@@ -36,27 +36,43 @@
     <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"  class="btn btn-success">Order on WhatsApp</a>
   </header>
 
-  <!-- Contact Form -->
-  <section class="contact py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center mb-4">Contact Us</h2>
-      <form action="https://wa.me/917731021234" method="get">
-        <div class="mb-3">
-          <label for="name" class="form-label">Your Name</label>
-          <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email Address</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-          <label for="message" class="form-label">Your Message</label>
-          <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Send Message</button>
-      </form>
-    </div>
-  </section>
+ <section class="contact py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Contact Us</h2>
+    <form id="whatsapp-form">
+      <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Your Message</label>
+        <textarea class="form-control" id="message" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Send on WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.getElementById("whatsapp-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    const whatsappMessage = `Hi, my name is ${name}. My email is ${email}. Here's my message: ${message}`;
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappURL = `https://wa.me/917731021234?text=${encodedMessage}`;
+
+    window.open(whatsappURL, "_blank");
+  });
+</script>
+
 <!-- Contact Section -->
   <section class="contact-section py-5 bg text-white">
     <div class="container">
