@@ -92,8 +92,8 @@ header h1 {
   background-color: #388e3c;
 }
 .logo {
-  width:300px; 
-  height: auto; 
+  width:100%; 
+  height: 50vh; 
   border-radius:30px;
    
 }
@@ -116,7 +116,7 @@ header h1 {
 }
 @media (max-width: 768px) {
   .logo {
-    width: 300px; 
+    width: 450px; 
     height: auto;
   }
 }
