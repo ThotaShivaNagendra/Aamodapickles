@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Aamoda Pickles</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container ">
+      <a class="navbar-brand" href="#">
+        <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="bg">Menu</span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
+          <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
+          <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">
+              <i class="fas fa-shopping-cart"></i> Cart (<span id="cart-icon-count">0</span>)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="header text-center py-4">
+    <h1>Checkout</h1>
+  </header>
+
+  <section class="checkout-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>Shipping Information</h3>
+          <form id="checkout-form">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fullName" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Street Address, Apartment, Suite, etc." required>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" required>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label for="zip" class="form-label">Zip Code</label>
+                <input type="text" class="form-control" id="zip" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" class="form-control" id="country" value="India" readonly>
+            </div>
+
+            <h3 class="mt-4">Order Summary</h3>
+            <div id="order-summary-items" class="mb-3">
+              </div>
+            <div class="text-end mb-4">
+              <h4>Total Amount: ₹<span id="order-total">0</span></h4>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg w-100">Pay Now</button>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-3 sticky-top" style="top: 20px;">
+            <h4 class="mb-3">Secure Payment</h4>
+            <p>Your payment will be processed securely using Razorpay.</p>
+            <p>Please review your order and shipping details before proceeding.</p>
+            <img src="https://placehold.co/300x150/E0E0E0/333333?text=Razorpay+Logo" alt="Razorpay Placeholder" class="img-fluid mt-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section py-5 bg text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center mb-4 mb-md-0">
+          <img src="logo.png" class="img-fluid" style="max-height: 250px;" alt="Aamoda Pickles Logo">
+        </div>
+        <div class="col-md-8 text-center text-md-start">
+          <h2>Contact Us</h2>
+          <p>We'd love to hear from you! Connect with us through:</p>
+          <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
+            <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"  class="btn btn-success">📞 WhatsApp</a>
+            <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
+            <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
+            <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer bg-warning text-center py-4">
+    <p>© 2025 Aamoda Pickles. All rights reserved.</p>
+    <div class="container mt-2">
+      <a href="terms.html" class="text-white mx-2">Terms & Conditions</a> |
+      <a href="shipping.html" class="text-white mx-2">Shipping Policy</a> |
+      <a href="contact.html" class="text-white mx-2">Contact Us</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartIcon(); // Update cart icon on page load
+
+        const orderSummaryItemsContainer = document.getElementById('order-summary-items');
+        const orderTotalElement = document.getElementById('order-total');
+        const cart = getCart(); // Get current cart from cart.js
+
+        if (cart.length === 0) {
+            orderSummaryItemsContainer.innerHTML = '<p class="text-center">Your cart is empty. Please add items to proceed to checkout.</p>';
+            document.getElementById('checkout-form').style.display = 'none'; // Hide the form if cart is empty
+            orderTotalElement.textContent = '0';
+            return;
+        }
+
+        let total = 0;
+        cart.forEach(item => {
+            const itemTotal = item.pricePerUnit * item.count;
+            total += itemTotal;
+
+            const orderItemHtml = `
+                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                    <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
+                    <span>₹${itemTotal}</span>
+                </div>
+            `;
+            orderSummaryItemsContainer.innerHTML += orderItemHtml;
+        });
+
+        orderTotalElement.textContent = total;
+
+        // Handle form submission and Razorpay integration
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const totalAmount = calculateCartTotal(); // Get total from cart.js
+
+            // IMPORTANT: In a real application, you would send this data to your backend
+            // to create a Razorpay Order. The backend would return an order_id.
+            // For this demonstration, we are simulating the Razorpay checkout directly.
+            // This client-side-only approach is NOT secure for production.
+
+            const options = {
+                key: "DqqJMEGp9XOVfE", // Your Razorpay Key ID
+                amount: totalAmount * 100, // Amount in paise (e.g., 10000 paise = ₹100)
+                currency: "INR",
+                name: "Aamoda Pickles",
+                description: "Order from Aamoda Pickles",
+                image: "logo.png", // Your logo image
+                // order_id: "order_xxxxxxxxxxxxxx", // This would come from your backend
+                handler: function (response) {
+                    // This function is called after successful payment
+                    alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                    console.log("Payment Response:", response);
+
+                    // In a real application, you would send response.razorpay_payment_id,
+                    // response.razorpay_order_id, and response.razorpay_signature to your backend
+                    // for verification.
+
+                    clearCart(); // Clear cart after successful payment
+                    window.location.href = 'index.html'; // Redirect to home or a success page
+                },
+                prefill: {
+                    name: fullName,
+                    email: email,
+                    contact: phone
+                },
+                notes: {
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zip: document.getElementById('zip').value
+                },
+                theme: {
+                    color: "#400607" // Your brand color
+                }
+            };
+
+            const rzp1 = new Razorpay(options);
+            rzp1.open(); // Open the Razorpay payment modal
+        });
+    });
+  </script>
+</body>
+</html>

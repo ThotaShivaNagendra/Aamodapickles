@@ -3,41 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Specials - Aamoda Pickles</title>
+  <title>Terms & Conditions - Aamoda Pickles</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Aamoda Pickles",
-      "url": "https://aamodapickles.com",
-      "logo": "https://aamodapickles.com/logo.png",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+91-7731021234",
-        "contactType": "customer service",
-        "areaServed": "IN",
-        "availableLanguage": ["English", "Telugu"]
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "1-54/3, Thota Venakataratnam Nilayam, Main Road, Komaravaram",
-        "addressLocality": "Tanuku",
-        "addressRegion": "Andhra Pradesh",
-        "postalCode": "534222",
-        "addressCountry": "IN"
-      }
-    }
-  </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg custom-navbar">
@@ -66,11 +37,41 @@
     </div>
   </nav>
 
-  <section class="products bg">
-    <div class="container ">
-      <h2 class="text-center mb-4">Our Special Products</h2>
-      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="product-list">
-        </div>
+  <header class="header text-center py-4">
+    <h1>Terms & Conditions</h1>
+  </header>
+
+  <section class="content-section py-5 bg-light">
+    <div class="container">
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing and using the Aamoda Pickles website (the "Website"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use the Website.</p>
+
+      <h3>2. Products and Pricing</h3>
+      <p>All products listed on the Website are subject to availability. We reserve the right to change prices, product descriptions, and availability at any time without notice. All prices are in Indian Rupees (₹).</p>
+
+      <h3>3. Ordering and Payment</h3>
+      <p>Orders can be placed through the Website's shopping cart system. Payment for orders must be made in full at the time of purchase. We currently support Razorpay for secure online payments. Your order will be processed only after successful payment confirmation.</p>
+
+      <h3>4. Shipping and Delivery</h3>
+      <p>Please refer to our <a href="shipping.html">Shipping Policy</a> for detailed information on shipping times, costs, and delivery areas.</p>
+
+      <h3>5. Cancellations, Returns, and Refunds</h3>
+      <p>Due to the perishable nature of our products, we generally do not accept returns or offer refunds unless the product received is damaged or incorrect. Any issues must be reported within 24 hours of delivery with photographic evidence. For cancellations, please contact us immediately. Orders already dispatched cannot be cancelled.</p>
+
+      <h3>6. Intellectual Property</h3>
+      <p>All content on this Website, including text, images, logos, and product designs, is the property of Aamoda Pickles and is protected by intellectual property laws. Unauthorized use is prohibited.</p>
+
+      <h3>7. Limitation of Liability</h3>
+      <p>Aamoda Pickles will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your access to or use of or inability to access or use the Website; (b) any conduct or content of any third party on the Website; (c) any content obtained from the Website; and (d) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.</p>
+
+      <h3>8. Governing Law</h3>
+      <p>These Terms shall be governed and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+
+      <h3>9. Changes to Terms</h3>
+      <p>We reserve the right to modify or replace these Terms at any time. It is your responsibility to review these Terms periodically for changes.</p>
+
+      <h3>10. Contact Information</h3>
+      <p>If you have any questions about these Terms, please contact us at <a href="mailto:aamodapickles@gmail.com">aamodapickles@gmail.com</a> or call us at 7731021234.</p>
     </div>
   </section>
 
@@ -107,44 +108,9 @@
   <script src="products.js"></script>
   <script src="cart.js"></script>
   <script>
-    // Script to dynamically load special products
+    // Ensure cart count is updated on page load for terms page
     document.addEventListener('DOMContentLoaded', () => {
-        const productListings = document.getElementById('product-list');
-        // Get only special products from the products.js array
-        const specialProducts = products.filter(product => product.category === 'special');
-
-        specialProducts.forEach(product => {
-            const productCard = `
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">${product.name}</h5>
-
-                            <div class="mt-auto">
-                                <select class="form-select mb-2 quantity-selector" data-product-id="${product.id}">
-                                    ${Object.keys(product.prices).map(key => `<option value="${key}"> ${key} - ₹${product.prices[key]}</option>`).join('')}
-                                </select>
-                                <button class="btn btn-success add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            productListings.innerHTML += productCard;
-        });
-
-        // Add event listeners for "Add to Cart" buttons
-        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const productId = event.target.dataset.productId;
-                const quantitySelector = document.querySelector(`.quantity-selector[data-product-id="${productId}"]`);
-                const selectedQuantity = quantitySelector.value;
-                addToCart(productId, selectedQuantity, 1); // Add 1 unit of the selected quantity
-            });
-        });
-
-        updateCartIcon(); // Ensure cart count is updated on page load
+        updateCartIcon();
     });
   </script>
 </body>

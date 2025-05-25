@@ -8,13 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Aamoda Pickles",
       "url": "https://aamodapickles.com",
-      "logo": "https://aamodapickles.com/logo.png,
+      "logo": "https://aamodapickles.com/logo.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+91-7731021234",
@@ -32,14 +33,12 @@
       }
     }
   </script>
-
 </head>
 <body>
-    <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg custom-navbar">
+    <nav class="navbar navbar-expand-lg custom-navbar">
     <div class="container ">
       <a class="navbar-brand" href="#">
-        <img src="logo.png" class="logo-image">
+        <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="bg menu">Menu</span>
@@ -52,112 +51,31 @@
           <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
           <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">
+              <i class="fas fa-shopping-cart"></i> Cart (<span id="cart-icon-count">0</span>)
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
   <header class="header text-center ">
-    <img src="dashboard.jpeg" class="logo mb-3" /> 
-    <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles" class="btn btn-success demo">Order on WhatsApp</a> 
-  </header>
-  <!-- Product Section -->
+    <img src="dashboard.jpeg" class="logo mb-3" alt="Aamoda Pickles Dashboard Image"/>
+    </header>
   <section class="products bg">
     <div class="container ">
       <h2 class="text-center mb-3">Our Best Sellers</h2>
-      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4">
-          <div class="card">
-            <img src="mango.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Mango Pickle</h5>
-              <p class="card-text">₹100 - ₹400 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Mango%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
+      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="product-list">
         </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="chicken.jpeg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Chicken Pickle</h5>
-              <p class="card-text">₹250 - ₹1000 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20Chi%20Pickle%20order%20for%20Chicken%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="mutton.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Mutton Pickle</h5>
-              <p class="card-text">₹400 - ₹1600 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Mutton%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-                <div class="col mb-4">
-          <div class="card">
-            <img src="prawns.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Prawns Pickle</h5>
-              <p class="card-text">₹350 - ₹1400 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Prawns%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="magayi.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Magayi Pickle</h5>
-              <p class="card-text">₹125 - ₹500 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Magayi%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="gongurachicken.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Gongura Chicken Pickle</h5>
-              <p class="card-text">₹300 - ₹1200 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Gongura%20Chicken%20Pickle%20from%20Aamoda%20Pickles" class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="karvepakupodi.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">Karvepaku podi</h5>
-              <p class="card-text">₹150 - ₹600 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Karvepaku%20Podi%20from%20Aamoda%20Pickles" class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-4">
-          <div class="card">
-            <img src="koramenu.jpg" class="card-img-top" alt="Mango Pickle">
-            <div class="card-body">
-              <h5 class="card-title">koramenu Pickle</h5>
-              <p class="card-text">₹400 - ₹1600 (250gm - 1kg)</p>
-              <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20for%20Koramenu%20Pickle%20from%20Aamoda%20Pickles"  class="btn btn-success demo">Order Now</a>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Repeat similar product cards for other pickles -->
-      </div>
     </div>
   </section>
-  <!-- Welcome Section -->
   <section class="text-center bg">
     <div class="container ">
       <h2>Welcome to Aamoda Pickles</h2>
       <p>We at Aamoda Pickles are proud to offer a wide variety of traditional Andhra-style pickles and special items. Whether you're a vegetarian or a non-vegetarian, our pickles are handcrafted with love using age-old recipes and the finest ingredients. From spicy mango and magayi pickles to our mouth-watering chicken, mutton, prawns, and gongura varieties, there’s something for everyone.<br>We also bring you our special range of homemade products like: Karam Podi, Putharekulu, Gummadikaya Vadiyalu, Karvepaku Podi, Pure Desi Ghee, Pesari Vadiyalu, challa mirapakayalu etc. <br>All products are made with high hygiene standards, free from preservatives, and packed with authentic taste. Enjoy our pickles as a daily companion to your meals or gift them to your loved ones!</p>
     </div>
   </section>
-  <!-- Contact Section -->
   <section class="contact-section py-5 bg text-white">
     <div class="container">
       <div class="row align-items-center">
@@ -178,11 +96,63 @@
     </div>
   </section>
 
-  <!-- Footer Section -->
   <footer class="footer bg-warning text-center py-4">
     <p>© 2025 Aamoda Pickles. All rights reserved.</p>
+    <div class="container mt-2">
+      <a href="terms.html" class="text-white mx-2">Terms & Conditions</a> |
+      <a href="shipping.html" class="text-white mx-2">Shipping Policy</a> |
+      <a href="contact.html" class="text-white mx-2">Contact Us</a>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    // Script to dynamically load "Best Sellers" products on the homepage
+    document.addEventListener('DOMContentLoaded', () => {
+        const productListings = document.getElementById('product-list');
+        // Define best sellers by their IDs from products.js
+        const bestSellers = [
+            'mango-pickle', 'chicken-pickle', 'mutton-pickle', 'prawns-pickle',
+            'magayi-pickle', 'gongura-chicken-pickle', 'karvepaku-podi', 'koramenu-pickle'
+        ];
+
+        // Filter products to only include best sellers
+        const productsToDisplay = products.filter(p => bestSellers.includes(p.id));
+
+        productsToDisplay.forEach(product => {
+            const productCard = `
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${product.name}</h5>
+                            <div class="mt-auto">
+                                <select class="form-select mb-2 quantity-selector" data-product-id="${product.id}">
+                                    ${Object.keys(product.prices).map(key => `<option value="${key}"> ${key} - ₹${product.prices[key]}</option>`).join('')}
+                                </select>
+                                <button class="btn btn-success add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            productListings.innerHTML += productCard;
+        });
+
+        // Add event listeners for "Add to Cart" buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.target.dataset.productId;
+                const quantitySelector = document.querySelector(`.quantity-selector[data-product-id="${productId}"]`);
+                const selectedQuantity = quantitySelector.value;
+                addToCart(productId, selectedQuantity, 1); // Add 1 unit of the selected quantity
+            });
+        });
+
+        updateCartIcon(); // Ensure cart count is updated on page load
+    });
+  </script>
 </body>
 </html>
