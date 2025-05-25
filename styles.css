@@ -16,6 +16,11 @@ header {
   background-color: #400607;
   color:white;
 }
+.menu{
+  font-size:15px;
+  font-weight:bold;
+
+}
 .demo{
   margin-bottom:6px;
 }
