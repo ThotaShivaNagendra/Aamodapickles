@@ -21,6 +21,7 @@
             width: 70%;
             margin-left: auto;
             margin-right: auto;
+            gap: 15px; /* Reduced gap for closer elements */
         }
 
         .cart-item img {
@@ -45,30 +46,45 @@
             overflow: hidden;
         }
 
-        .quantity-input-wrapper button {
-            background: none;
-            border: none;
-            padding: 5px 8px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
         .quantity-input-wrapper input[type="number"] {
-            width: 40px;
+            width: 50px; /* Slightly wider for arrows */
             padding: 5px;
             text-align: center;
             border: none;
-            -webkit-appearance: none; /* Remove arrows for Chrome, Safari, Edge, Opera */
-            -moz-appearance: textfield; /* Remove arrows for Firefox */
+            -webkit-appearance: none; /* Remove default arrows */
+            -moz-appearance: textfield; /* Remove default arrows */
+        }
+
+        /* Style for always visible integrated arrows */
+        .quantity-input-wrapper {
+            position: relative;
+        }
+
+        .quantity-input-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            font-size: 0.7em;
+            color: #555;
+            pointer-events: none; /* Allows clicking on the input */
+        }
+
+        .quantity-input-wrapper::after {
+            content: '▲\a▼'; /* Unicode for up and down arrows with line break */
+            white-space: pre-line; /* Preserve line breaks */
         }
 
         .cart-item-actions button {
-            margin-left: 10px;
             padding: 5px 10px;
             background-color: #dc3545;
             color: white;
             border: none;
             cursor: pointer;
+            margin-left: 10px; /* Add some space between quantity and remove */
         }
 
         .cart-total {
@@ -88,7 +104,8 @@
             margin-top: 10px;
         }
 
-        .text-center button, .text-center a {
+        .text-center button,
+        .text-center a {
             margin: 0 5px;
         }
     </style>
@@ -150,7 +167,7 @@
                     <h2>Contact Us</h2>
                     <p>We'd love to hear from you! Connect with us through:</p>
                     <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"  class="btn btn-success">📞 WhatsApp</a>
+                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles" class="btn btn-success">📞 WhatsApp</a>
                         <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
                         <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
                         <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
@@ -208,12 +225,10 @@
                             <div class="cart-item-quantity">
                                 <label for="quantity-${item.cartItemId}" class="form-label me-2 mb-0">Quantity:</label>
                                 <div class="quantity-input-wrapper">
-                                    <button onclick="changeQuantity('${item.cartItemId}', -1)">-</button>
                                     <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
-                                    <button onclick="changeQuantity('${item.cartItemId}', 1)">+</button>
                                 </div>
+                                <p class="mt-2">Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
                             </div>
-                            <p>Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
                         </div>
                         <div class="cart-item-actions">
                             <button class="remove-item-btn" data-cart-item-id="${item.cartItemId}">Remove</button>
@@ -225,40 +240,25 @@
 
             cartTotalElement.textContent = total;
 
-            // Function to update quantity
-            function changeQuantity(cartItemId, change) {
-                const cart = getCart();
-                const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
-                if (itemIndex !== -1) {
-                    const newCount = Math.max(1, cart[itemIndex].count + change);
-                    cart[itemIndex].count = newCount;
-                    updateCart(cart); // Update cart in localStorage
-                    const itemTotalElement = document.getElementById(`item-total-${cartItemId}`);
-                    if (itemTotalElement) {
-                        itemTotalElement.textContent = (newCount * cart[itemIndex].pricePerUnit).toFixed(2);
-                    }
-                    renderCart(); // Re-render the cart display to update the main total
-                }
-            }
-
-            // Function to update quantity when input field changes
+            // Function to update quantity (now triggered by input change)
             function updateQuantity(cartItemId, newQuantity) {
-                const cart = getCart();
-                const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
-                if (itemIndex !== -1) {
-                    const newCount = Math.max(1, parseInt(newQuantity));
-                    cart[itemIndex].count = newCount;
-                    updateCart(cart); // Update cart in localStorage
-                    const itemTotalElement = document.getElementById(`item-total-${cartItemId}`);
-                    if (itemTotalElement) {
-                        itemTotalElement.textContent = (newCount * cart[itemIndex].pricePerUnit).toFixed(2);
+                const parsedQuantity = Math.max(1, parseInt(newQuantity));
+                if (!isNaN(parsedQuantity)) {
+                    const cart = getCart();
+                    const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
+                    if (itemIndex !== -1) {
+                        cart[itemIndex].count = parsedQuantity;
+                        updateCart(cart); // Update cart in localStorage
+                        const itemTotalElement = document.getElementById(`item-total-${cartItemId}`);
+                        if (itemTotalElement) {
+                            itemTotalElement.textContent = (parsedQuantity * cart[itemIndex].pricePerUnit).toFixed(2);
+                        }
+                        renderCart(); // Re-render the cart display to update the main total
                     }
-                    renderCart(); // Re-render the cart display to update the main total
                 }
             }
 
-            // Attach the functions to the global scope
-            window.changeQuantity = changeQuantity;
+            // Attach the function to the global scope
             window.updateQuantity = updateQuantity;
 
             // Add event listeners for remove buttons
