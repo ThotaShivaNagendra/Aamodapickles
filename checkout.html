@@ -90,7 +90,7 @@
 
                         <h3 class="mt-4">Order Summary</h3>
                         <div id="order-summary-items" class="mb-3">
-                            </div>
+                        </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h4>Subtotal: ₹<span id="order-subtotal">0</span></h4>
                         </div>
@@ -184,15 +184,16 @@
             // ----  Order Summary Population ----
             cart.forEach(item => {
                 //  Get full product details using a more reliable function (getProductById -  Ensure this is in products.js)
-                const product = getProductById(item.id);
+                const product = getProductById(item.productId);
                 if (!product) {
-                    console.error('Product not found:', item.id);
+                    console.error('Product not found:', item.productId);
                     return;  // Skip this item if product details are missing
                 }
 
                 const itemTotal = item.pricePerUnit * item.count;
                 subtotal += itemTotal;
-                totalWeight += product.weight * item.count;  // Use product.weight
+                // Assuming 'weights' property exists in your product object with keys like '250gm', '500gm', etc.
+                totalWeight += product.weights[item.quantityKey] * item.count;
 
                 const orderItemHtml = `
                     <div class="d-flex justify-content-between align-items-center border-bottom py-2">
@@ -255,7 +256,7 @@
                 if (subtotal >= freeShippingThreshold) {
                     shippingRate = 0;
                 } else {
-                    // Weight-based rates
+                    // Weight-based rates (using totalWeight in grams)
                     if (totalWeight <= 500) {
                         shippingRate = 50;
                     } else if (totalWeight <= 1000) {
@@ -305,7 +306,7 @@
                 const selectedCourier = calculateShipping(zipCode);
 
                 const options = {
-                    key: "YOUR_RAZORPAY_KEY_ID",  //  **Replace with your actual Razorpay Key ID**
+                    key: "rzp_test_dzr0ExL25Pj8II",  //  **Replace with your actual Razorpay Key ID**
                     amount: totalAmountPayable * 100,  // Amount in paise
                     currency: "INR",
                     name: "Aamoda Pickles",
@@ -340,6 +341,11 @@
                 rzp1.open();
             });
         });
+
+        // Ensure this function exists in your products.js
+        function getProductById(productId) {
+            return products.find(product => product.id === productId);
+        }
     </script>
 </body>
 
