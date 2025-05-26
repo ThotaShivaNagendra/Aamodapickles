@@ -1,4 +1,3 @@
-</html>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,35 +76,7 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="state" class="form-label">State</label>
-                                <select class="form-control" id="state" required>
-                                    <option value="">Select State</option>
-                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                    <option value="Assam">Assam</option>
-                                    <option value="Bihar">Bihar</option>
-                                    <option value="Chhattisgarh">Chhattisgarh</option>
-                                    <option value="Goa<option value="Haryana">Haryana</option>
-                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                    <option value="Jharkhand">Jharkhand</option>
-                                    <option value="Karnataka">Karnataka</option>
-                                    <option value="Kerala">Kerala</option>
-                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                                    <option value="Maharashtra">Maharashtra</option>
-                                    <option value="Manipur">Manipur</option>
-                                    <option value="Meghalaya">Meghalaya</option>
-                                    <option value="Mizoram">Mizoram</option>
-                                    <option value="Nagaland">Nagaland</option>
-                                    <option value="Odisha">Odisha</option>
-                                    <option value="Punjab">Punjab</option>
-                                    <option value="Rajasthan">Rajasthan</option>
-                                    <option value="Sikkim">Sikkim</option>
-                                    <option value="Tamil Nadu">Tamil Nadu</option>
-                                    <option value="Telangana">Telangana</option>
-                                    <option value="Tripura">Tripura</option>
-                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                    <option value="Uttarakhand">Uttarakhand</option>
-                                    <option value="West Bengal">West Bengal</option>
-                                </select>
+                                <input type="text" class="form-control" id="state" required>
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="zip" class="form-label">Zip Code</label>
@@ -156,11 +127,11 @@
                     <p>We'd love to hear from you! Connect with us through:</p>
                     <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
                         <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"
-                            class="btn btn-success"> WhatsApp</a>
-                        <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">
+                            class="btn btn-success">📞 WhatsApp</a>
+                        <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸
                             Instagram</a>
-                        <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning"> Email Us</a>
-                        <a href="tel:7731021234" class="btn btn-primary"> Call: 7731021234</a>
+                        <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
+                        <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
                     </div>
                 </div>
             </div>
@@ -191,13 +162,12 @@
             const orderTotalElement = document.getElementById('order-total');
             const checkoutForm = document.getElementById('checkout-form');
             const zipCodeField = document.getElementById('zip');
-            const stateField = document.getElementById('state'); // Get the state dropdown
             const cart = getCart();
 
             const tanukuPinCode = '534211'; // Origin pincode
             const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 }; // Coordinates for Tanuku
 
-            // ---- Cart Empty Handling ----
+            // ----  Cart Empty Handling ----
             if (cart.length === 0) {
                 orderSummaryItemsContainer.innerHTML =
                     '<p class="text-center">Your cart is empty. Please add items to proceed to checkout.</p>';
@@ -211,9 +181,11 @@
             let subtotal = 0;
             let totalWeight = 0; // Total weight in grams
 
-            // ---- Order Summary Population and Initial Calculations ----
+            // ----  Order Summary Population and Initial Calculations ----
             cart.forEach(item => {
-                const product = getProductById(item.id); // Corrected to use item.id
+                // console.log("Cart Item:", item); // Debugging: Log the cart item
+                const product = getProductById(item.id);
+                // console.log("Found Product:", product); // Debugging: Log the found product
 
                 if (!product) {
                     console.error('Product not found in products.js for ID:', item.id);
@@ -232,12 +204,12 @@
                         console.warn('Weight information missing for product:', product.name, 'quantity:', item.quantityKey);
                     }
 
-                    const orderItemHtml = 
+                    const orderItemHtml = `
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
                             <span>₹${itemTotal.toFixed(2)}</span>
                         </div>
-                    ;
+                    `;
                     orderSummaryItemsContainer.innerHTML += orderItemHtml;
                 } else {
                     console.error('Price information missing or invalid quantity key for product:', product.name, 'quantity:', item.quantityKey);
@@ -245,37 +217,38 @@
             });
 
             orderSubtotalElement.textContent = subtotal.toFixed(2); // Display with 2 decimal places
-            shippingCostElement.textContent = '0.00'; // Initialize shipping to 0
-            orderTotalElement.textContent = subtotal.toFixed(2); // Initialize total to subtotal
 
-            // ---- Distance Calculation (Placeholder - Requires Geocoding API for accuracy) ----
+
+            // ----  Distance Calculation (Placeholder - Requires Geocoding API for accuracy) ----
             function calculateDistance(zipCode) {
+                // In a real application, you'd use a geocoding API (e.g., Google Maps Geocoding API)
+                // to convert the user's address/pincode to coordinates for accurate distance calculation.
+                // This is a simplified placeholder based on city names.
                 try {
                     const userCity = document.getElementById('city').value;
-                    const userState = document.getElementById('state').value;
+                    const userState = document.getElementById('state').value; // You might use state for broader zones
 
                     let userCoordinates = { latitude: 0, longitude: 0 }; // Default to 0,0
 
-                    // Very basic city/state-based coordinate simulation (expand as needed)
+                    // Very basic city-based coordinate simulation
                     if (userCity.toLowerCase().includes('hyderabad')) {
                         userCoordinates = { latitude: 17.3850, longitude: 78.4867 };
                     } else if (userCity.toLowerCase().includes('chennai')) {
                         userCoordinates = { latitude: 13.0827, longitude: 80.2707 };
                     } else if (userCity.toLowerCase().includes('bangalore')) {
                         userCoordinates = { latitude: 12.9716, longitude: 77.5946 };
-                    } else if (userState.toLowerCase().includes('maharashtra')) {
-                        userCoordinates = { latitude: 19.7515, longitude: 75.7139 }; // Approximate center
-                    } else if (userState.toLowerCase().includes('uttar pradesh')) {
-                        userCoordinates = { latitude: 26.8467, longitude: 80.9462 }; // Approximate center
                     } else if (userCity.toLowerCase().includes('tanuku') || zipCode === tanukuPinCode) {
                         userCoordinates = tanukuCoordinates; // If it's the origin city, distance is 0
                     }
-                    // Add more city/state mappings as needed for a better simulation
+                    // Add more cities/states and their approximate coordinates as needed for better simulation
 
                     if (userCoordinates.latitude === 0 && userCoordinates.longitude === 0) {
-                        return 1500; // Default large distance if location not matched
+                        // If city not recognized, return a default distance or handle as unknown
+                        // For now, let's return a large distance to ensure a shipping cost
+                        return 1500; // Default large distance if city not matched
                     }
 
+                    // geolib.getDistance returns distance in meters, convert to kilometers
                     const distance = geolib.getDistance(tanukuCoordinates, userCoordinates) / 1000;
                     return distance;
 
@@ -285,42 +258,42 @@
                 }
             }
 
+
             // ---- Shipping Calculation based on Weight and Simulated Distance ----
             function calculateShipping() {
                 let shippingRate = 0;
                 const freeShippingThreshold = 2000; // Order value above which shipping is free
                 const currentZipCode = zipCodeField.value; // Get current zip code from input
                 const distance = calculateDistance(currentZipCode); // Get simulated distance in km
+
+                // Convert totalWeight from grams to kilograms for easier tier comparison
                 const totalWeightKg = totalWeight / 1000;
-                const selectedState = stateField.value;
 
-                // Apply shipping only if a state is selected AND a zip code is entered
-                if (selectedState && currentZipCode.trim() !== '') {
-                    if (subtotal >= freeShippingThreshold) {
-                        shippingRate = 0; // Free shipping
-                    } else {
-                        // Base weight-based rates (adjust these as per your courier charges)
-                        if (totalWeightKg <= 0.5) { // 0-500g
-                            shippingRate = 50;
-                        } else if (totalWeightKg <= 1) { // 501g-1kg
-                            shippingRate = 80;
-                        } else if (totalWeightKg <= 2) { // 1.01kg-2kg
-                            shippingRate = 120;
-                        } else { // Above 2kg
-                            shippingRate = 120 + (Math.ceil(totalWeightKg - 2) * 50);
-                        }
-
-                        // Distance-based adjustments (Simplified and illustrative)
-                        if (distance > 100 && distance <= 500) { // Regional
-                            shippingRate += 30;
-                        } else if (distance > 500 && distance <= 1000) { // Zonal
-                            shippingRate += 60;
-                        } else if (distance > 1000) { // National
-                            shippingRate += 100;
-                        }
-                    }
+                if (subtotal >= freeShippingThreshold) {
+                    shippingRate = 0; // Free shipping
                 } else {
-                    shippingRate = 0; // Don't calculate shipping if state or zip code is missing
+                    // Base weight-based rates (adjust these as per your courier charges)
+                    if (totalWeightKg <= 0.5) { // 0-500g
+                        shippingRate = 50;
+                    } else if (totalWeightKg <= 1) { // 501g-1kg
+                        shippingRate = 80;
+                    } else if (totalWeightKg <= 2) { // 1.01kg-2kg
+                        shippingRate = 120;
+                    } else { // Above 2kg
+                        // For every additional kg or part thereof above 2kg, add a charge
+                        // Example: 120 (for first 2kg) + (additional_kg * 50)
+                        shippingRate = 120 + (Math.ceil(totalWeightKg - 2) * 50);
+                    }
+
+                    // Distance-based adjustments (Simplified and illustrative)
+                    // These are *additional* charges based on distance, mimicking courier zones
+                    if (distance > 100 && distance <= 500) { // Regional
+                        shippingRate += 30;
+                    } else if (distance > 500 && distance <= 1000) { // Zonal
+                        shippingRate += 60;
+                    } else if (distance > 1000) { // National
+                        shippingRate += 100;
+                    }
                 }
 
                 // Update display
@@ -331,16 +304,17 @@
                 return shippingRate; // Return the calculated shipping rate
             }
 
-            // ---- Initial Calculations & Event Listeners for Dynamic Update ----
-            // No initial call to calculateShipping()
+            // ----  Initial Calculations & Event Listeners for Dynamic Update ----
+            // Initial calculation when the page loads
+            calculateShipping();
 
-            // Recalculate shipping and total when the zip code field loses focus
-            zipCodeField.addEventListener('blur', calculateShipping);
+            // Recalculate shipping and total when relevant fields change
+            zipCodeField.addEventListener('input', calculateShipping); // Use 'input' for real-time updates
+            document.getElementById('city').addEventListener('input', calculateShipping);
+            document.getElementById('state').addEventListener('input', calculateShipping);
 
-            // Recalculate shipping when the state changes
-            stateField.addEventListener('change', calculateShipping);
 
-                       // ----  Razorpay Integration ----
+            // ----  Razorpay Integration ----
             checkoutForm.addEventListener('submit', function (e) {
                 e.preventDefault(); // Prevent default form submission
 
@@ -420,7 +394,13 @@
                 rzp1.open();
             });
         });
+
+        // Ensure this function exists in your products.js and is accessible globally
+        // It should look something like:
+        // function getProductById(productId) {
+        //     return products.find(product => product.id === productId);
+        // }
     </script>
 </body>
 
-</html> 
+</html>
