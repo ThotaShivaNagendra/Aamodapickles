@@ -125,3 +125,14 @@ header h1 {
     height: auto;
   }
 }
+/* Force show number input arrows on Chrome/Safari (Webkit browsers) */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: auto;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
