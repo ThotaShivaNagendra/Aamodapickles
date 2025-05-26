@@ -90,7 +90,7 @@
 
                         <h3 class="mt-4">Order Summary</h3>
                         <div id="order-summary-items" class="mb-3">
-                        </div>
+                            </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h4>Subtotal: ₹<span id="order-subtotal">0</span></h4>
                         </div>
@@ -154,7 +154,7 @@
     <script src="cart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            updateCartIcon(); // Update cart icon on page load
+            updateCartIcon();
 
             const orderSummaryItemsContainer = document.getElementById('order-summary-items');
             const orderSubtotalElement = document.getElementById('order-subtotal');
@@ -162,15 +162,16 @@
             const orderTotalElement = document.getElementById('order-total');
             const checkoutForm = document.getElementById('checkout-form');
             const zipCodeField = document.getElementById('zip');
-            const cart = getCart(); // Get current cart from cart.js
+            const cart = getCart();
 
             const tanukuPinCode = '534211';
-            const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 }; // Approximate coordinates for Tanuku (You might need more precise ones)
+            const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 };
 
+            // ----  Cart Empty Handling ----
             if (cart.length === 0) {
                 orderSummaryItemsContainer.innerHTML =
                     '<p class="text-center">Your cart is empty. Please add items to proceed to checkout.</p>';
-                checkoutForm.style.display = 'none'; // Hide the form if cart is empty
+                checkoutForm.style.display = 'none';
                 orderSubtotalElement.textContent = '0';
                 shippingCostElement.textContent = '0';
                 orderTotalElement.textContent = '0';
@@ -179,22 +180,33 @@
 
             let subtotal = 0;
             let totalWeight = 0;
+
+            // ----  Order Summary Population ----
             cart.forEach(item => {
+                //  Get full product details using a more reliable function (getProductById -  Ensure this is in products.js)
+                const product = getProductById(item.id);
+                if (!product) {
+                    console.error('Product not found:', item.id);
+                    return;  // Skip this item if product details are missing
+                }
+
                 const itemTotal = item.pricePerUnit * item.count;
                 subtotal += itemTotal;
-                totalWeight += item.weight * item.count; // Assuming weight is in grams in products.js
+                totalWeight += product.weight * item.count;  // Use product.weight
 
                 const orderItemHtml = `
                     <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
+                        <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
                         <span>₹${itemTotal}</span>
                     </div>
                 `;
                 orderSummaryItemsContainer.innerHTML += orderItemHtml;
             });
 
-            orderSubtotalElement.textContent = subtotal;
+            orderSubtotalElement.textContent = subtotal.toFixed(2);  // Display with 2 decimal places
 
+
+            // ----  Distance Calculation ----
             function calculateDistance(zipCode) {
                 try {
                     const userAddress = document.getElementById('address').value;
@@ -202,44 +214,42 @@
                     const userState = document.getElementById('state').value;
                     const userCountry = document.getElementById('country').value;
 
-                    // Geocoding the user's address (This is a simplified approach and might need a proper geocoding API)
-                    // For simplicity, let's assume the user's city provides rough coordinates
-                    // You'd ideally use a service like Google Maps Geocoding API or similar.
-
-                    // Placeholder coordinates (replace with actual geocoding)
+                    //  **IMPORTANT:** Replace this with a real geocoding API for accuracy!
+                    //  This is a placeholder.  Geocoding APIs (like Google Maps)
+                    //  convert addresses/cities to precise coordinates.
                     const userCoordinates = { latitude: 0, longitude: 0 };
 
-                    // Rough approximation based on city (This is NOT accurate)
-                    // You need a geocoding service for precise coordinates
+                    //  **Placeholder Geocoding (INACCURATE)**
                     if (userCity.toLowerCase().includes('hyderabad')) {
                         userCoordinates.latitude = 17.3850;
                         userCoordinates.longitude = 78.4867;
                     } else if (userCity.toLowerCase().includes('chennai')) {
                         userCoordinates.latitude = 13.0827;
                         userCoordinates.longitude = 80.2707;
-                    }  else if (userCity.toLowerCase().includes('bangalore')) {
+                    } else if (userCity.toLowerCase().includes('bangalore')) {
                         userCoordinates.latitude = 12.9716;
                         userCoordinates.longitude = 77.5946;
                     }
 
                     if (userCoordinates.latitude === 0 && userCoordinates.longitude === 0) {
-                        return 0; // Default to 0 if geocoding fails
+                        return 0;
                     }
 
-                    const distance = geolib.getDistance(tanukuCoordinates, userCoordinates) / 1000; // Distance in kilometers
+                    const distance = geolib.getDistance(tanukuCoordinates, userCoordinates) / 1000;  // in kilometers
                     return distance;
 
                 } catch (error) {
                     console.error("Error calculating distance:", error);
-                    return 0; // Default to 0 on error
+                    return 0;
                 }
             }
 
 
+            // ---- Shipping Calculation ----
             function calculateShipping(zipCode) {
                 let shippingRate = 0;
                 const freeShippingThreshold = 2000;
-                const distance = calculateDistance(zipCode); // Get distance in km
+                const distance = calculateDistance(zipCode);
                 let courier = 'default';
 
                 if (subtotal >= freeShippingThreshold) {
@@ -254,7 +264,7 @@
                         shippingRate = 120;
                     }
 
-                    // Distance-based adjustments (Very simplified)
+                    // Distance-based adjustments (Simplified)
                     if (distance > 100 && distance <= 500) {
                         shippingRate += 30;
                         courier = 'dtdc';
@@ -267,24 +277,23 @@
                     }
                 }
 
-                shippingCostElement.textContent = shippingRate;
+                shippingCostElement.textContent = shippingRate.toFixed(2);
                 const totalAmount = subtotal + shippingRate;
-                orderTotalElement.textContent = totalAmount;
-
+                orderTotalElement.textContent = totalAmount.toFixed(2);
                 return courier;
             }
 
-            // Initial shipping calculation
+            // ----  Initial Calculations & Event Listeners ----
             const initialCourier = calculateShipping(zipCodeField.value);
-            console.log("Initial Courier:", initialCourier); // Log initial courier
+            console.log("Initial Courier:", initialCourier);
 
-            // Recalculate shipping on zip code change
             zipCodeField.addEventListener('change', function () {
                 const selectedCourier = calculateShipping(this.value);
-                console.log("Selected Courier:", selectedCourier); // Log selected courier
+                console.log("Selected Courier:", selectedCourier);
             });
 
-            // Handle form submission and Razorpay integration
+
+            // ----  Razorpay Integration ----
             checkoutForm.addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -292,22 +301,22 @@
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
                 const zipCode = document.getElementById('zip').value;
-                const totalAmountPayable = parseFloat(orderTotalElement.textContent);
+                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total
                 const selectedCourier = calculateShipping(zipCode);
 
                 const options = {
-                    key: "DqqJMEGp9XOVfE", // Your Razorpay Key ID
-                    amount: totalAmountPayable * 100, // Amount in paise
+                    key: "YOUR_RAZORPAY_KEY_ID",  //  **Replace with your actual Razorpay Key ID**
+                    amount: totalAmountPayable * 100,  // Amount in paise
                     currency: "INR",
                     name: "Aamoda Pickles",
                     description: "Order from Aamoda Pickles",
-                    image: "logo.png", // Your logo image
+                    image: "logo.png",
                     handler: function (response) {
                         alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
                         console.log("Payment Response:", response);
 
-                        clearCart();
-                        window.location.href = 'index.html';
+                        clearCart();  // Clear the cart (Implement this in cart.js)
+                        window.location.href = 'index.html';  // Redirect to home or success page
                     },
                     prefill: {
                         name: fullName,
