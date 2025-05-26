@@ -164,160 +164,193 @@
             const zipCodeField = document.getElementById('zip');
             const cart = getCart();
 
-            const tanukuPinCode = '534211';
-            const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 };
+            const tanukuPinCode = '534211'; // Origin pincode
+            const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 }; // Coordinates for Tanuku
 
             // ----  Cart Empty Handling ----
             if (cart.length === 0) {
                 orderSummaryItemsContainer.innerHTML =
                     '<p class="text-center">Your cart is empty. Please add items to proceed to checkout.</p>';
-                checkoutForm.style.display = 'none';
+                checkoutForm.style.display = 'none'; // Hide the form if cart is empty
                 orderSubtotalElement.textContent = '0';
                 shippingCostElement.textContent = '0';
                 orderTotalElement.textContent = '0';
-                return;
+                return; // Stop further execution if cart is empty
             }
 
             let subtotal = 0;
-            let totalWeight = 0;
+            let totalWeight = 0; // Total weight in grams
 
-            // ----  Order Summary Population ----
+            // ----  Order Summary Population and Initial Calculations ----
             cart.forEach(item => {
-                //  Get full product details using a more reliable function (getProductById -  Ensure this is in products.js)
+                // console.log("Cart Item:", item); // Debugging: Log the cart item
                 const product = getProductById(item.productId);
+                // console.log("Found Product:", product); // Debugging: Log the found product
+
                 if (!product) {
-                    console.error('Product not found:', item.productId);
-                    return;  // Skip this item if product details are missing
+                    console.error('Product not found in products.js for ID:', item.productId);
+                    return; // Skip this item if product details are missing
                 }
 
-                const itemTotal = item.pricePerUnit * item.count;
-                subtotal += itemTotal;
-                // Assuming 'weights' property exists in your product object with keys like '250gm', '500gm', etc.
-                totalWeight += product.weights[item.quantityKey] * item.count;
+                // Ensure that product.prices and item.quantityKey are valid
+                if (product.prices && product.prices[item.quantityKey]) {
+                    const itemTotal = item.pricePerUnit * item.count; // Use pricePerUnit from cart item
+                    subtotal += itemTotal;
 
-                const orderItemHtml = `
-                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
-                        <span>₹${itemTotal}</span>
-                    </div>
-                `;
-                orderSummaryItemsContainer.innerHTML += orderItemHtml;
+                    // Assuming 'weights' property exists in your product object with keys like '250gm', '500gm', etc.
+                    if (product.weights && product.weights[item.quantityKey]) {
+                        totalWeight += product.weights[item.quantityKey] * item.count;
+                    } else {
+                        console.warn('Weight information missing for product:', product.name, 'quantity:', item.quantityKey);
+                    }
+
+                    const orderItemHtml = `
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
+                            <span>₹${itemTotal.toFixed(2)}</span>
+                        </div>
+                    `;
+                    orderSummaryItemsContainer.innerHTML += orderItemHtml;
+                } else {
+                    console.error('Price information missing or invalid quantity key for product:', product.name, 'quantity:', item.quantityKey);
+                }
             });
 
-            orderSubtotalElement.textContent = subtotal.toFixed(2);  // Display with 2 decimal places
+            orderSubtotalElement.textContent = subtotal.toFixed(2); // Display with 2 decimal places
 
 
-            // ----  Distance Calculation ----
+            // ----  Distance Calculation (Placeholder - Requires Geocoding API for accuracy) ----
             function calculateDistance(zipCode) {
+                // In a real application, you'd use a geocoding API (e.g., Google Maps Geocoding API)
+                // to convert the user's address/pincode to coordinates for accurate distance calculation.
+                // This is a simplified placeholder based on city names.
                 try {
-                    const userAddress = document.getElementById('address').value;
                     const userCity = document.getElementById('city').value;
-                    const userState = document.getElementById('state').value;
-                    const userCountry = document.getElementById('country').value;
+                    const userState = document.getElementById('state').value; // You might use state for broader zones
 
-                    //  **IMPORTANT:** Replace this with a real geocoding API for accuracy!
-                    //  This is a placeholder.  Geocoding APIs (like Google Maps)
-                    //  convert addresses/cities to precise coordinates.
-                    const userCoordinates = { latitude: 0, longitude: 0 };
+                    let userCoordinates = { latitude: 0, longitude: 0 }; // Default to 0,0
 
-                    //  **Placeholder Geocoding (INACCURATE)**
+                    // Very basic city-based coordinate simulation
                     if (userCity.toLowerCase().includes('hyderabad')) {
-                        userCoordinates.latitude = 17.3850;
-                        userCoordinates.longitude = 78.4867;
+                        userCoordinates = { latitude: 17.3850, longitude: 78.4867 };
                     } else if (userCity.toLowerCase().includes('chennai')) {
-                        userCoordinates.latitude = 13.0827;
-                        userCoordinates.longitude = 80.2707;
+                        userCoordinates = { latitude: 13.0827, longitude: 80.2707 };
                     } else if (userCity.toLowerCase().includes('bangalore')) {
-                        userCoordinates.latitude = 12.9716;
-                        userCoordinates.longitude = 77.5946;
+                        userCoordinates = { latitude: 12.9716, longitude: 77.5946 };
+                    } else if (userCity.toLowerCase().includes('tanuku') || zipCode === tanukuPinCode) {
+                        userCoordinates = tanukuCoordinates; // If it's the origin city, distance is 0
                     }
+                    // Add more cities/states and their approximate coordinates as needed for better simulation
 
                     if (userCoordinates.latitude === 0 && userCoordinates.longitude === 0) {
-                        return 0;
+                        // If city not recognized, return a default distance or handle as unknown
+                        // For now, let's return a large distance to ensure a shipping cost
+                        return 1500; // Default large distance if city not matched
                     }
 
-                    const distance = geolib.getDistance(tanukuCoordinates, userCoordinates) / 1000;  // in kilometers
+                    // geolib.getDistance returns distance in meters, convert to kilometers
+                    const distance = geolib.getDistance(tanukuCoordinates, userCoordinates) / 1000;
                     return distance;
 
                 } catch (error) {
                     console.error("Error calculating distance:", error);
-                    return 0;
+                    return 0; // Return 0 or a default large distance on error
                 }
             }
 
 
-            // ---- Shipping Calculation ----
-            function calculateShipping(zipCode) {
+            // ---- Shipping Calculation based on Weight and Simulated Distance ----
+            function calculateShipping() {
                 let shippingRate = 0;
-                const freeShippingThreshold = 2000;
-                const distance = calculateDistance(zipCode);
-                let courier = 'default';
+                const freeShippingThreshold = 2000; // Order value above which shipping is free
+                const currentZipCode = zipCodeField.value; // Get current zip code from input
+                const distance = calculateDistance(currentZipCode); // Get simulated distance in km
+
+                // Convert totalWeight from grams to kilograms for easier tier comparison
+                const totalWeightKg = totalWeight / 1000;
 
                 if (subtotal >= freeShippingThreshold) {
-                    shippingRate = 0;
+                    shippingRate = 0; // Free shipping
                 } else {
-                    // Weight-based rates (using totalWeight in grams)
-                    if (totalWeight <= 500) {
+                    // Base weight-based rates (adjust these as per your courier charges)
+                    if (totalWeightKg <= 0.5) { // 0-500g
                         shippingRate = 50;
-                    } else if (totalWeight <= 1000) {
+                    } else if (totalWeightKg <= 1) { // 501g-1kg
                         shippingRate = 80;
-                    } else {
+                    } else if (totalWeightKg <= 2) { // 1.01kg-2kg
                         shippingRate = 120;
+                    } else { // Above 2kg
+                        // For every additional kg or part thereof above 2kg, add a charge
+                        // Example: 120 (for first 2kg) + (additional_kg * 50)
+                        shippingRate = 120 + (Math.ceil(totalWeightKg - 2) * 50);
                     }
 
-                    // Distance-based adjustments (Simplified)
-                    if (distance > 100 && distance <= 500) {
+                    // Distance-based adjustments (Simplified and illustrative)
+                    // These are *additional* charges based on distance, mimicking courier zones
+                    if (distance > 100 && distance <= 500) { // Regional
                         shippingRate += 30;
-                        courier = 'dtdc';
-                    } else if (distance > 500 && distance <= 1000) {
+                    } else if (distance > 500 && distance <= 1000) { // Zonal
                         shippingRate += 60;
-                        courier = 'professional';
-                    } else if (distance > 1000) {
+                    } else if (distance > 1000) { // National
                         shippingRate += 100;
-                        courier = 'indiaPost';
                     }
                 }
 
+                // Update display
                 shippingCostElement.textContent = shippingRate.toFixed(2);
                 const totalAmount = subtotal + shippingRate;
                 orderTotalElement.textContent = totalAmount.toFixed(2);
-                return courier;
+
+                return shippingRate; // Return the calculated shipping rate
             }
 
-            // ----  Initial Calculations & Event Listeners ----
-            const initialCourier = calculateShipping(zipCodeField.value);
-            console.log("Initial Courier:", initialCourier);
+            // ----  Initial Calculations & Event Listeners for Dynamic Update ----
+            // Initial calculation when the page loads
+            calculateShipping();
 
-            zipCodeField.addEventListener('change', function () {
-                const selectedCourier = calculateShipping(this.value);
-                console.log("Selected Courier:", selectedCourier);
-            });
+            // Recalculate shipping and total when relevant fields change
+            zipCodeField.addEventListener('input', calculateShipping); // Use 'input' for real-time updates
+            document.getElementById('city').addEventListener('input', calculateShipping);
+            document.getElementById('state').addEventListener('input', calculateShipping);
 
 
             // ----  Razorpay Integration ----
             checkoutForm.addEventListener('submit', function (e) {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default form submission
 
+                // Get form data
                 const fullName = document.getElementById('fullName').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
                 const zipCode = document.getElementById('zip').value;
-                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total
-                const selectedCourier = calculateShipping(zipCode);
+                const country = document.getElementById('country').value;
 
+                // Recalculate shipping just before payment to ensure latest values
+                const currentShippingCost = calculateShipping(); // This also updates the displayed total
+                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
+
+                // Razorpay Options
                 const options = {
-                    key: "rzp_test_dzr0ExL25Pj8II",  //  **Replace with your actual Razorpay Key ID**
+                    key: "rzp_test_dzr0ExL25Pj8II",  // Your Razorpay Test Key ID
                     amount: totalAmountPayable * 100,  // Amount in paise
                     currency: "INR",
                     name: "Aamoda Pickles",
                     description: "Order from Aamoda Pickles",
-                    image: "logo.png",
+                    image: "logo.png", // Path to your logo image
                     handler: function (response) {
+                        // This function is called on successful payment
                         alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
                         console.log("Payment Response:", response);
 
-                        clearCart();  // Clear the cart (Implement this in cart.js)
-                        window.location.href = 'index.html';  // Redirect to home or success page
+                        // In a production environment, you would send response.razorpay_payment_id,
+                        // response.razorpay_order_id, and response.razorpay_signature to your backend
+                        // for server-side verification to ensure payment authenticity.
+
+                        clearCart();  // Clear the cart after successful payment
+                        window.location.href = 'index.html';  // Redirect to home or a success page
                     },
                     prefill: {
                         name: fullName,
@@ -325,27 +358,48 @@
                         contact: phone
                     },
                     notes: {
-                        address: document.getElementById('address').value,
-                        city: document.getElementById('city').value,
-                        state: document.getElementById('state').value,
+                        address: address,
+                        city: city,
+                        state: state,
                         zip: zipCode,
-                        shippingCost: parseFloat(shippingCostElement.textContent),
-                        courier: selectedCourier
+                        country: country,
+                        shippingCost: currentShippingCost,
+                        totalWeight: totalWeight / 1000 // Store in KG for notes
                     },
                     theme: {
-                        color: "#400607"
+                        color: "#400607" // Your brand color
                     }
                 };
+
+                // Handle payment failure (optional, but good for debugging)
+                options.handler.onClose = function () {
+                    console.log("Payment widget closed by user.");
+                    // You might want to show a message or log this event
+                };
+
+                options.handler.onDismiss = function () {
+                    console.log("Payment widget dismissed by user.");
+                    // You might want to show a message or log this event
+                };
+
+                options.handler.onFailure = function (response) {
+                    // This function is called on payment failure
+                    alert("Payment Failed: " + response.error.description);
+                    console.error("Payment Failure Response:", response);
+                    // You might want to log this error to your server or display a more user-friendly message
+                };
+
 
                 const rzp1 = new Razorpay(options);
                 rzp1.open();
             });
         });
 
-        // Ensure this function exists in your products.js
-        function getProductById(productId) {
-            return products.find(product => product.id === productId);
-        }
+        // Ensure this function exists in your products.js and is accessible globally
+        // It should look something like:
+        // function getProductById(productId) {
+        //     return products.find(product => product.id === productId);
+        // }
     </script>
 </body>
 
