@@ -15,14 +15,17 @@
         .cart-item {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Reduced margin */
             border-bottom: 1px solid #ddd;
             padding-bottom: 10px;
+            width: 70%; /* Reduced width of the item card */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cart-item img {
-            max-width: 80px;
-            margin-right: 20px;
+            max-width: 60px; /* Reduced image size */
+            margin-right: 15px; /* Reduced margin */
         }
 
         .cart-item-details {
@@ -34,17 +37,26 @@
             align-items: center;
         }
 
-        .cart-item-quantity label {
-            margin-right: 10px;
+        .cart-item-quantity button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            cursor: pointer;
         }
 
-        .cart-item-quantity select {
-            width: 70px;
-            padding: 5px;
+        .cart-item-quantity span {
+            width: 30px;
+            text-align: center;
         }
 
         .cart-item-actions button {
             margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
         .cart-total {
@@ -52,11 +64,20 @@
             font-size: 1.2em;
             font-weight: bold;
             margin-top: 20px;
+            width: 70%; /* Match item card width */
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .checkout-btn {
-            margin-top: 20px;
-            text-align: center;
+        .text-center {
+            width: 70%; /* Match item card width */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+
+        .text-center button, .text-center a {
+            margin: 0 5px;
         }
     </style>
 </head>
@@ -166,30 +187,21 @@
                 const itemTotal = item.pricePerUnit * item.count;
                 total += itemTotal;
 
-                const quantityOptions = Array.from({ length: 10 }, (_, i) => i + 1)
-                    .map(qty => `<option value="${qty}" ${item.count === qty ? 'selected' : ''}>${qty}</option>`)
-                    .join('');
-
                 const cartItemHtml = `
-                    <div class="card mb-3">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-2">
-                                <img src="${item.image}" class="img-fluid rounded-start" alt="${item.name}">
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4>${item.name} (${item.quantityKey})</h4>
+                            <p>Price per unit: ₹${item.pricePerUnit}</p>
+                            <div class="cart-item-quantity">
+                                <button onclick="changeQuantity('${item.cartItemId}', -1)">-</button>
+                                <span>${item.count}</span>
+                                <button onclick="changeQuantity('${item.cartItemId}', 1)">+</button>
                             </div>
-                            <div class="col-md-10">
-                                <div class="card-body">
-                                    <h5 class="card-title">${item.name} (${item.quantityKey})</h5>
-                                    <p class="card-text">Price per unit: ₹${item.pricePerUnit}</p>
-                                    <div class="d-flex align-items-center">
-                                        <label for="quantity-${item.cartItemId}" class="form-label me-2 mb-0">Quantity:</label>
-                                        <select id="quantity-${item.cartItemId}" class="form-select w-auto cart-item-quantity" data-cart-item-id="${item.cartItemId}">
-                                            ${quantityOptions}
-                                        </select>
-                                        <button class="btn btn-danger btn-sm ms-2 remove-item-btn" data-cart-item-id="${item.cartItemId}">Remove</button>
-                                    </div>
-                                    <p class="card-text mt-2">Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
-                                </div>
-                            </div>
+                            <p>Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="remove-item-btn" data-cart-item-id="${item.cartItemId}">Remove</button>
                         </div>
                     </div>
                 `;
@@ -199,14 +211,18 @@
             cartTotalElement.textContent = total;
 
             // Add event listeners for quantity changes
-            document.querySelectorAll('.cart-item-quantity').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const cartItemId = event.target.dataset.cartItemId;
-                    const newCount = parseInt(event.target.value);
-                    updateCartItem(cartItemId, newCount);
-                    renderCart(); // Re-render to update totals and item displays
-                });
-            });
+            function changeQuantity(cartItemId, change) {
+                const cart = getCart();
+                const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
+                if (itemIndex !== -1) {
+                    cart[itemIndex].count = Math.max(1, cart[itemIndex].count + change); // Ensure quantity is at least 1
+                    updateCart(cart); // Update cart in localStorage
+                    renderCart(); // Re-render the cart display
+                }
+            }
+
+            // Attach the changeQuantity function to the global scope so it can be called from onclick
+            window.changeQuantity = changeQuantity;
 
             // Add event listeners for remove buttons
             document.querySelectorAll('.remove-item-btn').forEach(button => {
