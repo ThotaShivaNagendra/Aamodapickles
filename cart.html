@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Styles remain the same */
         .cart-item {
             display: flex;
             align-items: center;
@@ -101,74 +102,25 @@
 
     <script src="cart.js"></script>
     <script>
-        function renderCart() {
-            const cartItemsContainer = document.getElementById('cart-items-container');
-            const cartTotalContainer = document.getElementById('cart-total-container');
-            cartItemsContainer.innerHTML = ''; // Clear previous cart display
+        function getCartItemCount() {
+            const storedCart = localStorage.getItem('cart');
+            if (storedCart) {
+                const cart = JSON.parse(storedCart);
+                return cart.reduce((sum, item) => sum + item.count, 0);
+            }
+            return 0;
+        }
 
-            const cart = getCart(); // Get the cart from cart.js
-            let totalPrice = 0;
-
-            if (cart.length === 0) {
+        document.addEventListener('DOMContentLoaded', () => {
+            const itemCount = getCartItemCount();
+            if (itemCount > 0) {
+                window.location.href = 'checkout.html';
+            } else {
+                // Optionally display an empty cart message here if the cart is empty
+                const cartItemsContainer = document.getElementById('cart-items-container');
+                const cartTotalContainer = document.getElementById('cart-total-container');
                 cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
                 cartTotalContainer.textContent = 'Total: ₹0';
-                // Optionally, you could redirect to the homepage or display a message
-                // window.location.href = 'index.html';
-                return;
-            }
-
-            cart.forEach(item => {
-                const product = getProductById(item.id); // Get full product details
-                if (!product) {
-                    console.error('Product not found in products.js:', item.id);
-                    return; // Skip this item if product not found
-                }
-
-                const itemTotal = item.pricePerUnit * item.count;
-                totalPrice += itemTotal;
-
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.classList.add('cart-item');
-                cartItemDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <div class="cart-item-details">
-                        <h4>${product.name} (${item.quantityKey})</h4>
-                        <p>₹${item.pricePerUnit} x ${item.count} = ₹${itemTotal}</p>
-                    </div>
-                    <div class="cart-item-quantity">
-                        <button onclick="changeQuantity('${item.cartItemId}', -1)" class="btn btn-sm btn-secondary">-</button>
-                        <span>${item.count}</span>
-                        <button onclick="changeQuantity('${item.cartItemId}', 1)" class="btn btn-sm btn-secondary">+</button>
-                        <button onclick="removeItem('${item.cartItemId}')" class="btn btn-sm btn-danger">Remove</button>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(cartItemDiv);
-            });
-
-            cartTotalContainer.textContent = `Total: ₹${totalPrice.toFixed(2)}`;
-        }
-
-        function changeQuantity(cartItemId, change) {
-            const newCount = parseInt(cart.find(item => item.cartItemId === cartItemId).count) + change;
-            updateCartItem(cartItemId, newCount); // Update cart in cart.js
-            renderCart(); // Re-render the cart display
-        }
-
-        function removeItem(cartItemId) {
-            removeCartItem(cartItemId); // Remove item from cart.js
-            renderCart(); // Re-render the cart display
-        }
-
-
-        // Load and render cart on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadCart(); // Load cart data
-            renderCart(); // Display cart items
-
-            // Redirect to checkout if the cart has items
-            const cart = getCart();
-            if (cart.length > 0) {
-                window.location.href = 'checkout.html';
             }
         });
     </script>
