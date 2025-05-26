@@ -1,127 +1,241 @@
 /* Global Styles */
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #fdfdfd;
-  margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fdfdfd;
+    margin: 0;
 }
 
 header {
-  background-color: #400607;
-  color: white;
-  font-size:20px;
-  margin:0px;
-  
+    background-color: #400607;
+    color: white;
+    font-size: 20px;
+    margin: 0px;
 }
-.bg{
-  background-color: #400607;
-  color:white;
-}
-.menu{
-  font-size:25px;
-  font-weight:bold;
 
+.bg {
+    background-color: #400607;
+    color: white;
 }
-.demo{
-  margin-bottom:6px;
+
+.menu {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.demo {
+    margin-bottom: 6px;
 }
 
 header h1 {
-  font-size: 2.5rem;
-  color:white;
+    font-size: 2.5rem;
+    color: white;
 }
 
 .custom-navbar {
-  background-color: #400607;
-  
+    background-color: #400607;
 }
+
 .navbar .nav-link {
-  font-weight: bold;
-  font-size: 25px;
-  color: white;
-  margin:0 10px;
-  
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+    margin: 0 10px;
 }
 
 .navbar .nav-link:hover {
-  color: #c62828;
-  
+    color: #c62828;
 }
+
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .hero {
-  height: 60vh;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 60vh;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero h2 {
-  font-size: 2.5rem;
-  color:white;
+    font-size: 2.5rem;
+    color: white;
 }
 
 .intro {
-  background-color: #ffeb3b;
+    background-color: #ffeb3b;
 }
 
 .intro h2 {
-  font-size: 2rem;
-  color:white;
+    font-size: 2rem;
+    color: white;
 }
 
 .products .card {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color:black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
 }
 
 .products .card img {
-  border-radius: 8px;
+    border-radius: 8px;
 }
 
 .footer {
-  background-color: #fce4b9;
-  color: #3b2f2f;
+    background-color: #fce4b9;
+    color: #3b2f2f;
 }
 
 .btn-success {
-  background-color: #4caf50;
-  color: white;
+    background-color: #4caf50;
+    color: white;
 }
 
 .btn-success:hover {
-  background-color: #388e3c;
+    background-color: #388e3c;
 }
+
 .logo {
-  width:100%; 
-  height: 55vh; 
-  border-radius:30px;
-    
+    width: 100%;
+    height: 55vh;
+    border-radius: 30px;
 }
-.logo-image{
-  width: 125px;         
-  height: auto;         
-  object-fit: contain;  
-  margin-right: 20px;
+
+.logo-image {
+    width: 125px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 20px;
 }
 
 @media (max-width: 768px) {
-  .hero h2 {
-    font-size: 2rem;
-  }
+    .hero h2 {
+        font-size: 2rem;
+    }
 }
+
 @media (max-width: 768px) {
-  .navbar-brand .logo-image {
-    width: 125px; 
-  }
+    .navbar-brand .logo-image {
+        width: 125px;
+    }
 }
+
 @media (max-width: 768px) {
-  .logo {
-    width: 420px; 
-    height: auto;
-  }
+    .logo {
+        width: 420px;
+        height: auto;
+    }
+}
+
+/* Cart Page Specific Styles (Add these to your styles.css or within the <style> tag in cart.html) */
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px;
+}
+
+.cart-item img {
+    max-width: 60px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.quantity-input-wrapper button {
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 1; /* Adjust line height for better arrow alignment */
+}
+
+.quantity-input-wrapper input[type="number"] {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+/* Style for always visible arrows */
+.quantity-input-wrapper {
+    position: relative; /* Needed for absolute positioning of arrows */
+}
+
+.quantity-input-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7em;
+    color: #555;
+    pointer-events: none; /* Allows clicking on the input */
+}
+
+.quantity-input-wrapper::after {
+    content: '▲\a▼'; /* Unicode for up and down arrows with line break */
+    white-space: pre-line; /* Preserve line breaks */
+}
+
+.cart-item-actions {
+    margin-left: auto;
+}
+
+.cart-item-actions button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.text-center button,
+.text-center a {
+    margin: 0 5px;
 }
