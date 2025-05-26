@@ -1,95 +1,127 @@
 // cart.js
+// This file handles all shopping cart logic, including adding, updating, removing items,
+// and persisting the cart data in localStorage.
 
-// Function to get the cart items from local storage
-function getCart() {
-    const cartData = localStorage.getItem('aamodaCart');
-    return cartData ? JSON.parse(cartData) : [];
+let cart = []; // Initialize an empty cart array
+
+// Function to load the cart from localStorage when the page loads
+function loadCart() {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+        cart = JSON.parse(storedCart);
+    }
+    updateCartIcon(); // Update the cart count displayed in the navbar
 }
 
-// Function to save the cart items to local storage
-function updateCart(cart) {
-    localStorage.setItem('aamodaCart', JSON.stringify(cart));
-    updateCartIcon(); // Update the cart icon count whenever the cart changes
+// Function to save the current cart state to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Function to add an item to the cart
-function addToCart(productId, quantityKey, selectedProduct) {
-    const cart = getCart();
-    const existingItem = cart.find(item => item.productId === productId && item.quantityKey === quantityKey);
+// productId: The unique ID of the product
+// quantityKey: The selected quantity (e.g., '250gm', '500gm', '1kg', 'piece')
+// count: The number of units of this specific quantity (e.g., 2 for two 250gm packs)
+function addToCart(productId, quantityKey, count) {
+    // Find the product in the global 'products' array (from products.js)
+    const product = getProductById(productId); // Use getProductById
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
 
-    if (existingItem) {
-        existingItem.count++;
+    // Check if the selected quantity key exists for this product
+    if (!product.prices[quantityKey]) {
+        console.error(`Quantity key "${quantityKey}" not found for product "${productId}"`);
+        return;
+    }
+
+    // Create a unique identifier for the cart item based on product ID and quantity key
+    const cartItemId = `${productId}-${quantityKey}`;
+
+    // Find if the item already exists in the cart
+    const existingItemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
+
+    if (existingItemIndex > -1) {
+        // If item exists, update its count
+        cart[existingItemIndex].count += count;
     } else {
+        // If item does not exist, add it to the cart
         cart.push({
-            cartItemId: generateCartItemId(productId, quantityKey), // Unique ID for each cart item
-            productId: productId,
-            name: selectedProduct.name,
-            pricePerUnit: selectedProduct.prices[quantityKey],
-            quantityKey: quantityKey,
-            image: selectedProduct.image,
-            count: 1
+            cartItemId: cartItemId, // Unique ID for this specific cart entry
+            id: productId,
+            name: product.name,
+            image: product.image,
+            quantityKey: quantityKey, // e.g., '250gm'
+            pricePerUnit: product.prices[quantityKey], // Price for one unit of this quantity
+            count: count // Number of units of this quantity
         });
     }
-    updateCart(cart);
-}
-
-// Function to generate a unique cart item ID
-function generateCartItemId(productId, quantityKey) {
-    return `${productId}-${quantityKey.replace(/\s+/g, '-')}`; // Replace spaces for safety
-}
-
-// Function to remove an item from the cart
-function removeCartItem(cartItemId) {
-    const cart = getCart();
-    const updatedCart = cart.filter(item => item.cartItemId !== cartItemId);
-    updateCart(updatedCart);
+    saveCart(); // Save the updated cart to localStorage
+    updateCartIcon(); // Update the cart count in the UI
+    alert('Item added to cart!'); // Inform the user
 }
 
 // Function to update the quantity of an item in the cart
+// cartItemId: The unique identifier of the cart item (product ID + quantity key)
+// newCount: The new count for this item
 function updateCartItem(cartItemId, newCount) {
-    const cart = getCart();
     const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
-    if (itemIndex !== -1) {
-        cart[itemIndex].count = parseInt(newCount);
-        if (cart[itemIndex].count < 1) {
-            removeCartItem(cartItemId); // Remove if quantity becomes less than 1
+    if (itemIndex > -1) {
+        if (newCount <= 0) {
+            // If new count is 0 or less, remove the item
+            removeCartItem(cartItemId);
         } else {
-            updateCart(cart);
+            // Otherwise, update the count
+            cart[itemIndex].count = newCount;
+            saveCart(); // Save changes
+            // renderCart(); // Re-render the cart page if applicable - this function is specific to cart.html
+            updateCartIcon(); // Update cart icon
         }
     }
+}
+
+// Function to remove an item from the cart
+// cartItemId: The unique identifier of the cart item
+function removeCartItem(cartItemId) {
+    cart = cart.filter(item => item.cartItemId !== cartItemId);
+    saveCart(); // Save changes
+    // renderCart(); // Re-render the cart page if applicable - this function is specific to cart.html
+    updateCartIcon(); // Update cart icon
+}
+
+// Function to get the current cart contents
+function getCart() {
+    return cart;
+}
+
+// Function to calculate the total price of all items in the cart
+function calculateCartTotal() {
+    return cart.reduce((total, item) => total + (item.pricePerUnit * item.count), 0);
 }
 
 // Function to clear the entire cart
 function clearCart() {
-    localStorage.removeItem('aamodaCart');
-    updateCartIcon();
+    cart = [];
+    localStorage.removeItem('cart'); // Clear from localStorage
+    updateCartIcon(); // Reset cart icon
 }
 
-// Function to get the number of items in the cart for the icon
-function getCartItemCount() {
-    const cart = getCart();
-    return cart.reduce((total, item) => total + item.count, 0);
-}
-
-// Function to update the cart icon in the navigation
-function updateCartIcon(elementToUpdate = document.getElementById('cart-icon-count')) {
-    if (elementToUpdate) {
-        elementToUpdate.textContent = getCartItemCount();
+// Function to update the number displayed on the cart icon in the navbar
+function updateCartIcon() {
+    const cartIconCount = document.getElementById('cart-icon-count');
+    if (cartIconCount) {
+        const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
+        cartIconCount.textContent = totalItems;
+        cartIconCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
     }
 }
 
-// Function to calculate total weight of items in the cart based on the provided products data
-function calculateTotalWeight(products) {
-    const cart = getCart();
-    let totalWeightInGrams = 0;
-    cart.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (product && product.weights && product.weights[item.quantityKey]) {
-            totalWeightInGrams += product.weights[item.quantityKey] * item.count;
-        }
-    });
-    return totalWeightInGrams / 1000; // Convert to kilograms for easier handling
+// Function to get product details by ID from the products array
+function getProductById(productId) {
+    return products.find(product => product.id === productId);
 }
 
-// Call updateCartIcon on page load to set initial count
-updateCartIcon();
+
+// Load the cart when the script is first loaded (on page load)
+document.addEventListener('DOMContentLoaded', loadCart);
