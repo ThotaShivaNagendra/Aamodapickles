@@ -1,7 +1,8 @@
 // products.js
 // This file centralizes all product data for Aamoda Pickles.
 // Each product object includes an ID, name, image path, category, and a 'prices' object
-// that maps different quantities (250gm, 500gm, 1kg) to their respective prices.
+// that maps different quantities (250gm, 500gm, 1kg) to their respective prices,
+// and a 'weights' object that maps the same quantities to their weight in grams.
 
 const products = [
     {
@@ -13,6 +14,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -21,6 +27,11 @@ const products = [
         image: 'chicken.jpeg',
         category: 'nonveg',
         prices: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        weights: {
             '250gm': 250,
             '500gm': 500,
             '1kg': 1000
@@ -35,6 +46,11 @@ const products = [
             '250gm': 400,
             '500gm': 800,
             '1kg': 1600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -46,6 +62,11 @@ const products = [
             '250gm': 350,
             '500gm': 700,
             '1kg': 1400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -57,6 +78,11 @@ const products = [
             '250gm': 125,
             '500gm': 250,
             '1kg': 500
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -68,6 +94,11 @@ const products = [
             '250gm': 300,
             '500gm': 600,
             '1kg': 1200
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -79,6 +110,11 @@ const products = [
             '250gm': 150,
             '500gm': 300,
             '1kg': 600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -90,6 +126,11 @@ const products = [
             '250gm': 400,
             '500gm': 800,
             '1kg': 1600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -101,6 +142,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -112,6 +158,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -123,6 +174,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -134,6 +190,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -145,6 +206,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -156,6 +222,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -167,6 +238,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -178,6 +254,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -189,6 +270,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -200,6 +286,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -211,6 +302,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -222,6 +318,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -233,6 +334,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -244,6 +350,11 @@ const products = [
             '250gm': 100,
             '500gm': 200,
             '1kg': 400
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -255,6 +366,11 @@ const products = [
             '250gm': 300,
             '500gm': 600,
             '1kg': 1200
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -266,6 +382,11 @@ const products = [
             '250gm': 400,
             '500gm': 800,
             '1kg': 1600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -277,6 +398,11 @@ const products = [
             '250gm': 450,
             '500gm': 900,
             '1kg': 1800
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -288,6 +414,11 @@ const products = [
             '250gm': 150,
             '500gm': 300,
             '1kg': 600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -299,6 +430,11 @@ const products = [
             '250gm': 150,
             '500gm': 300,
             '1kg': 600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -308,6 +444,9 @@ const products = [
         category: 'special',
         prices: {
             'piece': 35 // Special pricing for Putharekulu
+        },
+        weights: {
+            'piece': 50 // Weight per piece in grams
         }
     },
     {
@@ -319,6 +458,11 @@ const products = [
             '250gm': 175,
             '500gm': 350,
             '1kg': 700
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
     {
@@ -330,36 +474,11 @@ const products = [
             '250gm': 150,
             '500gm': 300,
             '1kg': 600
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         }
     },
-    {
-        id: 'pesari-vadiyalu',
-        name: 'Pesari Vadiyalu',
-        image: 'pesarivadiyalu.png',
-        category: 'special',
-        prices: {
-            '250gm': 175,
-            '500gm': 350,
-            '1kg': 700
-        }
-    },
-    {
-        id: 'cow-ghee',
-        name: 'Cow Ghee',
-        image: 'ghee.jpg',
-        category: 'special',
-        prices: {
-            '250gm': 300,
-            '500gm': 600,
-            '1kg': 1200
-        }
-    }
-];
-
-// Function to get products by category
-function getProductsByCategory(category) {
-    if (category === 'all') {
-        return products;
-    }
-    return products.filter(product => product.category === category);
-}
+]
