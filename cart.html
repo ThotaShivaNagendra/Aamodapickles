@@ -36,6 +36,7 @@
         .cart-item-quantity {
             display: flex;
             align-items: center;
+            margin-bottom: 10px; /* Add some space below quantity on mobile */
         }
 
         .quantity-input-wrapper {
@@ -86,7 +87,7 @@
             margin: 0 5px;
         }
 
-        /* Styles for larger screens (laptop) - Integrated arrows */
+        /* Styles for larger screens (laptop) */
         @media (min-width: 601px) {
             .quantity-input-wrapper {
                 position: relative;
@@ -105,10 +106,33 @@
                 pointer-events: none;
                 white-space: pre-line;
             }
+
+            .cart-item {
+                flex-direction: row; /* Keep items in a row on larger screens */
+                align-items: center;
+            }
+
+            .cart-item-actions {
+                margin-left: auto; /* Push remove button to the right on larger screens */
+            }
         }
 
-        /* Styles for smaller screens (mobile) - Separate +/- buttons */
+        /* Styles for smaller screens (mobile) */
         @media (max-width: 600px) {
+            .cart-item {
+                flex-direction: column; /* Stack items vertically on mobile */
+                align-items: flex-start; /* Align items to the left */
+            }
+
+            .cart-item img {
+                margin-bottom: 10px;
+                margin-right: 0; /* Reset right margin on mobile */
+            }
+
+            .cart-item-details {
+                width: 100%; /* Take full width on mobile */
+            }
+
             .quantity-input-wrapper {
                 border: none;
             }
@@ -140,6 +164,13 @@
                 border-radius: 5px;
                 -webkit-appearance: none;
                 -moz-appearance: textfield;
+            }
+
+            .cart-item-actions {
+                margin-top: 10px; /* Add some space above the remove button on mobile */
+                margin-left: 0; /* Reset left margin */
+                width: 100%; /* Make the actions take full width */
+                text-align: right; /* Align the remove button to the right */
             }
         }
     </style>
