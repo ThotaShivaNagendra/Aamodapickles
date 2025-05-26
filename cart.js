@@ -24,7 +24,7 @@ function saveCart() {
 // count: The number of units of this specific quantity (e.g., 2 for two 250gm packs)
 function addToCart(productId, quantityKey, count) {
     // Find the product in the global 'products' array (from products.js)
-    const product = products.find(p => p.id === productId);
+    const product = getProductById(productId); // Use getProductById
     if (!product) {
         console.error('Product not found:', productId);
         return;
@@ -116,6 +116,12 @@ function updateCartIcon() {
         cartIconCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
     }
 }
+
+// Function to get product details by ID from the products array
+function getProductById(productId) {
+    return products.find(product => product.id === productId);
+}
+
 
 // Load the cart when the script is first loaded (on page load)
 document.addEventListener('DOMContentLoaded', loadCart);
