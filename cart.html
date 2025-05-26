@@ -75,12 +75,29 @@
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="cart.html">Cart <span id="cart-icon-count">0</span></a>
+                        <a class="nav-link active" href="checkout.html">Cart <span id="cart-icon-count">0</span></a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div class="container mt-5">
+        <h1>Shopping Cart</h1>
+        <div id="cart-items-container">
+            </div>
+        <div id="cart-total-container" class="cart-total">
+            </div>
+        <div class="checkout-btn">
+            <a href="checkout.html" class="btn btn-primary">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-dark text-white">
+        <div class="container text-center">
+            <p>&copy; 2024 Aamoda Pickles. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="cart.js"></script>
     <script>
@@ -95,6 +112,8 @@
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
                 cartTotalContainer.textContent = 'Total: ₹0';
+                // Optionally, you could redirect to the homepage or display a message
+                // window.location.href = 'index.html';
                 return;
             }
 
@@ -145,6 +164,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadCart(); // Load cart data
             renderCart(); // Display cart items
+
+            // Redirect to checkout if the cart has items
+            const cart = getCart();
+            if (cart.length > 0) {
+                window.location.href = 'checkout.html';
+            }
         });
     </script>
 </body>
