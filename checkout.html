@@ -184,11 +184,11 @@
             // ----  Order Summary Population and Initial Calculations ----
             cart.forEach(item => {
                 // console.log("Cart Item:", item); // Debugging: Log the cart item
-                const product = getProductById(item.productId);
+                const product = getProductById(item.id);
                 // console.log("Found Product:", product); // Debugging: Log the found product
 
                 if (!product) {
-                    console.error('Product not found in products.js for ID:', item.productId);
+                    console.error('Product not found in products.js for ID:', item.id);
                     return; // Skip this item if product details are missing
                 }
 
