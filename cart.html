@@ -21,7 +21,7 @@
             width: 70%;
             margin-left: auto;
             margin-right: auto;
-            gap: 15px; /* Reduced gap for closer elements */
+            gap: 15px;
         }
 
         .cart-item img {
@@ -47,35 +47,12 @@
         }
 
         .quantity-input-wrapper input[type="number"] {
-            width: 50px; /* Slightly wider for arrows */
+            width: 50px;
             padding: 5px;
             text-align: center;
             border: none;
-            -webkit-appearance: none; /* Remove default arrows */
-            -moz-appearance: textfield; /* Remove default arrows */
-        }
-
-        /* Style for always visible integrated arrows */
-        .quantity-input-wrapper {
-            position: relative;
-        }
-
-        .quantity-input-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 5px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            font-size: 0.7em;
-            color: #555;
-            pointer-events: none; /* Allows clicking on the input */
-        }
-
-        .quantity-input-wrapper::after {
-            content: '▲\a▼'; /* Unicode for up and down arrows with line break */
-            white-space: pre-line; /* Preserve line breaks */
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
         }
 
         .cart-item-actions button {
@@ -84,7 +61,7 @@
             color: white;
             border: none;
             cursor: pointer;
-            margin-left: 10px; /* Add some space between quantity and remove */
+            margin-left: 10px;
         }
 
         .cart-total {
@@ -107,6 +84,63 @@
         .text-center button,
         .text-center a {
             margin: 0 5px;
+        }
+
+        /* Styles for larger screens (laptop) - Integrated arrows */
+        @media (min-width: 601px) {
+            .quantity-input-wrapper {
+                position: relative;
+            }
+
+            .quantity-input-wrapper::after {
+                content: '▲\a▼';
+                position: absolute;
+                top: 50%;
+                right: 5px;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                font-size: 0.7em;
+                color: #555;
+                pointer-events: none;
+                white-space: pre-line;
+            }
+        }
+
+        /* Styles for smaller screens (mobile) - Separate +/- buttons */
+        @media (max-width: 600px) {
+            .quantity-input-wrapper {
+                border: none;
+            }
+
+            .quantity-input-wrapper::after {
+                display: none; /* Hide CSS arrows on mobile */
+            }
+
+            .quantity-controls-mobile {
+                display: flex;
+                align-items: center;
+            }
+
+            .quantity-controls-mobile button {
+                background: none;
+                border: 1px solid #ccc;
+                padding: 8px 12px;
+                margin: 0 5px;
+                cursor: pointer;
+                font-size: 1em;
+                border-radius: 5px;
+            }
+
+            .quantity-controls-mobile input[type="number"] {
+                width: 50px;
+                padding: 8px 5px;
+                text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
+            }
         }
     </style>
 </head>
@@ -203,18 +237,35 @@
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
                 cartTotalElement.textContent = '0';
-                document.getElementById('checkout-btn').classList.add('disabled'); // Disable checkout button
-                document.getElementById('clear-cart-btn').classList.add('disabled'); // Disable clear cart button
+                document.getElementById('checkout-btn').classList.add('disabled');
+                document.getElementById('clear-cart-btn').classList.add('disabled');
                 return;
             }
 
-            document.getElementById('checkout-btn').classList.remove('disabled'); // Enable checkout button
-            document.getElementById('clear-cart-btn').classList.remove('disabled'); // Enable clear cart button
+            document.getElementById('checkout-btn').classList.remove('disabled');
+            document.getElementById('clear-cart-btn').classList.remove('disabled');
 
             let total = 0;
             cart.forEach(item => {
                 const itemTotal = item.pricePerUnit * item.count;
                 total += itemTotal;
+
+                let quantityControls;
+                if (window.innerWidth <= 600) {
+                    quantityControls = `
+                        <div class="quantity-controls-mobile">
+                            <button onclick="changeQuantity('${item.cartItemId}', -1)">-</button>
+                            <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
+                            <button onclick="changeQuantity('${item.cartItemId}', 1)">+</button>
+                        </div>
+                    `;
+                } else {
+                    quantityControls = `
+                        <div class="quantity-input-wrapper">
+                            <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
+                        </div>
+                    `;
+                }
 
                 const cartItemHtml = `
                     <div class="cart-item">
@@ -224,9 +275,7 @@
                             <p>Price per unit: ₹${item.pricePerUnit}</p>
                             <div class="cart-item-quantity">
                                 <label for="quantity-${item.cartItemId}" class="form-label me-2 mb-0">Quantity:</label>
-                                <div class="quantity-input-wrapper">
-                                    <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
-                                </div>
+                                ${quantityControls}
                                 <p class="mt-2">Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
                             </div>
                         </div>
@@ -240,40 +289,41 @@
 
             cartTotalElement.textContent = total;
 
-            // Function to update quantity (now triggered by input change)
-            function updateQuantity(cartItemId, newQuantity) {
-                const parsedQuantity = Math.max(1, parseInt(newQuantity));
-                if (!isNaN(parsedQuantity)) {
-                    const cart = getCart();
-                    const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
-                    if (itemIndex !== -1) {
-                        cart[itemIndex].count = parsedQuantity;
-                        updateCart(cart); // Update cart in localStorage
-                        const itemTotalElement = document.getElementById(`item-total-${cartItemId}`);
-                        if (itemTotalElement) {
-                            itemTotalElement.textContent = (parsedQuantity * cart[itemIndex].pricePerUnit).toFixed(2);
-                        }
-                        renderCart(); // Re-render the cart display to update the main total
-                    }
+            // Function to update quantity using +/- buttons
+            function changeQuantity(cartItemId, change) {
+                const currentCart = getCart();
+                const itemIndex = currentCart.findIndex(item => item.cartItemId === cartItemId);
+                if (itemIndex !== -1) {
+                    const newCount = Math.max(1, currentCart[itemIndex].count + change);
+                    updateCartItem(cartItemId, newCount);
+                    renderCart();
                 }
             }
 
-            // Attach the function to the global scope
+            // Function to update quantity when input field changes
+            function updateQuantity(cartItemId, newQuantity) {
+                const parsedQuantity = Math.max(1, parseInt(newQuantity));
+                if (!isNaN(parsedQuantity)) {
+                    updateCartItem(cartItemId, parsedQuantity);
+                    renderCart();
+                }
+            }
+
+            window.changeQuantity = changeQuantity;
             window.updateQuantity = updateQuantity;
 
-            // Add event listeners for remove buttons
             document.querySelectorAll('.remove-item-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const cartItemId = event.target.dataset.cartItemId;
                     removeCartItem(cartItemId);
-                    renderCart(); // Re-render to update totals and item displays
+                    renderCart();
                 });
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderCart(); // Initial render of the cart
-            updateCartIcon(); // Update cart icon on page load
+            renderCart();
+            updateCartIcon();
         });
     </script>
 </body>
