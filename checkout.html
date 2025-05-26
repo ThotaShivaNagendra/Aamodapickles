@@ -1,3 +1,4 @@
+</html>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -231,12 +232,12 @@
                         console.warn('Weight information missing for product:', product.name, 'quantity:', item.quantityKey);
                     }
 
-                    const orderItemHtml = `
+                    const orderItemHtml = 
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
                             <span>₹${itemTotal.toFixed(2)}</span>
                         </div>
-                    `;
+                    ;
                     orderSummaryItemsContainer.innerHTML += orderItemHtml;
                 } else {
                     console.error('Price information missing or invalid quantity key for product:', product.name, 'quantity:', item.quantityKey);
@@ -339,13 +340,87 @@
             // Recalculate shipping when the state changes
             stateField.addEventListener('change', calculateShipping);
 
-            // ---- Razorpay Integration ----
+                       // ----  Razorpay Integration ----
             checkoutForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                // ... (rest of your Razorpay form submission logic)
+                e.preventDefault(); // Prevent default form submission
+
+                // Get form data
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const zipCode = document.getElementById('zip').value;
+                const country = document.getElementById('country').value;
+
+                // Recalculate shipping just before payment to ensure latest values
+                const currentShippingCost = calculateShipping(); // This also updates the displayed total
+                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
+
+                // Razorpay Options
+                const options = {
+                    key: "rzp_test_dzr0ExL25Pj8II",  // Your Razorpay Test Key ID
+                    amount: totalAmountPayable * 100,  // Amount in paise
+                    currency: "INR",
+                    name: "Aamoda Pickles",
+                    description: "Order from Aamoda Pickles",
+                    image: "logo.png", // Path to your logo image
+                    handler: function (response) {
+                        // This function is called on successful payment
+                        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                        console.log("Payment Response:", response);
+
+                        // In a production environment, you would send response.razorpay_payment_id,
+                        // response.razorpay_order_id, and response.razorpay_signature to your backend
+                        // for server-side verification to ensure payment authenticity.
+
+                        clearCart();  // Clear the cart after successful payment
+                        window.location.href = 'index.html';  // Redirect to home or a success page
+                    },
+                    prefill: {
+                        name: fullName,
+                        email: email,
+                        contact: phone
+                    },
+                    notes: {
+                        address: address,
+                        city: city,
+                        state: state,
+                        zip: zipCode,
+                        country: country,
+                        shippingCost: currentShippingCost,
+                        totalWeight: totalWeight / 1000 // Store in KG for notes
+                    },
+                    theme: {
+                        color: "#400607" // Your brand color
+                    }
+                };
+
+                // Handle payment failure (optional, but good for debugging)
+                options.handler.onClose = function () {
+                    console.log("Payment widget closed by user.");
+                    // You might want to show a message or log this event
+                };
+
+                options.handler.onDismiss = function () {
+                    console.log("Payment widget dismissed by user.");
+                    // You might want to show a message or log this event
+                };
+
+                options.handler.onFailure = function (response) {
+                    // This function is called on payment failure
+                    alert("Payment Failed: " + response.error.description);
+                    console.error("Payment Failure Response:", response);
+                    // You might want to log this error to your server or display a more user-friendly message
+                };
+
+
+                const rzp1 = new Razorpay(options);
+                rzp1.open();
             });
         });
     </script>
 </body>
 
-</html>
+</html> 
