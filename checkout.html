@@ -127,6 +127,9 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h4>Shipping: ₹<span id="shipping-cost">0</span></h4>
                         </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <p>free Shipping on orders above 3000</p>
+                        </div>
                         <div class="text-end mb-4">
                             <h3>Total Amount: ₹<span id="order-total">0</span></h3>
                         </div>
@@ -201,33 +204,68 @@
 
             // Define shipping zones and rates (adjust these based on your actual costs)
             const shippingRates = {
-                "Andhra Pradesh": {
-                    weightSlabs: [{ maxWeightKg: 0.5, rate: 40 }, { maxWeightKg: 1, rate: 60 }, { maxWeightKg: 2, rate: 90 }, { ratePerKgAbove2: 40 }],
-                    freeShippingThreshold: 1500
-                },
-                "Arunachal Pradesh": {
-                    weightSlabs: [{ maxWeightKg: 0.5, rate: 90 }, { maxWeightKg: 1, rate: 140 }, { maxWeightKg: 2, rate: 200 }, { ratePerKgAbove2: 80 }],
-                    freeShippingThreshold: 3000
-                },
-                // ... (Shipping rates for other states will be in Part 2) ...
-                "Uttar Pradesh": {
-                    weightSlabs: [{ maxWeightKg: 0.5, rate: 55 }, { maxWeightKg: 1, rate: 80 }, { maxWeightKg: 2, rate: 120 }, { ratePerKgAbove2: 50 }],
-                    freeShippingThreshold: 1900
-                },
-                "Uttarakhand": {
-                    weightSlabs: [{ maxWeightKg: 0.5, rate: 70 }, { maxWeightKg: 1, rate: 100 }, { maxWeightKg: 2, rate: 150 }, { ratePerKgAbove2: 60 }],
-                    freeShippingThreshold: 2200
-                },
-                "West Bengal": {
-                  weightSlabs: [{ maxWeightKg: 0.5, rate: 65 }, { maxWeightKg: 1, rate: 95 }, { maxWeightKg: 2, rate: 140 }, { ratePerKgAbove2: 55 }],
-                  freeShippingThreshold: 2100
-                },
-                "default": {
-                    weightSlabs: [{ maxWeightKg: 0.5, rate: 80 }, { maxWeightKg: 1, rate: 120 }, { maxWeightKg: 2, rate: 180 }, { ratePerKgAbove2: 70 }],
-                    freeShippingThreshold: 2500
-                }
-            };
-
+                                              
+                    "Andhra Pradesh": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 90 },
+                        { "maxWeightKg": 1, "rate": 135 },
+                        { "maxWeightKg": 1.5, "rate": 180 },
+                        { "maxWeightKg": 2, "rate": 210 },
+                        { "ratePerKgAbove2": 30 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    },
+                    "Telangana": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 90 },
+                        { "maxWeightKg": 1, "rate": 135 },
+                        { "maxWeightKg": 1.5, "rate": 180 },
+                        { "maxWeightKg": 2, "rate": 210 },
+                        { "ratePerKgAbove2": 30 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    },
+                    "Karnataka": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 120 },
+                        { "maxWeightKg": 1, "rate": 175 },
+                        { "maxWeightKg": 1.5, "rate": 230 },
+                        { "maxWeightKg": 2, "rate": 280 },
+                        { "ratePerKgAbove2": 50 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    },
+                    "Tamil Nadu": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 120 },
+                        { "maxWeightKg": 1, "rate": 175 },
+                        { "maxWeightKg": 1.5, "rate": 230 },
+                        { "maxWeightKg": 2, "rate": 280 },
+                        { "ratePerKgAbove2": 50 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    },
+                    "Kerala": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 120 },
+                        { "maxWeightKg": 1, "rate": 175 },
+                        { "maxWeightKg": 1.5, "rate": 230 },
+                        { "maxWeightKg": 2, "rate": 280 },
+                        { "ratePerKgAbove2": 50 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    },
+                    "default": {
+                      "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 150 },
+                        { "maxWeightKg": 1, "rate": 220 },
+                        { "maxWeightKg": 1.5, "rate": 290 },
+                        { "maxWeightKg": 2, "rate": 360 },
+                        { "ratePerKgAbove2": 70 }
+                      ],
+                      "freeShippingThreshold": 3000
+                    }
+                  };
 
             // ----  Cart Empty Handling ----
             if (cart.length === 0) {
