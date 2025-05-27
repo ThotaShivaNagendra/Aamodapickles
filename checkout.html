@@ -545,9 +545,11 @@
                 // Use selected state rates or default if not found
                 const selectedStateRates = shippingRates[currentState] || shippingRates["default"] || {
                     "weightSlabs": [
-                        { "maxWeightKg": 0.5, "rate": 100 },
-                        { "maxWeightKg": 1, "rate": 150 },
-                        { "ratePerKgAbove2": 60 }
+                        { "maxWeightKg": 0.5, "rate": 90 },
+                        { "maxWeightKg": 1, "rate": 135 },
+                        { "maxWeightKg": 1, "rate": 180 },
+                        { "maxWeightKg": 2, "rate": 210 },
+                        { "ratePerKgAbove2": 30 }
                     ],
                     "freeShippingThreshold": 3000
                 };
