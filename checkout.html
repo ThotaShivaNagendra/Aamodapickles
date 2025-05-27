@@ -76,7 +76,45 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="state" class="form-label">State</label>
-                                <input type="text" class="form-control" id="state" required>
+                                <select class="form-control" id="state" required>
+        <option value="">Select State</option>
+        <option>Andhra Pradesh</option>
+        <option>Arunachal Pradesh</option>
+        <option>Assam</option>
+        <option>Bihar</option>
+        <option>Chhattisgarh</option>
+        <option>Goa</option>
+        <option>Gujarat</option>
+        <option>Haryana</option>
+        <option>Himachal Pradesh</option>
+        <option>Jharkhand</option>
+        <option>Karnataka</option>
+        <option>Kerala</option>
+        <option>Madhya Pradesh</option>
+        <option>Maharashtra</option>
+        <option>Manipur</option>
+        <option>Meghalaya</option>
+        <option>Mizoram</option>
+        <option>Nagaland</option>
+        <option>Odisha</option>
+        <option>Punjab</option>
+        <option>Rajasthan</option>
+        <option>Sikkim</option>
+        <option>Tamil Nadu</option>
+        <option>Telangana</option>
+        <option>Tripura</option>
+        <option>Uttar Pradesh</option>
+        <option>Uttarakhand</option>
+        <option>West Bengal</option>
+        <option>Andaman and Nicobar Islands</option>
+        <option>Chandigarh</option>
+        <option>Dadra and Nagar Haveli and Daman and Diu</option>
+        <option>Delhi</option>
+        <option>Jammu and Kashmir</option>
+        <option>Ladakh</option>
+        <option>Lakshadweep</option>
+        <option>Puducherry</option>
+    </select>
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="zip" class="form-label">Zip Code</label>
@@ -260,48 +298,42 @@
 
 
             // ---- Shipping Calculation based on Weight and Simulated Distance ----
-            function calculateShipping() {
-                let shippingRate = 0;
-                const freeShippingThreshold = 2000; // Order value above which shipping is free
-                const currentZipCode = zipCodeField.value; // Get current zip code from input
-                const distance = calculateDistance(currentZipCode); // Get simulated distance in km
 
-                // Convert totalWeight from grams to kilograms for easier tier comparison
-                const totalWeightKg = totalWeight / 1000;
+// ---- Updated Shipping Fare Calculation ----
+function calculateShippingFare(state, weightKg) {
+    const slabs = [
+        { max: 0.5, price: 90 },
+        { max: 1, price: 135 },
+        { max: 1.5, price: 180 },
+        { max: 2, price: 210 },
+        { max: 2.5, price: 240 },
+        { max: 3, price: 270 },
+        { max: 3.5, price: 300 },
+        { max: 4, price: 330 },
+        { max: 4.5, price: 370 },
+        { max: 5, price: 400 },
+        { max: 5.5, price: 430 },
+        { max: 6, price: 460 }
+    ];
 
-                if (subtotal >= freeShippingThreshold) {
-                    shippingRate = 0; // Free shipping
-                } else {
-                    // Base weight-based rates (adjust these as per your courier charges)
-                    if (totalWeightKg <= 0.5) { // 0-500g
-                        shippingRate = 50;
-                    } else if (totalWeightKg <= 1) { // 501g-1kg
-                        shippingRate = 80;
-                    } else if (totalWeightKg <= 2) { // 1.01kg-2kg
-                        shippingRate = 120;
-                    } else { // Above 2kg
-                        // For every additional kg or part thereof above 2kg, add a charge
-                        // Example: 120 (for first 2kg) + (additional_kg * 50)
-                        shippingRate = 120 + (Math.ceil(totalWeightKg - 2) * 50);
-                    }
+    let baseFare = 0;
+    for (let slab of slabs) {
+        if (weightKg <= slab.max) {
+            baseFare = slab.price;
+            break;
+        }
+    }
+    if (weightKg > 6) {
+        const extra = Math.ceil((weightKg - 6) / 0.5);
+        baseFare = 460 + (extra * 30);
+    }
 
-                    // Distance-based adjustments (Simplified and illustrative)
-                    // These are *additional* charges based on distance, mimicking courier zones
-                    if (distance > 100 && distance <= 500) { // Regional
-                        shippingRate += 30;
-                    } else if (distance > 500 && distance <= 1000) { // Zonal
-                        shippingRate += 60;
-                    } else if (distance > 1000) { // National
-                        shippingRate += 100;
-                    }
-                }
+    const freeShippingThreshold = 2000;
+    return subtotal >= freeShippingThreshold ? 0 : baseFare;
+}
 
-                // Update display
-                shippingCostElement.textContent = shippingRate.toFixed(2);
-                const totalAmount = subtotal + shippingRate;
-                orderTotalElement.textContent = totalAmount.toFixed(2);
 
-                return shippingRate; // Return the calculated shipping rate
+// Return the calculated shipping rate
             }
 
             // ----  Initial Calculations & Event Listeners for Dynamic Update ----
