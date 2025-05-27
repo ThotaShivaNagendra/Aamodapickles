@@ -75,46 +75,36 @@
                                 <input type="text" class="form-control" id="city" required>
                             </div>
                             <div class="col-md-4 mb-3">
-                              <label for="state" class="form-label">State</label>
-                              <select class="form-control" id="state" required>
-                                <option value="">Select State</option>
-                                <option>Andhra Pradesh</option>
-                                <option>Arunachal Pradesh</option>
-                                <option>Assam</option>
-                                <option>Bihar</option>
-                                <option>Chhattisgarh</option>
-                                <option>Goa</option>
-                                <option>Gujarat</option>
-                                <option>Haryana</option>
-                                <option>Himachal Pradesh</option>
-                                <option>Jharkhand</option>
-                                <option>Karnataka</option>
-                                <option>Kerala</option>
-                                <option>Madhya Pradesh</option>
-                                <option>Maharashtra</option>
-                                <option>Manipur</option>
-                                <option>Meghalaya</option>
-                                <option>Mizoram</option>
-                                <option>Nagaland</option>
-                                <option>Odisha</option>
-                                <option>Punjab</option>
-                                <option>Rajasthan</option>
-                                <option>Sikkim</option>
-                                <option>Tamil Nadu</option>
-                                <option>Telangana</option>
-                                <option>Tripura</option>
-                                <option>Uttar Pradesh</option>
-                                <option>Uttarakhand</option>
-                                <option>West Bengal</option>
-                                <option>Andaman and Nicobar Islands</option>
-                                <option>Chandigarh</option>
-                                <option>Dadra and Nagar Haveli and Daman and Diu</option>
-                                <option>Delhi</option>
-                                <option>Jammu and Kashmir</option>
-                                <option>Ladakh</option>
-                                <option>Lakshadweep</option>
-                                <option>Puducherry</option>
-                              </select>
+                                <label for="state" class="form-label">State</label>
+                                <select class="form-select" id="state" required>
+                                    <option value="" disabled selected>Select State</option>
+                                    <option value="Andhra Pradesh">Andhra="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                </select>
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="zip" class="form-label">Zip Code</label>
@@ -164,167 +154,179 @@
                     <h2>Contact Us</h2>
                     <p>We'd love to hear from you! Connect with us through:</p>
                     <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" class="btn btn-light btn-lg">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="mailto:support@aamodapickles.com" class="btn btn-light btn-lg">
-                            <i class="fas fa-envelope"></i> Email
-                        </a>
-                        <a href="tel:+917731021234" class="btn btn-light btn-lg">
-                            <i class="fas fa-phone"></i> Phone
-                        </a>
+                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"
+                            class="btn btn-success"> WhatsApp</a>
+                        <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">
+                            Instagram</a>
+                        <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning"> Email Us</a>
+                        <a href="tel:7731021234" class="btn btn-primary"> Call: 7731021234</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer py-3 text-center">
-        &copy; 2025 Aamoda Pickles. All rights reserved.
+    <footer class="footer bg-warning text-center py-4">
+        <p>© 2025 Aamoda Pickles. All rights reserved.</p>
+        <div class="container mt-2">
+            <a href="terms.html" class="text-red mx-2">Terms & Conditions</a> |
+            <a href="shipping.html" class="text-red mx-2">Shipping Policy</a> |
+            <a href="contact.html" class="text-red mx-2">Contact Us</a> |
+            <a href="refundpolicy.html" class="text-red mx-2">Cancel & refund Policy</a> |
+            <a href="privacypolicy.html" class="text-red mx-2">Privacy Policy</a>
+        </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="products.js"></script>
+    <script src="cart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
-            const orderSummaryItems = document.getElementById('order-summary-items');
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartIcon();
+
+            const orderSummaryItemsContainer = document.getElementById('order-summary-items');
             const orderSubtotalElement = document.getElementById('order-subtotal');
             const shippingCostElement = document.getElementById('shipping-cost');
             const orderTotalElement = document.getElementById('order-total');
             const checkoutForm = document.getElementById('checkout-form');
+            const zipCodeField = document.getElementById('zip');
+            const stateField = document.getElementById('state');
+            const cityField = document.getElementById('city');
+            const cart = getCart();
 
-            let totalWeight = 0; // in grams
+            const tanukuPinCode = '534211'; // Origin pincode (Andhra Pradesh)
+            const tanukuCoordinates = { latitude: 16.7561, longitude: 81.6888 }; // Coordinates for Tanuku
 
-            // Display cart items summary
-            function displayCartItems() {
-                orderSummaryItems.innerHTML = '';
-                let subtotal = 0;
-                totalWeight = 0;
+            // Define shipping zones and rates (adjust these based on your actual costs)
+            const shippingRates = {
+                "Andhra Pradesh": {
+                    weightSlabs: [{ maxWeightKg: 0.5, rate: 40 }, { maxWeightKg: 1, rate: 60 }, { maxWeightKg: 2, rate: 90 }, { ratePerKgAbove2: 40 }],
+                    freeShippingThreshold: 1500
+                },
+                "Arunachal Pradesh": {
+                    weightSlabs: [{ maxWeightKg: 0.5, rate: 90 }, { maxWeightKg: 1, rate: 140 }, { maxWeightKg: 2, rate: 200 }, { ratePerKgAbove2: 80 }],
+                    freeShippingThreshold: 3000
+                },
+                // ... (Shipping rates for other states will be in Part 2) ...
+                "Uttar Pradesh": {
+                    weightSlabs: [{ maxWeightKg: 0.5, rate: 55 }, { maxWeightKg: 1, rate: 80 }, { maxWeightKg: 2, rate: 120 }, { ratePerKgAbove2: 50 }],
+                    freeShippingThreshold: 1900
+                },
+                "Uttarakhand": {
+                    weightSlabs: [{ maxWeightKg: 0.5, rate: 70 }, { maxWeightKg: 1, rate: 100 }, { maxWeightKg: 2, rate: 150 }, { ratePerKgAbove2: 60 }],
+                    freeShippingThreshold: 2200
+                },
+                "West Bengal": {
+                  weightSlabs: [{ maxWeightKg: 0.5, rate: 65 }, { maxWeightKg: 1, rate: 95 }, { maxWeightKg: 2, rate: 140 }, { ratePerKgAbove2: 55 }],
+                  freeShippingThreshold: 2100
+                },
+                "default": {
+                    weightSlabs: [{ maxWeightKg: 0.5, rate: 80 }, { maxWeightKg: 1, rate: 120 }, { maxWeightKg: 2, rate: 180 }, { ratePerKgAbove2: 70 }],
+                    freeShippingThreshold: 2500
+                }
+            };
+            Object.assign(shippingRates, shippingRatesContinuation);
 
-                cart.forEach(item => {
-                    const itemTotal = item.price * item.quantity;
+            // ----  Cart Empty Handling ----
+            if (cart.length === 0) {
+                orderSummaryItemsContainer.innerHTML =
+                    '<p class="text-center">Your cart is empty. Please add items to proceed to checkout.</p>';
+                checkoutForm.style.display = 'none'; // Hide the form if cart is empty
+                orderSubtotalElement.textContent = '0';
+                shippingCostElement.textContent = '0';
+                orderTotalElement.textContent = '0';
+                return; // Stop further execution if cart is empty
+            }
+
+            let subtotal = 0;
+            let totalWeight = 0; // Total weight in grams
+
+            // ----  Order Summary Population and Initial Calculations ----
+            cart.forEach(item => {
+                const product = getProductById(item.id);
+
+                if (!product) {
+                    console.error('Product not found in products.js for ID:', item.id);
+                    return; // Skip this item if product details are missing
+                }
+
+                if (product.prices && product.prices[item.quantityKey]) {
+                    const itemTotal = item.pricePerUnit * item.count; // Use pricePerUnit from cart item
                     subtotal += itemTotal;
-                    totalWeight += item.weight * item.quantity; // weight assumed in grams
 
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'd-flex justify-content-between mb-2';
-                    itemDiv.innerHTML = `
-                        <div>${item.name} x ${item.quantity}</div>
-                        <div>₹${itemTotal.toFixed(2)}</div>
+                    if (product.weights && product.weights[item.quantityKey]) {
+                        totalWeight += product.weights[item.quantityKey] * item.count;
+                    } else {
+                        console.warn('Weight information missing for product:', product.name, 'quantity:', item.quantityKey);
+                    }
+
+                    const orderItemHtml = `
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>${product.name} (${item.quantityKey}) x ${item.count}</span>
+                            <span>₹${itemTotal.toFixed(2)}</span>
+                        </div>
                     `;
-                    orderSummaryItems.appendChild(itemDiv);
-                });
-
-                orderSubtotalElement.textContent = subtotal.toFixed(2);
-                return subtotal;
-            }
-
-            // Function to simulate distance calculation based on zip code or city/state
-            function calculateDistance() {
-                // For demo: use simple mock distances for some zip codes or states
-                const zip = document.getElementById('zip').value.trim();
-                const city = document.getElementById('city').value.trim().toLowerCase();
-                const state = document.getElementById('state').value.trim().toLowerCase();
-
-                // Mock data of distances in km from store location (example: Pune)
-                const locationDistances = {
-                    '411001': 10,
-                    '411002': 12,
-                    '411003': 8,
-                    'mumbai': 150,
-                    'delhi': 1400,
-                    'bangalore': 850,
-                    'chennai': 1200,
-                    'kolkata': 1800,
-                    'maharashtra': 100,
-                    'karnataka': 900,
-                    'delhi': 1400,
-                    'tamil nadu': 1200,
-                };
-
-                if (locationDistances[zip]) return locationDistances[zip];
-                if (locationDistances[city]) return locationDistances[city];
-                if (locationDistances[state]) return locationDistances[state];
-
-                // Default distance if no match found
-                return 500;
-            }
-
-            // Calculate shipping cost based on weight (grams), distance (km), and state surcharge
-            function calculateShipping() {
-                const subtotal = displayCartItems();
-                if (subtotal === 0) {
-                    shippingCostElement.textContent = '0';
-                    orderTotalElement.textContent = '0';
-                    return 0;
-                }
-
-                const distance = calculateDistance();
-                let shippingCost = 0;
-
-                // Weight thresholds in grams and corresponding base shipping costs (example)
-                if (totalWeight <= 500) {
-                    shippingCost = 50;
-                } else if (totalWeight <= 1000) {
-                    shippingCost = 75;
-                } else if (totalWeight <= 2000) {
-                    shippingCost = 100;
+                    orderSummaryItemsContainer.innerHTML += orderItemHtml;
                 } else {
-                    shippingCost = 150;
+                    console.error('Price information missing or invalid quantity key for product:', product.name, 'quantity:', item.quantityKey);
+                }
+            });
+
+            orderSubtotalElement.textContent = subtotal.toFixed(2); // Display with 2 decimal places
+
+            // ---- Shipping Calculation based on State and Weight ----
+            function calculateShipping() {
+                let shippingRate = 0;
+                const totalWeightKg = totalWeight / 1000;
+                const currentState = stateField.value;
+                const selectedStateRates = shippingRates[currentState] || shippingRates["default"];
+                const freeShippingThreshold = selectedStateRates.freeShippingThreshold;
+                const weightSlabs = selectedStateRates.weightSlabs;
+
+                if (subtotal >= freeShippingThreshold) {
+                    shippingRate = 0; // Free shipping
+                } else {
+                    for (const slab of weightSlabs) {
+                        if (slab.maxWeightKg !== undefined && totalWeightKg <= slab.maxWeightKg) {
+                            shippingRate = slab.rate;
+                            break;
+                        } else if (slab.ratePerKgAbove2 !== undefined && totalWeightKg > 2) {
+                            shippingRate = weightSlabs.find(s => s.maxWeightKg === 2)?.rate || weightSlabs[weightSlabs.length - 2]?.rate || 0; // Base rate up to 2kg
+                            shippingRate += Math.ceil(totalWeightKg - 2) * slab.ratePerKgAbove2;
+                            break;
+                        } else if (weightSlabs.length > 0 && slab === weightSlabs[weightSlabs.length - 1] && slab.ratePerKgAbove2 === undefined) {
+                            // If none of the weight slabs match and there's no ratePerKgAbove2, use the last defined rate (if any)
+                            shippingRate = slab.rate || 0;
+                        }
+                    }
+                    // Ensure a minimum shipping rate if the cart isn't empty and doesn't qualify for free shipping
+                    if (cart.length > 0 && subtotal < freeShippingThreshold && shippingRate === 0) {
+                        shippingRate = shippingRates["default"].weightSlabs[0]?.rate || 50; // Apply default minimum
+                    }
                 }
 
-                // Add distance-based surcharge: 1 INR per 10 km rounded up
-                const distanceSurcharge = Math.ceil(distance / 10);
-                shippingCost += distanceSurcharge;
+                // Update display
+                shippingCostElement.textContent = shippingRate.toFixed(2);
+                const totalAmount = subtotal + shippingRate;
+                orderTotalElement.textContent = totalAmount.toFixed(2);
 
-                // Add state-based surcharge example
-                const state = document.getElementById('state').value.trim().toLowerCase();
-
-                // Define surcharge per state (INR)
-                const stateSurchargeMap = {
-                    'delhi': 20,
-                    'karnataka': 15,
-                    'tamil nadu': 25,
-                    'maharashtra': 10,
-                    'west bengal': 30,
-                    // Add more states as needed
-                };
-
-                if (stateSurchargeMap[state]) {
-                    shippingCost += stateSurchargeMap[state];
-                }
-
-                shippingCostElement.textContent = shippingCost.toFixed(2);
-
-                const total = subtotal + shippingCost;
-                orderTotalElement.textContent = total.toFixed(2);
-
-                return shippingCost;
+                return shippingRate; // Return the calculated shipping rate
             }
 
-            // Clear cart function after successful payment
-            function clearCart() {
-                localStorage.removeItem('cartItems');
-                document.getElementById('cart-icon-count').textContent = '0';
-            }
-
-            // Initialize
-            displayCartItems();
+            // ----  Initial Calculations & Event Listeners for Dynamic Update ----
+            // Initial calculation when the page loads
             calculateShipping();
 
-            // Update cart icon count
-            document.getElementById('cart-icon-count').textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
-
             // Recalculate shipping and total when relevant fields change
-            const zipCodeField = document.getElementById('zip');
+            stateField.addEventListener('input', calculateShipping);
             zipCodeField.addEventListener('input', calculateShipping);
-            document.getElementById('city').addEventListener('input', calculateShipping);
-            document.getElementById('state').addEventListener('change', calculateShipping);
+            cityField.addEventListener('input', calculateShipping);
 
-            // Razorpay Integration
+            // ----  Razorpay Integration (will be in Part 2) ----
             checkoutForm.addEventListener('submit', function (e) {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default form submission
 
-                // Get form values
+                // Get form data
                 const fullName = document.getElementById('fullName').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
@@ -334,9 +336,9 @@
                 const zipCode = document.getElementById('zip').value;
                 const country = document.getElementById('country').value;
 
-                // Calculate shipping cost fresh
-                const currentShippingCost = calculateShipping();
-                const totalAmountPayable = parseFloat(orderTotalElement.textContent);
+                // Recalculate shipping just before payment to ensure latest values
+                const currentShippingCost = calculateShipping(); // This also updates the displayed total
+                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
 
                 const options = {
                     key: "rzp_test_dzr0ExL25Pj8II",
@@ -347,6 +349,7 @@
                     image: "logo.png",
                     handler: function (response) {
                         alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                        console.log("Payment Response:", response);
                         clearCart();
                         window.location.href = 'index.html';
                     },
@@ -369,23 +372,21 @@
                     },
                     modal: {
                         ondismiss: function () {
+                            console.log("Payment popup closed by user.");
                             alert("Payment popup was closed. If you need help, feel free to contact us.");
                         }
                     }
                 };
 
                 const rzp = new Razorpay(options);
-
                 rzp.on('payment.failed', function (response) {
+                    console.error("Payment failed:", response.error);
                     alert("Payment failed. Please try again.\nReason: " + response.error.description);
                 });
-
                 rzp.open();
             });
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
