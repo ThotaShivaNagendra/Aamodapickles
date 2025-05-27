@@ -535,44 +535,56 @@
             orderSubtotalElement.textContent = subtotal.toFixed(2); // Display with 2 decimal places
 
             // ---- Shipping Calculation based on State and Weight ----
-            function calculateShipping() {
-                let shippingRate = 0;
-                const totalWeightKg = totalWeight / 1000;
-                const currentState = stateField.value;
-                const selectedStateRates = shippingRates[currentState] || shippingRates["default"];
-                const freeShippingThreshold = selectedStateRates.freeShippingThreshold;
-                const weightSlabs = selectedStateRates.weightSlabs;
+            // ---- Shipping Calculation based on State and Weight ----
 
-                if (subtotal >= freeShippingThreshold) {
-                    shippingRate = 0; // Free shipping
-                } else {
-                    for (const slab of weightSlabs) {
-                        if (slab.maxWeightKg !== undefined && totalWeightKg <= slab.maxWeightKg) {
-                            shippingRate = slab.rate;
-                            break;
-                        } else if (slab.ratePerKgAbove2 !== undefined && totalWeightKg > 2) {
-                            shippingRate = weightSlabs.find(s => s.maxWeightKg === 2)?.rate || weightSlabs[weightSlabs.length - 2]?.rate || 0; // Base rate up to 2kg
-                            shippingRate += Math.ceil(totalWeightKg - 2) * slab.ratePerKgAbove2;
-                            break;
-                        } else if (weightSlabs.length > 0 && slab === weightSlabs[weightSlabs.length - 1] && slab.ratePerKgAbove2 === undefined) {
-                            // If none of the weight slabs match and there's no ratePerKgAbove2, use the last defined rate (if any)
-                            shippingRate = slab.rate || 0;
-                        }
-                    }
-                    // Ensure a minimum shipping rate if the cart isn't empty and doesn't qualify for free shipping
-                    if (cart.length > 0 && subtotal < freeShippingThreshold && shippingRate === 0) {
-                        shippingRate = shippingRates["default"].weightSlabs[0]?.rate || 50; // Apply default minimum
-                    }
-                }
+            // ---- Shipping Calculation based on State and Weight ----
+            function calculateShipping() {
+                let shippingRate = 0;
+                const totalWeightKg = totalWeight / 1000;
+                const currentState = stateField.value;
+                // Use selected state rates or default if not found
+                const selectedStateRates = shippingRates[currentState] || shippingRates["default"] || {
+                    "weightSlabs": [
+                        { "maxWeightKg": 0.5, "rate": 100 },
+                        { "maxWeightKg": 1, "rate": 150 },
+                        { "ratePerKgAbove2": 60 }
+                    ],
+                    "freeShippingThreshold": 3000
+                };
 
-                // Update display
-                shippingCostElement.textContent = shippingRate.toFixed(2);
-                const totalAmount = subtotal + shippingRate;
-                orderTotalElement.textContent = totalAmount.toFixed(2);
+                const freeShippingThreshold = selectedStateRates.freeShippingThreshold;
+                const weightSlabs = selectedStateRates.weightSlabs;
 
-                return shippingRate; // Return the calculated shipping rate
-            }
+                if (subtotal >= freeShippingThreshold) {
+                    shippingRate = 0; // Free shipping
+                } else {
+                    for (const slab of weightSlabs) {
+                        if (slab.maxWeightKg !== undefined && totalWeightKg <= slab.maxWeightKg) {
+                            shippingRate = slab.rate;
+                            break;
+                        } else if (slab.ratePerKgAbove2 !== undefined && totalWeightKg > 2) {
+                            shippingRate = weightSlabs.find(s => s.maxWeightKg === 2)?.rate || weightSlabs[weightSlabs.length - 2]?.rate || 0; // Base rate up to 2kg
+                            shippingRate += Math.ceil(totalWeightKg - 2) * slab.ratePerKgAbove2;
+                            break;
+                        } else if (weightSlabs.length > 0 && slab === weightSlabs[weightSlabs.length - 1] && slab.ratePerKgAbove2 === undefined) {
+                            // If none of the weight slabs match and there's no ratePerKgAbove2, use the last defined rate (if any)
+                            shippingRate = slab.rate || 0;
+                        }
+                    }
+                    // Ensure a minimum shipping rate if the cart isn't empty and doesn't qualify for free shipping
+                    if (cart.length > 0 && subtotal < freeShippingThreshold && shippingRate === 0) {
+                        shippingRate = shippingRates["default"]?.weightSlabs[0]?.rate || 50; // Apply default minimum
+                    }
+                }
 
+                // Update display
+                shippingCostElement.textContent = shippingRate.toFixed(2);
+                const totalAmount = subtotal + shippingRate;
+                orderTotalElement.textContent = totalAmount.toFixed(2);
+
+                return shippingRate; // Return the calculated shipping rate
+            }
+  
             // ----  Initial Calculations & Event Listeners for Dynamic Update ----
             // Initial calculation when the page loads
             calculateShipping();
