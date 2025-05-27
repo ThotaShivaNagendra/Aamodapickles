@@ -109,12 +109,20 @@ function clearCart() {
 
 // Function to update the number displayed on the cart icon in the navbar
 function updateCartIcon() {
-    const cartIconCount = document.getElementById('cart-icon-count');
-    if (cartIconCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
-        cartIconCount.textContent = totalItems;
-        cartIconCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
-    }
+  const cart = getCart();
+  const cartIconCountDesktop = document.getElementById('cart-icon-count');
+  const cartIconCountMobile = document.getElementById('cart-icon-count-mobile');
+
+  const itemCount = cart.reduce((sum, item) => sum + item.count, 0);
+
+  if (cartIconCountDesktop) {
+    cartIconCountDesktop.textContent = itemCount;
+    cartIconCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
+  }
+  if (cartIconCountMobile) {
+    cartIconCountMobile.textContent = itemCount;
+    cartIconCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
+  }
 }
 
 // Function to get product details by ID from the products array
