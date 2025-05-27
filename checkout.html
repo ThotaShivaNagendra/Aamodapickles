@@ -622,10 +622,10 @@
                     description: "Order from Aamoda Pickles",
                     image: "logo.png",
                     handler: function (response) {
-                        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                        console.log("Payment Response:", response);
-                        clearCart();
-                        window.location.href = 'index.html';
+                       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                       console.log("Payment Response:", response);
+                       clearCart();
+                       window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id; // Redirect with payment ID
                     },
                     prefill: {
                         name: fullName,
