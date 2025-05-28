@@ -114,25 +114,26 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const productListings = document.getElementById('product-list');
-            // Get only special products from the products.js array
             const specialProducts = products.filter(product => product.category === 'special');
 
             specialProducts.forEach(product => {
                 const productCard = `
                     <div class="col mb-4">
-                        <div class="card h-100">
-                            <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">${product.name}</h5>
-                                <p class="card-text">${product.description || ''}</p>
-                                <div class="mt-auto">
-                                    <select class="form-select mb-2 quantity-selector" data-product-id="${product.id}">
-                                        ${Object.keys(product.prices).map(key => `<option value="${key}"> ${key} - ₹${product.prices[key]}</option>`).join('')}
-                                    </select>
-                                    <button class="btn btn-success add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+                        <a href="product-details.html?id=${product.id}" class="card-link">
+                            <div class="card h-100">
+                                <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description || ''}</p>
+                                    <div class="mt-auto">
+                                        <select class="form-select mb-2 quantity-selector" data-product-id="${product.id}">
+                                            ${Object.keys(product.prices).map(key => `<option value="${key}"> ${key} - ₹${product.prices[key]}</option>`).join('')}
+                                        </select>
+                                        <button class="btn btn-success add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 `;
                 productListings.innerHTML += productCard;
@@ -141,14 +142,22 @@
             // Add event listeners for "Add to Cart" buttons
             document.querySelectorAll('.add-to-cart-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent the link from being activated when clicking the button
                     const productId = event.target.dataset.productId;
                     const quantitySelector = document.querySelector(`.quantity-selector[data-product-id="${productId}"]`);
                     const selectedQuantity = quantitySelector.value;
-                    addToCart(productId, selectedQuantity, 1); // Assuming default quantity of 1
+                    addToCart(productId, selectedQuantity, 1);
                 });
             });
 
-            updateCartIcon(); // Ensure cart count is updated on page load
+            // Prevent redirection when the quantity selector changes
+            document.querySelectorAll('.quantity-selector').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    event.stopPropagation();
+                });
+            });
+
+            updateCartIcon();
         });
     </script>
 </body>
