@@ -541,4 +541,40 @@ const products = [
         description: 'Sun-dried chillies soaked in buttermilk and salt, offering a unique tangy and spicy flavor, often fried and served as a side.',
         ingredients: ['Green Chillies', 'Buttermilk', 'Salt', 'Turmeric Powder', 'Asafoetida']
     },
+    {
+    id: 'Pesari Vadiyalu',
+    name: 'Pesari Vadiyalu',
+    image: 'pesarivadiyalu.png',
+    category: 'special',
+    prices: {
+        '250gm': 175,
+        '500gm': 350,
+        '1kg': 700
+    },
+    weights: {
+        '250gm': 250,
+        '500gm': 500,
+        '1kg': 1000
+    },
+    description: 'Crispy and flavorful sun-dried fritters made from ground moong dal (split yellow lentils) and a blend of aromatic spices. These vadiyalu are a traditional Andhra delicacy, perfect for frying or adding to curries and stews for an extra crunch and taste.',
+    ingredients: ['Moong Dal (Split Yellow Lentils)', 'Rice Flour', 'Cumin Seeds', 'Asafoetida', 'Ginger', 'Green Chillies', 'Salt', 'Cooking Oil']
+    },
+    {
+    id: 'Cow Ghee',
+    name: 'Pure Desi Cow Ghee',
+    image: 'ghee.jpg',
+    category: 'special',
+    prices: {
+        '250gm': 300,
+        '500gm': 600,
+        '1kg': 1200
+    },
+    weights: {
+        '250gm': 250,
+        '500gm': 500,
+        '1kg': 1000
+    },
+    description: 'Authentic and aromatic Desi Cow Ghee, traditionally churned from pure cow’s milk. Rich in flavor and essential nutrients, our ghee adds a distinct taste and wholesome goodness to your cooking. It is prepared using time-honored methods, ensuring its purity and quality.',
+    ingredients: ['Pure Cow\'s Milk']
+    },
 ];
