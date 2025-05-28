@@ -10,12 +10,15 @@ header {
   color: white;
   font-size:20px;
   margin:0px;
-  padding-top: 100px
+  padding-top: 100px;
   
 }
 .bg{
   background-color: #400607;
   color:white;
+}
+.h2{
+padding-top: 100px;
 }
 .menu{
   font-size:25px;
