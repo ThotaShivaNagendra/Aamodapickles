@@ -68,7 +68,6 @@
             </div>
         </div>
     </nav>
-
     <section class="products bg">
         <div class="container ">
             <h2 class="text-center mb-4">Our Special Products</h2>
@@ -112,52 +111,47 @@
     <script src="products.js"></script>
     <script src="cart.js"></script>
     <script>
+        // Script to dynamically load special products
         document.addEventListener('DOMContentLoaded', () => {
             const productListings = document.getElementById('product-list');
+            // Get only special products from the products.js array
             const specialProducts = products.filter(product => product.category === 'special');
 
             specialProducts.forEach(product => {
-                const productCard = `
-                    <div class="col mb-4">
-                        <a href="product-details.html?id=${product.id}" class="card-link">
-                            <div class="card h-100">
-                                <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">${product.name}</h5>
-                                    <p class="card-text">${product.description || ''}</p>
-                                    <div class="mt-auto">
-                                        <select class="form-select mb-2 quantity-selector" data-product-id="${product.id}">
-                                            ${Object.keys(product.prices).map(key => `<option value="${key}"> ${key} - ₹${product.prices[key]}</option>`).join('')}
-                                        </select>
-                                        <button class="btn btn-success add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                const productCard = document.createElement('div');
+                productCard.classList.add('col', 'mb-4');
+
+                const cardLink = document.createElement('a');
+                cardLink.href = `product-details.html?id=${product.id}`;
+                cardLink.style.textDecoration = 'none';
+                cardLink.style.color = 'inherit';
+
+                let priceRange = '';
+                if (product.prices && Object.keys(product.prices).length > 0) {
+                    const prices = Object.values(product.prices);
+                    const minPrice = Math.min(...prices);
+                    const maxPrice = Math.max(...prices);
+                    priceRange = (minPrice === maxPrice) ? `₹ ${minPrice}` : `₹ ${minPrice} - ₹ ${maxPrice}`;
+                } else if (product.prices && product.prices.piece) {
+                    priceRange = `₹ ${product.prices.piece} / piece`;
+                }
+
+                const cardContent = `
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text mt-auto">Price: ${priceRange}</p>
+                        </div>
                     </div>
                 `;
-                productListings.innerHTML += productCard;
+
+                cardLink.innerHTML = cardContent;
+                productCard.appendChild(cardLink);
+                productListings.appendChild(productCard);
             });
 
-            // Add event listeners for "Add to Cart" buttons
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent the link from being activated when clicking the button
-                    const productId = event.target.dataset.productId;
-                    const quantitySelector = document.querySelector(`.quantity-selector[data-product-id="${productId}"]`);
-                    const selectedQuantity = quantitySelector.value;
-                    addToCart(productId, selectedQuantity, 1);
-                });
-            });
-
-            // Prevent redirection when the quantity selector changes
-            document.querySelectorAll('.quantity-selector').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    event.stopPropagation();
-                });
-            });
-
-            updateCartIcon();
+            updateCartIcon(); // Ensure cart count is updated on page load
         });
     </script>
 </body>
