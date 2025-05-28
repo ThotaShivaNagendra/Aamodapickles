@@ -136,3 +136,26 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+/* Existing CSS rules */
+
+#searchResults {
+    top: 100%; /* Position the top of the div at the bottom of the input */
+    left: 0;
+    right: 0;
+}
+
+#searchResults ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#searchResults li {
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#searchResults li:hover {
+    background-color: #f9f9f9;
+}
