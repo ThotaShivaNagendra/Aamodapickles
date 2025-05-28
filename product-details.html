@@ -16,94 +16,80 @@
     <link rel="manifest" href="/site.webmanifest">
     <style>
         /* Custom styles for product details page */
-        .product-image-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px; /* Add some space below the image */
-        }
-
         @media (max-width: 767.98px) {
             .product-image-container {
-                margin-top: 10px; /* Add a small top margin on mobile */
-                margin-bottom: 15px; /* Adjust bottom margin for mobile */
-                padding-top: 0; /* Ensure no extra top padding on mobile */
+                display: flex;
+                justify-content: center;
+                margin-bottom: 0px; 
             }
             #add-to-cart-details-btn {
-                display: block;
-                margin: 0 auto 20px;
-                width: 70%;
+                display: block; /* Make it a block-level element */
+                margin: 0 auto 20px; /* Center horizontally and add bottom margin */
+                width: 70%; /* Take up a reasonable width on mobile */
             }
         }
-
         .product-details-info {
-            padding-left: 10px;
-            margin-top: 20px; /* Add some top margin to the text info */
+            padding-left: 10px; /* Add some space between image and text */
         }
-
         .add-to-cart-section {
-            margin-top: 30px;
+            margin-top: 30px; /* Add space above the add to cart elements */
         }
-
         #add-to-cart-details-btn {
-            padding: 10px 20px;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+            padding: 10px 20px; /* Increase padding for a slightly larger button */
+            font-size: 1.1rem; /* Slightly increase font size of the button text */
+            margin-bottom: 20px; /* Add margin below the Add to Cart button */
         }
-
         @media (min-width: 768px) {
             .product-image-container {
-                margin-top: 60px; /* Add more top margin for desktop if needed */
-                margin-bottom: 30px; /* Adjust bottom margin for desktop */
-                max-width: 400px;
-            }
-            .product-details-info {
-                margin-top: 60px; /* Align text info with the image on desktop */
+                /* You can adjust these values to increase the image size on desktop */
+                max-width: 400px; /* Example: Set a maximum width */
+                /* You might also want to adjust height or use other properties like width: auto; height: auto; */
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container ">
-            <a class="navbar-brand" href="#">
-                <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
+ <nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container ">
+        <a class="navbar-brand" href="#">
+            <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+            <a class="nav-link pe-2" href="cart.html">
+                <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
             </a>
-            <div class="d-flex align-items-center d-lg-none">
-                <a class="nav-link pe-2" href="cart.html">
-                    <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
-                </a>
-                <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-search text-white"></i>
-                    <span class="bg menu ms-2">Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav m-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
-                        </a>
-                    </li>
-                </ul>
-                <form class="d-flex ms-lg-auto" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
-                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                    <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
-                    </div>
-                </form>
-            </div>
+            <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-search text-white"></i>
+                <span class="bg menu ms-2">Menu</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
+                <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
+                <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex ms-lg-auto" id="searchForm">
+                <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
+                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="position-absol   ute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
+            </form>
+        </div>
+    </div>
     </nav>
 
     <section class="container mt-5" >
         <div class="row" >
-            <div class="col-md-6 product-image-container">
+            <div class="col-md-6 product-image-container" >
                 <img id="product-image-details" src="" class="img-fluid" alt="Product Image">
             </div>
             <div class="col-md-6 product-details-info">
@@ -117,7 +103,7 @@
                     <div class="mb-3">
                         <label for="quantity-details" class="form-label">Select Quantity:</label>
                         <select class="form-select" id="quantity-details">
-                        </select>
+                            </select>
                     </div>
                     <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
                     <p id="add-to-cart-message" class="mt-2 text-success" style="display: none;">Item added to cart!</p>
@@ -176,7 +162,7 @@
                             suggestionsList.appendChild(listItem);
                         });
                         searchResultsDiv.appendChild(suggestionsList);
-                    }
+                 }
         }
     });
 
