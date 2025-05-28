@@ -649,71 +649,162 @@
                 }
             });
 
+          checkoutForm.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            // ----  Razorpay Integration (will be in Part 2) ----
-            checkoutForm.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevent default form submission
+    // Get form data
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const state = document.getElementById('state').value;
+    const zipCode = document.getElementById('zip').value;
+    const country = document.getElementById('country').value;
 
-                // Get form data
-                const fullName = document.getElementById('fullName').value;
-                const email = document.getElementById('email').value;
-                const phone = document.getElementById('phone').value;
-                const address = document.getElementById('address').value;
-                const city = document.getElementById('city').value;
-                const state = document.getElementById('state').value;
-                const zipCode = document.getElementById('zip').value;
-                const country = document.getElementById('country').value;
+    // Recalculate shipping
+    const currentShippingCost = calculateShipping();
+    const totalAmountPayable = parseFloat(orderTotalElement.textContent);
 
-                // Recalculate shipping just before payment to ensure latest values
-                const currentShippingCost = calculateShipping(); // This also updates the displayed total
-                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
+    // --- Use Helper Functions ---
+    const orderId = generateOrderId();
+    const items = getCartItemsString();
+    const subtotal = getSubtotal();
+    const total = getTotal();
+    const paymentStatus = "Paid"; // Consider updating based on Razorpay response
+    // --------------------------
 
-                const options = {
-                    key: "rzp_test_dzr0ExL25Pj8II",
-                    amount: totalAmountPayable * 100,
-                    currency: "INR",
-                    name: "Aamoda Pickles",
-                    description: "Order from Aamoda Pickles",
-                    image: "logo.png",
-                    handler: function (response) {
-                       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                       console.log("Payment Response:", response);
-                       clearCart();
-                       window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id; // Redirect with payment ID
-                    },
-                    prefill: {
-                        name: fullName,
-                        email: email,
-                        contact: phone
-                    },
-                    notes: {
-                        address: address,
-                        city: city,
-                        state: state,
-                        zip: zipCode,
-                        country: country,
-                        shippingCost: currentShippingCost,
-                        totalWeight: totalWeight / 1000
-                    },
-                    theme: {
-                        color: "#400607"
-                    },
-                    modal: {
-                        ondismiss: function () {
-                            console.log("Payment popup closed by user.");
-                            alert("Payment popup was closed. If you need help, feel free to contact us.");
-                        }
+    const options = {
+        key: "rzp_test_dzr0ExL25Pj8II",  //  <---  **IMPORTANT:  REPLACE THIS!**
+        amount: totalAmountPayable * 100,
+        currency: "INR",
+        name: "Aamoda Pickles",
+        description: "Order from Aamoda Pickles",
+        image: "logo.png",
+        handler: function (response) {
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            console.log("Payment Response:", response);
+            clearCart();
+            window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id;
+        },
+        prefill: {
+            name: fullName,
+            email: email,
+            contact: phone
+        },
+        notes: {
+            address: address,
+            city: city,
+            state: state,
+            zip: zipCode,
+            country: country,
+            shippingCost: currentShippingCost,
+            totalWeight: totalWeight / 1000
+        },
+        theme: {
+            color: "#400607"
+        },
+        modal: {
+            ondismiss: function () {
+                console.log("Payment popup closed by user.");
+                alert("Payment popup was closed. If you need help, feel free to contact us.");
+            }
+        }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function (response) {
+        console.error("Payment failed:", response.error);
+        alert("Payment failed. Please try again.\\nReason: " + response.error.description);
+    });
+    rzp.open();
+
+    // --- Fetch Request ---
+    const orderData = {
+        orderId: orderId,
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        address: address,
+        city: city,
+        state: state,
+        zip: zipCode,
+        items: items,
+        subtotal: subtotal,
+        shippingCost: currentShippingCost,
+        total: totalAmountPayable,
+        paymentStatus: paymentStatus
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", { /* Replace with your Web App URL */ })
+        .then(response => response.text())
+        .then(data => console.log("Order saved:", data))
+        .catch(error => console.error("Error saving order:", error));
+    // -------------------
+});
+
+// ---- Helper Functions ----
+
+function generateOrderId() {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substr(2, 5);
+    return timestamp + '-' + random;
+}
+
+function getCartItemsString() {
+    let itemsString = "";
+    const cartString = localStorage.getItem('cart');
+    if (cartString) {
+        try {
+            const cart = JSON.parse(cartString);
+            if (Array.isArray(cart)) {
+                cart.forEach(cartItem => {
+                    if (cartItem.items && Array.isArray(cartItem.items)) {
+                        cartItem.items.forEach(item => {
+                            itemsString += `${item.name} (Qty: ${item.quantity}), `;
+                        });
                     }
-                };
-
-                const rzp = new Razorpay(options);
-                rzp.on('payment.failed', function (response) {
-                    console.error("Payment failed:", response.error);
-                    alert("Payment failed. Please try again.\nReason: " + response.error.description);
                 });
-                rzp.open();
-            });
-        });
+                itemsString = itemsString.slice(0, -2);
+            } else {
+                itemsString = "Cart data is invalid.";
+            }
+        } catch (error) {
+            console.error("Error parsing cart data:", error);
+            itemsString = "Error reading cart data.";
+        }
+    } else {
+        itemsString = "No items in cart.";
+    }
+    return itemsString;
+}
+
+function getSubtotal() {
+    let subtotal = 0;
+    const cartString = localStorage.getItem('cart');
+    if (cartString) {
+        try {
+            const cart = JSON.parse(cartString);
+            if (Array.isArray(cart)) {
+                cart.forEach(cartItem => {
+                    if (cartItem.items && Array.isArray(cartItem.items)) {
+                        cartItem.items.forEach(item => {
+                            subtotal += item.price * item.quantity;
+                        });
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error parsing cart data:", error);
+        }
+    }
+    return subtotal;
+}
+
+function getTotal() {
+    return parseFloat(orderTotalElement.textContent);
+}
+                });
     </script>
 </body>
 
