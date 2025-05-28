@@ -721,6 +721,7 @@
     rzp.open();
 
     // --- Fetch Request ---
+    handler: function (response) {
     const orderData = {
         orderId: orderId,
         fullName: fullName,
@@ -734,37 +735,27 @@
         subtotal: subtotal,
         shippingCost: currentShippingCost,
         total: totalAmountPayable,
-        paymentStatus: paymentStatus
+        paymentStatus: "Paid"
     };
 
-   fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        orderId: orderId,
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        state: state,
-        zip: zipCode,
-        items: items,
-        subtotal: subtotal,
-        shippingCost: currentShippingCost,
-        total: totalAmountPayable,
-        paymentStatus: "Paid"
+    fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(orderData)
     })
-})
-.then(response => response.text())
-.then(data => {
-    console.log("Order saved:", data);
-    clearCart();
-    window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id;
-})
-.catch(error => console.error("Error saving order:", error));
+    .then(response => response.text())
+    .then(data => {
+        console.log("Order saved:", data);
+        clearCart();
+        window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id;
+    })
+    .catch(error => {
+        console.error("Error saving order:", error);
+        alert("Payment succeeded but order save failed. Please contact us.");
+    });
+  }
 
 // ---- Helper Functions ----
 
