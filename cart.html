@@ -142,6 +142,29 @@
                 -moz-appearance: textfield;
             }
         }
+        /* Put the remove button on a new line on phones */
+    @media (max-width: 600px) {
+        .cart-item {
+            flex-direction: column; /* Stack items vertically */
+            align-items: flex-start; /* Align items to the left */
+        }
+
+        .cart-item-actions {
+            width: 100%; /* Make the button container take full width */
+            text-align: right; /* Align the button to the right */
+            margin-top: 10px; /* Add some space above the button */
+        }
+
+        .cart-item-actions button {
+            margin-left: 0; /* Remove any left margin on the button */
+            width: auto; /* Let the button size itself */
+        }
+
+        .cart-item img {
+            margin-right: 0; /* Remove right margin from the image */
+            margin-bottom: 10px; /* Add some space below the image */
+        }
+    }
     </style>
 </head>
 
