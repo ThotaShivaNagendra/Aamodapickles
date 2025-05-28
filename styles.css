@@ -136,15 +136,12 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-/* Existing CSS rules for #searchResults */
+/*CSS rules for #searchResults */
 
 #searchResults {
     top: calc(100% + 2px); /* Position below the search bar */
-    right: 0;              /* Align to the right of the search bar */
-    /* right: auto; */      /* Remove right alignment */
-    width: auto;           /* Adjust width based on content */
-    min-width: 200px;      /* Set a minimum width if needed */
-    max-width: 300px;      /* Set a maximum width if needed */
+    left: 0;
+    right: 0;
     max-height: 150px;
     overflow-y: auto;
     border: 1px solid #ccc;
@@ -152,6 +149,7 @@ input[type=number] {
     border-radius: 0 0 5px 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: white;
+    z-index: 1001; /* Ensure it's above other elements */
 }
 
 #searchResults ul {
@@ -175,4 +173,30 @@ input[type=number] {
 
 #searchResults li:hover {
     background-color: #f9f9f9;
+}
+
+/* Mobile-specific styles (max-width: 991.98px - Bootstrap's breakpoint for small devices) */
+@media (max-width: 991.98px) {
+    #searchResults {
+        width: 100%; /* Take full width on mobile */
+        left: 0;     /* Ensure it starts from the left edge */
+        right: 0;    /* Ensure it extends to the right edge */
+    }
+}
+
+/* Desktop-specific styles (min-width: 992px) */
+@media (min-width: 992px) {
+    #searchResults {
+        /* Adjust width for desktop - you can set a fixed width or a max-width */
+        width: auto;
+        min-width: 250px; /* Example minimum width for desktop */
+        max-width: 400px; /* Example maximum width for desktop */
+        left: 0;      /* Align to the left of the search bar on desktop as well */
+        top: calc(100% + 2px); /* Keep the spacing consistent */
+    }
+
+    #searchResults li {
+        padding-top: 6px;    /* Reduce top padding for desktop */
+        padding-bottom: 6px; /* Reduce bottom padding for desktop */
+    }
 }
