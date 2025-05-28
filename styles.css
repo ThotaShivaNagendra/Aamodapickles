@@ -191,7 +191,7 @@ input[type=number] {
         width: auto;
         min-width: 250px; /* Example minimum width for desktop */
         max-width: 400px; /* Example maximum width for desktop */
-        left: 0;      /* Align to the left of the search bar on desktop as well */
+        right: 0;      /* Align to the right of the search bar on desktop as well */
         top: calc(100% + 2px); /* Keep the spacing consistent */
     }
 
