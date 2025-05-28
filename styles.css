@@ -136,19 +136,22 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-/* Existing CSS rules */
+/* Existing CSS rules for #searchResults */
 
 #searchResults {
     top: calc(100% + 2px); /* Position below the search bar */
-    left: 0;
-    right: 0;
-    max-height: 150px; /* Set a maximum height for the suggestion box */
-    overflow-y: auto;    /* Enable vertical scrolling if there are many suggestions */
+    left: 0;              /* Align to the left of the search bar */
+    /* right: auto; */      /* Remove right alignment */
+    width: auto;           /* Adjust width based on content */
+    min-width: 200px;      /* Set a minimum width if needed */
+    max-width: 300px;      /* Set a maximum width if needed */
+    max-height: 150px;
+    overflow-y: auto;
     border: 1px solid #ccc;
     border-top: none;
     border-radius: 0 0 5px 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: white; /* Ensure a white background */
+    background-color: white;
 }
 
 #searchResults ul {
@@ -167,7 +170,7 @@ input[type=number] {
 }
 
 #searchResults li:last-child {
-    border-bottom: none; /* Remove border from the last item */
+    border-bottom: none;
 }
 
 #searchResults li:hover {
