@@ -44,6 +44,8 @@
                 <i class="fas fa-shopping-cart"></i>(<span id="cart-icon-count-mobile">0</span>)
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-shopping-cart me-2"></i>
+                <i class="fas fa-search me-2"></i>
                 <span class="bg menu">Menu</span>
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -60,6 +62,10 @@
                         </a>
                     </li>
                 </ul>
+                <form class="d-flex ms-lg-3 mt-3 mt-lg-0" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                </form>
             </div>
         </div>
     </nav>
@@ -119,9 +125,9 @@
             const productListings = document.getElementById('product-list');
             // Define best sellers by their IDs from products.js
             const bestSellers = [
-                  'mango-pickle', 'chicken-pickle', 'mutton-pickle', 'prawns-pickle',
-                   'magayi-pickle', 'gongura-chicken-pickle', 'karvepaku-podi', 'koramenu-pickle'
-            // Add any other best seller IDs here, ensuring they match the 'id' in your products.js
+                'mango-pickle', 'chicken-pickle', 'mutton-pickle', 'prawns-pickle',
+                'magayi-pickle', 'gongura-chicken-pickle', 'karvepaku-podi', 'koramenu-pickle'
+                // Add any other best seller IDs here, ensuring they match the 'id' in your products.js
             ];
 
             // Filter products to only include best sellers
@@ -163,6 +169,30 @@
 
             updateCartIcon(); // Ensure cart count is updated on page load
         });
+
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        if (searchForm) {
+            searchForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent the default form submission
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                if (searchTerm) {
+                    // Basic search: Check if the product name (or ID) includes the search term
+                    const foundProduct = products.find(product =>
+                        product.name.toLowerCase().includes(searchTerm) || product.id.toLowerCase().includes(searchTerm)
+                    );
+
+                    if (foundProduct) {
+                        window.location.href = `product-details.html?id=${foundProduct.id}`;
+                        searchInput.value = ''; // Clear the search input after redirection
+                    } else {
+                        alert(`No product found matching "${searchTerm}"`); // Basic feedback for no results
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
