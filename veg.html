@@ -157,6 +157,46 @@
 
         updateCartIcon(); // Ensure cart count is updated on page load
     });
+    const searchInput = document.getElementById('searchInput');
+                const searchResultsDiv = document.getElementById('searchResults');
+
+                searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                searchResultsDiv.innerHTML = ''; // Clear previous suggestions
+                searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
+
+                if (searchTerm) {
+                    const matchingProducts = products.filter(product =>
+                        product.name.toLowerCase().startsWith(searchTerm)
+                    );
+
+                    if (matchingProducts.length > 0) {
+                        searchResultsDiv.style.display = 'block';
+                        const suggestionsList = document.createElement('ul');
+                        suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
+
+                        matchingProducts.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
+                            listItem.textContent = product.name;
+                            listItem.addEventListener('click', () => {
+                                window.location.href = `product-details.html?id=${product.id}`;
+                                searchInput.value = ''; // Clear input after selection
+                                searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                            });
+                            suggestionsList.appendChild(listItem);
+                        });
+                        searchResultsDiv.appendChild(suggestionsList);
+                 }
+        }
+    });
+
+    // Hide suggestions when clicking outside the search input and results
+    document.addEventListener('click', (event) => {
+        if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+            searchResultsDiv.style.display = 'none';
+        }
+    });
 </script>
 </body>
 </html>
