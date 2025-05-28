@@ -649,6 +649,7 @@
                 }
             });
 
+            //razorpay section
           checkoutForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -736,12 +737,34 @@
         paymentStatus: paymentStatus
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", { /* Replace with your Web App URL */ })
-        .then(response => response.text())
-        .then(data => console.log("Order saved:", data))
-        .catch(error => console.error("Error saving order:", error));
-    // -------------------
-});
+   fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        orderId: orderId,
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        address: address,
+        city: city,
+        state: state,
+        zip: zipCode,
+        items: items,
+        subtotal: subtotal,
+        shippingCost: currentShippingCost,
+        total: totalAmountPayable,
+        paymentStatus: "Paid"
+    })
+})
+.then(response => response.text())
+.then(data => {
+    console.log("Order saved:", data);
+    clearCart();
+    window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id;
+})
+.catch(error => console.error("Error saving order:", error));
 
 // ---- Helper Functions ----
 
