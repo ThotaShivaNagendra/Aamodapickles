@@ -55,6 +55,37 @@ header h1 {
     box-shadow: none !important;
     border: none !important; /* Explicitly remove any border on focus */
 }
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1020; /* Ensure it's above other elements */
+    background-color: #400607; /* Set your desired background color */
+    /* Add any other global styles for your navbar */
+}
+
+body {
+    padding-top: 56px; /* Adjust this to the height of your navbar */
+}
+
+/* You might need to adjust the mobile cart icon position if it overlaps */
+.nav-link.d-block.d-lg-none {
+    position: fixed;
+    top: 10px; /* Adjust as needed */
+    right: 15px; /* Adjust as needed */
+    z-index: 1021;
+    background-color: #400607; /* Match navbar background */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* You might need to adjust the collapsed menu position on mobile */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 56px; /* Adjust to the height of your navbar */
+    }
+}
 .hero {
   height: 60vh;
   background-position: center;
