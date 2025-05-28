@@ -19,7 +19,9 @@ const products = [
             '250gm': 250,
             '500gm': 500,
             '1kg': 1000
-        }
+        },
+        description: 'Tangy and spicy mango pickle, a classic Indian condiment that adds a burst of flavor to any meal.',
+        ingredients: ['Raw Mangoes', 'Salt', 'Mustard Oil', 'Chilli Powder', 'Turmeric Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Asafoetida']
     },
     {
         id: 'chicken-pickle',
