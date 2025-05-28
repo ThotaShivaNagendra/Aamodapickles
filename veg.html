@@ -45,13 +45,16 @@
         <a class="navbar-brand" href="#">
             <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
         </a>
-        <a class="nav-link d-block d-lg-none" href="cart.html" style="margin-right: 15px;">
-            <i class="fas fa-shopping-cart"></i>(<span id="cart-icon-count-mobile">0</span>)
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="bg menu">Menu</span>
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex align-items-center d-lg-none">
+            <a class="nav-link pe-2" href="cart.html">
+                <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
+            </a>
+            <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-search text-white"></i>
+                <span class="bg menu ms-2">Menu</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -65,9 +68,15 @@
                     </a>
                 </li>
             </ul>
+            <form class="d-flex ms-lg-auto" id="searchForm">
+                <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
+                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
+            </form>
         </div>
     </div>
-</nav>
+    </nav>
 <section class="products bg">
     <div class="container ">
         <h2 class="text-center mb-4">Our Vegetarian Pickles</h2>
