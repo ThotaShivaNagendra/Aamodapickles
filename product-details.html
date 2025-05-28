@@ -24,10 +24,30 @@
             }
         }
         .product-details-info {
-            padding-left: 20px; /* Add some space between image and text */
+            padding-left: 20px; /* Add some space between image and text on larger screens */
+        }
+        @media (min-width: 768px) {
+            .product-details-info {
+                padding-left: 30px; /* Increase padding on desktop for more separation if needed */
+            }
         }
         .add-to-cart-section {
-            margin-top: 30px; /* Add space above the add to cart elements */
+            margin-top: 25px; /* Adjust space above the add to cart elements */
+        }
+        #add-to-cart-details-btn {
+            padding: 10px 20px; /* Increase padding for a slightly larger button */
+            font-size: 1.1rem; /* Slightly increase font size of the button text */
+            margin-bottom: 20px; /* Add margin below the Add to Cart button */
+        }
+        .row > .col-md-6 {
+            display: flex; /* Enable flexbox for the columns */
+            align-items: flex-start; /* Align items to the top in the row */
+        }
+        .product-details-info > * {
+            margin-bottom: 10px; /* Add some bottom margin to elements within the info section */
+        }
+        .product-details-info > h2 {
+            margin-bottom: 15px; /* Add more bottom margin to the product name */
         }
     </style>
 </head>
