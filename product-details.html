@@ -14,6 +14,22 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    <style>
+        /* Custom styles for product details page */
+        @media (max-width: 767.98px) {
+            .product-image-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px; /* Add some space below the image on mobile */
+            }
+        }
+        .product-details-info {
+            padding-left: 20px; /* Add some space between image and text */
+        }
+        .add-to-cart-section {
+            margin-top: 30px; /* Add space above the add to cart elements */
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg custom-navbar">
@@ -47,23 +63,25 @@
 
     <section class="container mt-5">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 product-image-container">
                 <img id="product-image-details" src="" class="img-fluid" alt="Product Image">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 product-details-info">
                 <h2 id="product-name-details"></h2>
                 <p class="lead" id="product-description-details"></p>
                 <div>
                     <h3>Ingredients:</h3>
                     <p id="product-ingredients-details"></p>
                 </div>
-                <div class="mb-3">
-                    <label for="quantity-details" class="form-label">Select Quantity:</label>
-                    <select class="form-select" id="quantity-details">
-                        </select>
+                <div class="add-to-cart-section">
+                    <div class="mb-3">
+                        <label for="quantity-details" class="form-label">Select Quantity:</label>
+                        <select class="form-select" id="quantity-details">
+                            </select>
+                    </div>
+                    <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
+                    <p id="add-to-cart-message" class="mt-2 text-success" style="display: none;">Item added to cart!</p>
                 </div>
-                <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
-                <p id="add-to-cart-message" class="mt-2 text-success" style="display: none;">Item added to cart!</p>
             </div>
         </div>
     </section>
@@ -82,5 +100,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="products.js"></script>
     <script src="cart.js"></script>
-    <script src="product-details.js"></script> </body>
+    <script src="product-details.js"></script>
+</body>
 </html>
