@@ -66,6 +66,8 @@
             <form class="d-flex ms-lg-auto" id="searchForm">
                 <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
                 <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
             </form>
         </div>
     </div>
@@ -171,29 +173,47 @@
             updateCartIcon(); // Ensure cart count is updated on page load
         });
 
-        const searchForm = document.getElementById('searchForm');
-        const searchInput = document.getElementById('searchInput');
+                const searchInput = document.getElementById('searchInput');
+                const searchResultsDiv = document.getElementById('searchResults');
 
-        if (searchForm) {
-            searchForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent the default form submission
+                searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.trim().toLowerCase();
+                searchResultsDiv.innerHTML = ''; // Clear previous suggestions
+                searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
 
                 if (searchTerm) {
-                    // Basic search: Check if the product name (or ID) includes the search term
-                    const foundProduct = products.find(product =>
-                        product.name.toLowerCase().includes(searchTerm) || product.id.toLowerCase().includes(searchTerm)
+                    const matchingProducts = products.filter(product =>
+                        product.name.toLowerCase().startsWith(searchTerm)
                     );
 
-                    if (foundProduct) {
-                        window.location.href = `product-details.html?id=${foundProduct.id}`;
-                        searchInput.value = ''; // Clear the search input after redirection
-                    } else {
-                        alert(`No product found matching "${searchTerm}"`); // Basic feedback for no results
-                    }
-                }
-            });
+                    if (matchingProducts.length > 0) {
+                        searchResultsDiv.style.display = 'block';
+                        const suggestionsList = document.createElement('ul');
+                        suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
+
+                        matchingProducts.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
+                            listItem.textContent = product.name;
+                            listItem.addEventListener('click', () => {
+                                window.location.href = `product-details.html?id=${product.id}`;
+                                searchInput.value = ''; // Clear input after selection
+                                searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                            });
+                            suggestionsList.appendChild(listItem);
+                        });
+                        searchResultsDiv.appendChild(suggestionsList);
+                 }
         }
+    });
+
+    // Hide suggestions when clicking outside the search input and results
+    document.addEventListener('click', (event) => {
+        if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+            searchResultsDiv.style.display = 'none';
+        }
+    });
+
     </script>
 </body>
 </html>
