@@ -775,58 +775,29 @@ function generateOrderId() {
 }
 
 function getCartItemsString() {
+    const cart = getCart();
+    if (!Array.isArray(cart) || cart.length === 0) return "No items in cart.";
+    
     let itemsString = "";
-    const cartString = localStorage.getItem('cart');
-    if (cartString) {
-        try {
-            const cart = JSON.parse(cartString);
-            if (Array.isArray(cart)) {
-                cart.forEach(cartItem => {
-                    if (cartItem.items && Array.isArray(cartItem.items)) {
-                        cartItem.items.forEach(item => {
-                            itemsString += `${item.name} (Qty: ${item.quantity}), `;
-                        });
-                    }
-                });
-                itemsString = itemsString.slice(0, -2);
-            } else {
-                itemsString = "Cart data is invalid.";
-            }
-        } catch (error) {
-            console.error("Error parsing cart data:", error);
-            itemsString = "Error reading cart data.";
-        }
-    } else {
-        itemsString = "No items in cart.";
-    }
-    return itemsString;
-}
+    cart.forEach(item => {
+        itemsString += `${item.name} (${item.quantityKey}) x ${item.count}, `;
+    });
 
+    return itemsString.slice(0, -2); // remove last comma
+}
 function getSubtotal() {
-    let subtotal = 0;
-    const cartString = localStorage.getItem('cart');
-    if (cartString) {
-        try {
-            const cart = JSON.parse(cartString);
-            if (Array.isArray(cart)) {
-                cart.forEach(cartItem => {
-                    if (cartItem.items && Array.isArray(cartItem.items)) {
-                        cartItem.items.forEach(item => {
-                            subtotal += item.price * item.quantity;
-                        });
-                    }
-                });
-            }
-        } catch (error) {
-            console.error("Error parsing cart data:", error);
-        }
-    }
-    return subtotal;
+    const cart = getCart();
+    if (!Array.isArray(cart) || cart.length === 0) return 0;
+
+    return cart.reduce((subtotal, item) => {
+        return subtotal + (item.pricePerUnit * item.count);
+    }, 0);
 }
 
 function getTotal() {
-    return parseFloat(orderTotalElement.textContent);
+    return getSubtotal() + parseFloat(document.getElementById('shipping-cost').textContent);
 }
+          });
                 });
     </script>
 </body>
