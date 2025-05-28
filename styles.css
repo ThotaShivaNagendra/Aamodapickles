@@ -140,7 +140,7 @@ input[type=number] {
 
 #searchResults {
     top: calc(100% + 2px); /* Position below the search bar */
-    left: 0;              /* Align to the left of the search bar */
+    right: 0;              /* Align to the right of the search bar */
     /* right: auto; */      /* Remove right alignment */
     width: auto;           /* Adjust width based on content */
     min-width: 200px;      /* Set a minimum width if needed */
