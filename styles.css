@@ -139,9 +139,16 @@ input[type=number] {
 /* Existing CSS rules */
 
 #searchResults {
-    top: 100%; /* Position the top of the div at the bottom of the input */
+    top: calc(100% + 2px); /* Position below the search bar */
     left: 0;
     right: 0;
+    max-height: 150px; /* Set a maximum height for the suggestion box */
+    overflow-y: auto;    /* Enable vertical scrolling if there are many suggestions */
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white; /* Ensure a white background */
 }
 
 #searchResults ul {
@@ -154,6 +161,13 @@ input[type=number] {
     padding: 8px 15px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#searchResults li:last-child {
+    border-bottom: none; /* Remove border from the last item */
 }
 
 #searchResults li:hover {
