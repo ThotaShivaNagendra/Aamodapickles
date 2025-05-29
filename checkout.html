@@ -694,40 +694,48 @@
                           description: "Order from Aamoda Pickles",
                           image: "logo.png",
                           handler: function (response) {
-                              console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
-                              clearCart();
+                          console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
 
-                              const orderData = {
-                                  orderId: orderId, // Include the generated orderId
-                                  fullName: fullName,
-                                  email: email,
-                                  phone: phone,
-                                  address: address,
-                                  city: city,
-                                  state: state,
-                                  zip: zipCode,
-                                  country: country,
-                                  shippingCost: currentShippingCost,
-                                  totalAmount: totalAmountPayable,
-                                  paymentId: response.razorpay_payment_id, // Save paymentId to Firestore
-                                  items: getCart(),
-                                  orderDate: firebase.firestore.FieldValue.serverTimestamp()
-                              };
+                          const cartItems = getCart(); // Get cart items *before* anything else
+                          console.log("Cart contents before saving:", JSON.stringify(cartItems)); // VERY IMPORTANT DEBUG
 
-                              db.collection('orders')
-                                  .doc(orderId) // Use the generated orderId as the document ID
-                                  .set(orderData)
-                                  .then(() => {
-                                      console.log("Order saved to Firestore with ID: ", orderId);
-                                      window.location.href = `thankyou.html?orderId=${orderId}&paymentId=${response.razorpay_payment_id}`; // Redirect with orderId and paymentId
-                                  })
-                                  .catch((error) => {
-                                      console.error("Error saving order to Firestore: ", error);
-                                      alert("Error saving order. Please contact support.");
-                                      // Optionally, redirect to an error page here
-                                  });
-                          },
-                          prefill: {
+                          if (!cartItems || cartItems.length === 0) {
+                              console.warn("Cart is empty! Order will be saved without items.");
+                          }
+
+                          const orderData = {
+                              orderId: orderId,
+                              fullName: fullName,
+                              email: email,
+                              phone: phone,
+                              address: address,
+                              city: city,
+                              state: state,
+                              zipCode: zipCode,
+                              country: country,
+                              shippingCost: currentShippingCost,
+                              totalAmount: totalAmountPayable,
+                              paymentId: response.razorpay_payment_id,
+                              items: cartItems, // Save the cart items
+                              orderDate: firebase.firestore.FieldValue.serverTimestamp()
+                          };
+
+                          console.log("Order data to be saved:", JSON.stringify(orderData)); // Debug: Check all data
+
+                          db.collection('orders')
+                              .doc(orderId)
+                              .set(orderData)
+                              .then(() => {
+                                  console.log("Order saved to Firestore with ID: ", orderId);
+                                  clearCart(); // Clear cart *after* successful save
+                                  window.location.href = `thankyou.html?orderId=${orderId}&paymentId=${response.razorpay_payment_id}`;
+                              })
+                              .catch((error) => {
+                                  console.error("Error saving order to Firestore: ", error);
+                                  alert("Error saving order. Please contact support.");
+                              });
+                      },
+                                                prefill: {
                               name: fullName,
                               email: email,
                               contact: phone
