@@ -696,9 +696,17 @@
                           handler: function (response) {
                           console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
 
-                          const cartItems = getCart(); // Get cart items *before* anything else
-                          console.log("Cart contents before saving:", JSON.stringify(cartItems)); // VERY IMPORTANT DEBUG
+                          
+                          const cartItems = getCart();
+                          console.log("Full cart contents:", JSON.stringify(cartItems)); // Debugging the full cart
 
+                          const processedItems = cartItems.map(item => ({
+                              cartItemId: item.cartItemId,
+                              count: item.count,
+                              pricePerUnit: item.pricePerUnit
+                          }));
+
+                          console.log("Processed items for Firestore:", JSON.stringify(processedItems)); // Debugging the processed items
                           if (!cartItems || cartItems.length === 0) {
                               console.warn("Cart is empty! Order will be saved without items.");
                           }
