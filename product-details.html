@@ -30,9 +30,10 @@
             }
             #add-to-cart-details-btn,
             #view-cart-details-btn {
-                display: inline-block; /* Make them inline-block */
-                width: 48%; /* Approximately half width for each button */
-                margin-bottom: 10px; /* Add some bottom margin */
+                display: inline-block !important; /* Force inline-block */
+                width: 48% !important; /* Force approximate half width */
+                margin-bottom: 10px !important; /* Force some bottom margin */
+                box-sizing: border-box; /* Include padding and border in the width */
             }
             .mb-3 { /* Adjust margin for the quantity select */
                 margin-bottom: 15px;
