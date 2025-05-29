@@ -38,6 +38,7 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 15px;
+                margin-top:15px;
             }
 
             .quantity-input-wrapper {
@@ -178,13 +179,14 @@
                         <select class="form-select" id="quantity-details-select">
                         </select>
                     </div>
-
+                    <div class="quantity-controls"></div>
                         <label for="item-quantity" class="form-label me-2 mb-0 " style="padding-top:10px;">Quantity:</label>
                         <div class="quantity-input-wrapper">
                             <button type="button" id="decrease-quantity" class="quantity-btn">-</button>
                             <input type="number" id="item-quantity" class="form-control" value="1" min="1">
                             <button type="button" id="increase-quantity" class="quantity-btn">+</button>
                         </div>
+                    </div>
                     <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
                     <a href="cart.html" id="view-cart-details-btn" class="btn btn-outline-primary">View Cart</a>
                     <p id="add-to-cart-message" class="mt-2 text-success" style="display: none;">Item added to cart!</p>
