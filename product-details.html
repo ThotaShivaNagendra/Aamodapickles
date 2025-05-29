@@ -22,15 +22,17 @@
                 justify-content: center;
                 margin-bottom: 0px;
             }
-            #add-to-cart-details-btn {
-                display: block; /* Make it a block-level element */
-                margin: 0 auto 10px; /* Center horizontally and add bottom margin */
-                width: 70%; /* Take up a reasonable width on mobile */
-            }
+            #add-to-cart-details-btn,
             #view-cart-details-btn {
-                display: block; /* Make it a block-level element */
-                margin: 0 auto 20px; /* Center horizontally and add bottom margin */
-                width: 70%; /* Take up a reasonable width on mobile */
+                display: inline-block; /* Change to inline-block */
+                width: 48%; /* Adjust width for two buttons side by side */
+                margin-bottom: 10px;
+            }
+            .add-to-cart-section {
+                display: flex;
+                justify-content: flex-start; /* Align items to the start */
+                gap: 4%; /* Space between buttons */
+                flex-wrap: wrap; /* Allow wrapping */
             }
         }
         .product-details-info {
