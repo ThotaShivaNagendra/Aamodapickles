@@ -158,47 +158,80 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const paymentId = localStorage.getItem('paymentId');
-            const orderData = JSON.parse(localStorage.getItem('tempOrderData'));
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        const paymentIdFromUrl = urlParams.get('paymentId');
 
+        const paymentIdElement = document.getElementById('paymentId');
+        const orderIdElement = document.getElementById('orderId');
+        const customerNameElement = document.getElementById('customerName');
+        const customerEmailElement = document.getElementById('customerEmail');
+        const customerPhoneElement = document.getElementById('customerPhone');
+        const customerAddressElement = document.getElementById('customerAddress');
+        const customerCityElement = document.getElementById('customerCity');
+        const customerStateElement = document.getElementById('customerState');
+        const customerZipElement = document.getElementById('customerZip');
+        const customerCountryElement = document.getElementById('customerCountry');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const shippingCostElement = document.getElementById('shippingCost');
+        const orderItemsContainer = document.getElementById('orderItems');
 
-            if (orderData) {
-                document.getElementById('orderId').textContent = orderData.orderDate;
-                document.getElementById('customerName').textContent = orderData.fullName;
-                document.getElementById('customerEmail').textContent = orderData.email;
-                document.getElementById('customerPhone').textContent = orderData.phone;
-                document.getElementById('customerAddress').textContent = orderData.address;
-                document.getElementById('customerCity').textContent = orderData.city;
-                document.getElementById('customerState').textContent = orderData.state;
-                document.getElementById('customerZip').textContent = orderData.zip;
-                document.getElementById('customerCountry').textContent = orderData.country;
-                document.getElementById('totalAmount').textContent = orderData.totalAmount.toFixed(2);
-                document.getElementById('shippingCost').textContent = orderData.shippingCost.toFixed(2);
-                document.getElementById('paymentId').textContent = paymentId;
+        if (paymentIdElement) {
+            paymentIdElement.textContent = paymentIdFromUrl || "Not Available";
+        }
 
+        if (orderId) {
+            db.collection('orders').doc(orderId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const order = doc.data();
+                        console.log('Order details retrieved from Firestore:', order);
 
-                const orderItemsContainer = document.getElementById('orderItems');
-                orderData.items.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.classList.add('order-item');
-                    itemDiv.innerHTML = `
-                        <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
-                        <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
-                    `;
-                    orderItemsContainer.appendChild(itemDiv);
+                        if (orderIdElement) orderIdElement.textContent = order.orderId;
+                        if (customerNameElement) customerNameElement.textContent = order.fullName;
+                        if (customerEmailElement) customerEmailElement.textContent = order.email;
+                        if (customerPhoneElement) customerPhoneElement.textContent = order.phone;
+                        if (customerAddressElement) customerAddressElement.textContent = order.address;
+                        if (customerCityElement) customerCityElement.textContent = order.city;
+                        if (customerStateElement) customerStateElement.textContent = order.state;
+                        if (customerZipElement) customerZipElement.textContent = order.zipCode;
+                        if (customerCountryElement) customerCountryElement.textContent = order.country;
+                        if (totalAmountElement) totalAmountElement.textContent = order.totalAmount.toFixed(2);
+                        if (shippingCostElement) shippingCostElement.textContent = order.shippingCost.toFixed(2);
+
+                        if (order.items && Array.isArray(order.items)) {
+                            order.items.forEach(item => {
+                                const itemDiv = document.createElement('div');
+                                itemDiv.classList.add('order-item');
+                                itemDiv.innerHTML = `
+                                    <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
+                                    <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                `;
+                                orderItemsContainer.appendChild(itemDiv);
+                            });
+                        }
+
+                        // No need to rely on localStorage anymore for order data
+                        // localStorage.removeItem('tempOrderData');
+                        // localStorage.removeItem('paymentId');
+
+                    } else {
+                        document.querySelector('.thank-you-container').innerHTML =
+                            '<p class="text-center">Order details not found for ID: ' + orderId + '. Please contact support.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error retrieving order from Firestore:', error);
+                    document.querySelector('.thank-you-container').innerHTML =
+                        '<p class="text-center">Error retrieving order details. Please contact support.</p>';
                 });
-
-                // Clear temporary data after displaying
-                localStorage.removeItem('tempOrderData');
-                localStorage.removeItem('paymentId');
-            } else {
-                document.querySelector('.thank-you-container').innerHTML =
-                    '<p class="text-center">Could not retrieve order details. Please contact support.</p>';
-            }
-        });
-    </script>
+        } else {
+            document.querySelector('.thank-you-container').innerHTML =
+                '<p class="text-center">No Order ID provided. Please contact support.</p>';
+        }
+    });
+</script>
 </body>
 
 </html>

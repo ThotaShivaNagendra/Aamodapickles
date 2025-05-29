@@ -680,8 +680,11 @@
             const country = document.getElementById('country').value;
 
             // Recalculate shipping just before payment to ensure latest values
-            const currentShippingCost = calculateShipping(); // This also updates the displayed total
-            const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
+             const currentShippingCost = calculateShipping();
+            const totalAmountPayable = parseFloat(orderTotalElement.textContent);
+
+            // Generate a unique Order ID
+            const orderId = generateOrderId();
 
             const options = {
                 key: "rzp_test_dzr0ExL25Pj8II",
@@ -693,11 +696,9 @@
                 handler: function (response) {
                     console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
                     clearCart();
-                    // Store payment ID in localStorage
-                    localStorage.setItem('paymentId', response.razorpay_payment_id);
-                    window.location.href = 'thankyou.html'; // Redirect to thankyou.html
 
                     const orderData = {
+                        orderId: orderId, // Include the generated orderId
                         fullName: fullName,
                         email: email,
                         phone: phone,
@@ -708,24 +709,22 @@
                         country: country,
                         shippingCost: currentShippingCost,
                         totalAmount: totalAmountPayable,
-                        paymentId: response.razorpay_payment_id,
+                        paymentId: response.razorpay_payment_id, // Save paymentId to Firestore
                         items: getCart(),
                         orderDate: firebase.firestore.FieldValue.serverTimestamp()
                     };
 
                     db.collection('orders')
-                        .add(orderData)
-                        .then((docRef) => {
-                            console.log("Order saved to Firestore with ID: ", docRef.id);
-                            //  IMPORTANT:  We are NOT sending emails here due to the 'completely free' constraint.
-                            //  In a real application, you would use a service like SendGrid/Mailgun (costs money)
-                            //  or Firebase Cloud Functions (has a free tier but can incur costs).
-                            //  Instead, we are relying on displaying order details on thankyou.html.
-                            localStorage.setItem('tempOrderData', JSON.stringify(orderData)); // Temporarily save order data
+                        .doc(orderId) // Use the generated orderId as the document ID
+                        .set(orderData)
+                        .then(() => {
+                            console.log("Order saved to Firestore with ID: ", orderId);
+                            window.location.href = `thankyou.html?orderId=${orderId}&paymentId=${response.razorpay_payment_id}`; // Redirect with orderId and paymentId
                         })
                         .catch((error) => {
                             console.error("Error saving order to Firestore: ", error);
                             alert("Error saving order. Please contact support.");
+                            // Optionally, redirect to an error page here
                         });
                 },
                 prefill: {
@@ -760,6 +759,12 @@
             });
             rzp.open();
         });
+
+        function generateOrderId() {
+            const timestamp = Date.now().toString(36);
+            const random = Math.random().toString(36).substr(2, 5);
+            return timestamp + '-' + random;
+        }
     });
     </script>
 </body>
