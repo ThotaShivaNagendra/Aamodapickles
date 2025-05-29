@@ -221,9 +221,8 @@
                                     const itemDiv = document.createElement('div');
                                     itemDiv.classList.add('order-item');
                                     itemDiv.innerHTML = `
-                                        <span>${item.product.name} (${item.product.weight}) x ${item.count}</span>
-                                        <span style="float: right;">₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
-                                    `;
+                                         <span>cartItemId: ${item.cartItemId}, Count: ${item.count}, Price: ₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                `;
                                     orderItemsContainer.appendChild(itemDiv);
                                 });
                             }
