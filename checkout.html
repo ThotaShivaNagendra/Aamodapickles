@@ -650,70 +650,87 @@
             });
 
 
-            // ----  Razorpay Integration (will be in Part 2) ----
-            checkoutForm.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevent default form submission
+            // ----  Razorpay Integration ----
+        checkoutForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
 
-                // Get form data
-                const fullName = document.getElementById('fullName').value;
-                const email = document.getElementById('email').value;
-                const phone = document.getElementById('phone').value;
-                const address = document.getElementById('address').value;
-                const city = document.getElementById('city').value;
-                const state = document.getElementById('state').value;
-                const zipCode = document.getElementById('zip').value;
-                const country = document.getElementById('country').value;
+            // Get form data
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const zipCode = document.getElementById('zip').value;
+            const country = document.getElementById('country').value;
 
-                // Recalculate shipping just before payment to ensure latest values
-                const currentShippingCost = calculateShipping(); // This also updates the displayed total
-                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
+            // Recalculate shipping just before payment to ensure latest values
+            const currentShippingCost = calculateShipping(); // This also updates the displayed total
+            const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
 
-                const options = {
-                    key: "rzp_test_dzr0ExL25Pj8II",
-                    amount: totalAmountPayable * 100,
-                    currency: "INR",
-                    name: "Aamoda Pickles",
-                    description: "Order from Aamoda Pickles",
-                    image: "logo.png",
-                    handler: function (response) {
-                       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                       console.log("Payment Response:", response);
-                       clearCart();
-                       window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id; // Redirect with payment ID
-                    },
-                    prefill: {
-                        name: fullName,
+            const options = {
+                key: "rzp_test_dzr0ExL25Pj8II",
+                amount: totalAmountPayable * 100,
+                currency: "INR",
+                name: "Aamoda Pickles",
+                description: "Order from Aamoda Pickles",
+                image: "logo.png",
+                handler: function (response) {
+                    console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
+                    clearCart();
+                    window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id; // Redirect with payment ID
+                    // You might want to save order details and payment ID to your backend here (Firebase or your server)
+                    const orderData = {
+                        fullName: fullName,
                         email: email,
-                        contact: phone
-                    },
-                    notes: {
+                        phone: phone,
                         address: address,
                         city: city,
                         state: state,
                         zip: zipCode,
                         country: country,
                         shippingCost: currentShippingCost,
-                        totalWeight: totalWeight / 1000
-                    },
-                    theme: {
-                        color: "#400607"
-                    },
-                    modal: {
-                        ondismiss: function () {
-                            console.log("Payment popup closed by user.");
-                            alert("Payment popup was closed. If you need help, feel free to contact us.");
-                        }
+                        totalAmount: totalAmountPayable,
+                        paymentId: response.razorpay_payment_id,
+                        items: getCart() // Assuming getCart() returns the array of cart items
+                        // Add other relevant order details
+                    };
+                    console.log("Order Data for Backend:", orderData);
+                    // In a real application, you would send this orderData to your server or Firebase
+                },
+                prefill: {
+                    name: fullName,
+                    email: email,
+                    contact: phone
+                },
+                notes: {
+                    address: address,
+                    city: city,
+                    state: state,
+                    zip: zipCode,
+                    country: country,
+                    shippingCost: currentShippingCost,
+                    totalWeight: totalWeight / 1000
+                },
+                theme: {
+                    color: "#400607"
+                },
+                modal: {
+                    ondismiss: function () {
+                        console.log("Payment popup closed by user.");
+                        alert("Payment popup was closed. If you need help, feel free to contact us.");
                     }
-                };
+                }
+            };
 
-                const rzp = new Razorpay(options);
-                rzp.on('payment.failed', function (response) {
-                    console.error("Payment failed:", response.error);
-                    alert("Payment failed. Please try again.\nReason: " + response.error.description);
-                });
-                rzp.open();
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+                console.error("Payment failed:", response.error);
+                alert("Payment failed. Please try again.\nReason: " + response.error.description);
             });
+            rzp.open();
         });
+      });
     </script>
 </body>
 
