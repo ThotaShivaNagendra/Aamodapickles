@@ -221,7 +221,7 @@
                                     const itemDiv = document.createElement('div');
                                     itemDiv.classList.add('order-item');
                                     itemDiv.innerHTML = `
-                                         <span>${item.cartItemId} x ${item.count} = ₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                         <span>      (${item.cartItemId}) x ${item.count} = ₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
                                 `;
                                     orderItemsContainer.appendChild(itemDiv);
                                 });
