@@ -22,18 +22,13 @@
                 justify-content: center;
                 margin-bottom: 0px;
             }
-            .add-to-cart-section {
-                display: flex; /* Enable flexbox for buttons */
-                align-items: flex-start; /* Align items to the start */
-                gap: 4%; /* Space between buttons */
-                flex-wrap: wrap; /* Allow wrapping if necessary */
-            }
             #add-to-cart-details-btn,
             #view-cart-details-btn {
-                display: inline-block !important; /* Force inline-block */
-                width: 48% !important; /* Force approximate half width */
-                margin-bottom: 10px !important; /* Force some bottom margin */
-                box-sizing: border-box; /* Include padding and border in the width */
+                display: inline-block; /* Be explicit for desktop too */
+                box-sizing: border-box; /* Consistent box-sizing */
+                padding: 10px 20px;
+                font-size: 1.1rem;
+                margin-bottom: 20px;
             }
             .mb-3 { /* Adjust margin for the quantity select */
                 margin-bottom: 15px;
@@ -49,12 +44,7 @@
             align-items: center; /* Align buttons vertically on desktop */
             flex-wrap: wrap; /* Allow buttons to wrap on smaller desktops */
         }
-        #add-to-cart-details-btn,
-        #view-cart-details-btn {
-            padding: 10px 20px; /* Increase padding for a slightly larger button */
-            font-size: 1.1rem; /* Slightly increase font size of the button text */
-            margin-bottom: 20px; /* Add margin below the buttons */
-        }
+        
         @media (min-width: 768px) {
             .product-image-container {
                 /* You can adjust these values to increase the image size on desktop */
