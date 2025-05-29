@@ -724,7 +724,7 @@
                               shippingCost: currentShippingCost,
                               totalAmount: totalAmountPayable,
                               paymentId: response.razorpay_payment_id,
-                              items: cartItems, // Save the cart items
+                              items: processedItems, // Save the cart items
                               orderDate: firebase.firestore.FieldValue.serverTimestamp()
                           };
 
