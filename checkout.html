@@ -198,7 +198,6 @@
     <script src="cart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-           loadCart();
             updateCartIcon();
 
             const orderSummaryItemsContainer = document.getElementById('order-summary-items');
@@ -650,140 +649,71 @@
                 }
             });
 
-            //razorpay section
-          checkoutForm.addEventListener('submit', function (e) {
-    e.preventDefault();
 
-    // Get form data
-    const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const address = document.getElementById('address').value;
-    const city = document.getElementById('city').value;
-    const state = document.getElementById('state').value;
-    const zipCode = document.getElementById('zip').value;
-    const country = document.getElementById('country').value;
+            // ----  Razorpay Integration (will be in Part 2) ----
+            checkoutForm.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent default form submission
 
-    // Recalculate shipping
-    const currentShippingCost = calculateShipping();
-    const totalAmountPayable = parseFloat(orderTotalElement.textContent);
+                // Get form data
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const zipCode = document.getElementById('zip').value;
+                const country = document.getElementById('country').value;
 
-    // --- Use Helper Functions ---
-    const orderId = generateOrderId();
-    const items = getCartItemsString();
-    const subtotal = getSubtotal();
-    const total = getTotal();
-    const paymentStatus = "Paid"; // Consider updating based on Razorpay response
-    // --------------------------
-    const options = {
-        key: "rzp_test_dzr0ExL25Pj8II", // Your Razorpay key
-        amount: totalAmountPayable * 100,
-        currency: "INR",
-        name: "Aamoda Pickles",
-        description: "Order from Aamoda Pickles",
-        image: "logo.png",
-        handler: function (response) {
-            const orderData = {
-                orderId,
-                fullName,
-                email,
-                phone,
-                address,
-                city,
-                state,
-                zip: zipCode,
-                items,
-                subtotal,
-                shippingCost: currentShippingCost,
-                total: totalAmountPayable,
-                paymentStatus: "Paid"
-            };
+                // Recalculate shipping just before payment to ensure latest values
+                const currentShippingCost = calculateShipping(); // This also updates the displayed total
+                const totalAmountPayable = parseFloat(orderTotalElement.textContent); // Get parsed total from display
 
-            fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(orderData)
-            })
-            .then(res => res.text())
-            .then(data => {
-                console.log("Order saved:", data);
-                clearCart();
-                window.location.href = "thankyou.html?payment_id=" + response.razorpay_payment_id;
-            })
-            .catch(err => {
-                console.error("Order save failed:", err);
-                alert("Payment succeeded but order was not saved. Please contact support.");
+                const options = {
+                    key: "rzp_test_dzr0ExL25Pj8II",
+                    amount: totalAmountPayable * 100,
+                    currency: "INR",
+                    name: "Aamoda Pickles",
+                    description: "Order from Aamoda Pickles",
+                    image: "logo.png",
+                    handler: function (response) {
+                       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                       console.log("Payment Response:", response);
+                       clearCart();
+                       window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id; // Redirect with payment ID
+                    },
+                    prefill: {
+                        name: fullName,
+                        email: email,
+                        contact: phone
+                    },
+                    notes: {
+                        address: address,
+                        city: city,
+                        state: state,
+                        zip: zipCode,
+                        country: country,
+                        shippingCost: currentShippingCost,
+                        totalWeight: totalWeight / 1000
+                    },
+                    theme: {
+                        color: "#400607"
+                    },
+                    modal: {
+                        ondismiss: function () {
+                            console.log("Payment popup closed by user.");
+                            alert("Payment popup was closed. If you need help, feel free to contact us.");
+                        }
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (response) {
+                    console.error("Payment failed:", response.error);
+                    alert("Payment failed. Please try again.\nReason: " + response.error.description);
+                });
+                rzp.open();
             });
-        },
-        prefill: {
-            name: fullName,
-            email: email,
-            contact: phone
-        },
-        notes: {
-            address: address,
-            city: city,
-            state: state,
-            zip: zipCode,
-            country: country,
-            shippingCost: currentShippingCost,
-            totalWeight: totalWeight / 1000
-        },
-        theme: {
-            color: "#400607"
-        },
-        modal: {
-            ondismiss: function () {
-                console.log("Payment popup closed by user.");
-                alert("Payment popup was closed. If you need help, feel free to contact us.");
-            }
-        }
-    };
-
-
-    const rzp = new Razorpay(options);
-    rzp.on('payment.failed', function (response) {
-        console.error("Payment failed:", response.error);
-        alert("Payment failed. Please try again.\\nReason: " + response.error.description);
-    });
-    rzp.open();
-
-        
-    // ---- Helper Functions ----
-
-    function generateOrderId() {
-        const timestamp = Date.now().toString(36);
-        const random = Math.random().toString(36).substr(2, 5);
-        return timestamp + '-' + random;
-    }
-
-    function getCartItemsString() {
-        const cart = getCart();
-        if (!Array.isArray(cart) || cart.length === 0) return "No items in cart.";
-        
-        let itemsString = "";
-        cart.forEach(item => {
-            itemsString += `${item.name} (${item.quantityKey}) x ${item.count}, `;
         });
-
-        return itemsString.slice(0, -2); // remove last comma
-    }
-    function getSubtotal() {
-        const cart = getCart();
-        if (!Array.isArray(cart) || cart.length === 0) return 0;
-
-        return cart.reduce((subtotal, item) => {
-            return subtotal + (item.pricePerUnit * item.count);
-        }, 0);
-    }
-
-    function getTotal() {
-        return getSubtotal() + parseFloat(document.getElementById('shipping-cost').textContent);
-    }
-              });
-                    });
     </script>
 </body>
 
