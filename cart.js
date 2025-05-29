@@ -44,7 +44,7 @@ function addToCart(productId, quantityKey, count) {
 
     if (existingItemIndex > -1) {
         // If item exists, update its count
-        cart[existingItemIndex].count += count;
+        cart[existingItemIndex].count += parseInt(count, 10); // Ensure count is treated as a number
     } else {
         // If item does not exist, add it to the cart
         cart.push({
@@ -54,7 +54,7 @@ function addToCart(productId, quantityKey, count) {
             image: product.image,
             quantityKey: quantityKey, // e.g., '250gm'
             pricePerUnit: product.prices[quantityKey], // Price for one unit of this quantity
-            count: count // Number of units of this quantity
+            count: parseInt(count, 10) // Ensure count is treated as a number
         });
     }
     saveCart(); // Save the updated cart to localStorage
@@ -68,15 +68,14 @@ function addToCart(productId, quantityKey, count) {
 function updateCartItem(cartItemId, newCount) {
     const itemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
     if (itemIndex > -1) {
-        if (newCount <= 0) {
+        const parsedNewCount = parseInt(newCount, 10);
+        if (!isNaN(parsedNewCount) && parsedNewCount > 0) {
+            cart[itemIndex].count = parsedNewCount;
+            saveCart(); // Save changes
+            updateCartIcon(); // Update cart icon
+        } else if (!isNaN(parsedNewCount) && parsedNewCount <= 0) {
             // If new count is 0 or less, remove the item
             removeCartItem(cartItemId);
-        } else {
-            // Otherwise, update the count
-            cart[itemIndex].count = newCount;
-            saveCart(); // Save changes
-            // renderCart(); // Re-render the cart page if applicable - this function is specific to cart.html
-            updateCartIcon(); // Update cart icon
         }
     }
 }
@@ -86,7 +85,6 @@ function updateCartItem(cartItemId, newCount) {
 function removeCartItem(cartItemId) {
     cart = cart.filter(item => item.cartItemId !== cartItemId);
     saveCart(); // Save changes
-    // renderCart(); // Re-render the cart page if applicable - this function is specific to cart.html
     updateCartIcon(); // Update cart icon
 }
 
@@ -109,24 +107,24 @@ function clearCart() {
 
 // Function to update the number displayed on the cart icon in the navbar
 function updateCartIcon() {
-  const cart = getCart();
-  const cartIconCountMobile = document.getElementById('cart-icon-count-mobile');
-  const cartIconCountDesktop = document.getElementById('cart-icon-count-desktop');
+    const currentCart = getCart();
+    const cartIconCountMobile = document.getElementById('cart-icon-count-mobile');
+    const cartIconCountDesktop = document.getElementById('cart-icon-count-desktop');
 
-  const itemCount = cart.reduce((sum, item) => sum + item.count, 0);
+    const itemCount = currentCart.reduce((sum, item) => sum + item.count, 0);
 
-  if (cartIconCountMobile) {
-    cartIconCountMobile.textContent = itemCount;
-  }
-  if (cartIconCountDesktop) {
-    cartIconCountDesktop.textContent = itemCount;
-  }
+    if (cartIconCountMobile) {
+        cartIconCountMobile.textContent = itemCount;
+    }
+    if (cartIconCountDesktop) {
+        cartIconCountDesktop.textContent = itemCount;
+    }
 }
+
 // Function to get product details by ID from the products array
 function getProductById(productId) {
     return products.find(product => product.id === productId);
 }
-
 
 // Load the cart when the script is first loaded (on page load)
 document.addEventListener('DOMContentLoaded', loadCart);
