@@ -22,17 +22,20 @@
                 justify-content: center;
                 margin-bottom: 0px;
             }
+            .add-to-cart-section {
+                display: flex; /* Enable flexbox for buttons */
+                align-items: flex-start; /* Align items to the start */
+                gap: 4%; /* Space between buttons */
+                flex-wrap: wrap; /* Allow wrapping if necessary */
+            }
             #add-to-cart-details-btn,
             #view-cart-details-btn {
-                display: inline-block; /* Change to inline-block */
-                width: 48%; /* Adjust width for two buttons side by side */
-                margin-bottom: 10px;
+                display: inline-block; /* Make them inline-block */
+                width: 48%; /* Approximately half width for each button */
+                margin-bottom: 10px; /* Add some bottom margin */
             }
-            .add-to-cart-section {
-                display: flex;
-                justify-content: flex-start; /* Align items to the start */
-                gap: 4%; /* Space between buttons */
-                flex-wrap: wrap; /* Allow wrapping */
+            .mb-3 { /* Adjust margin for the quantity select */
+                margin-bottom: 15px;
             }
         }
         .product-details-info {
@@ -40,10 +43,10 @@
         }
         .add-to-cart-section {
             margin-top: 30px; /* Add space above the add to cart elements */
-            display: flex; /* Enable flexbox for buttons */
-            gap: 10px; /* Space between buttons */
-            align-items: center; /* Align buttons vertically */
-            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            display: flex; /* Enable flexbox for buttons on desktop */
+            gap: 10px; /* Space between buttons on desktop */
+            align-items: center; /* Align buttons vertically on desktop */
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller desktops */
         }
         #add-to-cart-details-btn,
         #view-cart-details-btn {
