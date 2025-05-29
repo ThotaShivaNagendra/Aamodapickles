@@ -721,50 +721,56 @@
     rzp.open();
 
     // --- Fetch Request ---
+    handler: function (response) {
+    // Collect all customer and order data
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const state = document.getElementById('state').value;
+    const zip = document.getElementById('zip').value;
+    const items = getCart().map(item => `${item.name} (${item.quantityKey}) x ${item.count}`).join(", ");
+    const subtotal = parseFloat(document.getElementById("order-subtotal").textContent);
+    const shippingCost = parseFloat(document.getElementById("shipping-cost").textContent);
+    const total = parseFloat(document.getElementById("order-total").textContent);
+    const orderId = "ORD" + Math.floor(Math.random() * 1000000); // or use Razorpay ID
+
     const orderData = {
-        orderId: orderId,
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        state: state,
-        zip: zipCode,
-        items: items,
-        subtotal: subtotal,
-        shippingCost: currentShippingCost,
-        total: totalAmountPayable,
-        paymentStatus: paymentStatus
+        orderId,
+        fullName,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        zip,
+        items,
+        subtotal,
+        shippingCost,
+        total,
+        paymentStatus: "Paid"
     };
 
-   fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        orderId: orderId,
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        state: state,
-        zip: zipCode,
-        items: items,
-        subtotal: subtotal,
-        shippingCost: currentShippingCost,
-        total: totalAmountPayable,
-        paymentStatus: "Paid"
+    // Send to Google Apps Script
+    fetch("https://script.google.com/macros/s/AKfycbwfblgOJYJCm0XiNjzRjil-UeNed7YSdi0IBEUhO9St3JtYb2Sqw-hbbXLL8WoIEmH2WQ/exec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(orderData)
     })
-})
-.then(response => response.text())
-.then(data => {
-    console.log("Order saved:", data);
-    clearCart();
-    window.location.href = 'thankyou.html?payment_id=' + response.razorpay_payment_id;
-})
-.catch(error => console.error("Error saving order:", error));
+    .then(res => res.text())
+    .then(data => {
+        console.log("Order saved:", data);
+        clearCart(); // clear cart only after save
+        window.location.href = "thankyou.html?payment_id=" + response.razorpay_payment_id;
+    })
+    .catch(err => {
+        console.error("Order save failed:", err);
+        alert("Payment succeeded but order was not saved. Please contact support.");
+    });
+}
 
 // ---- Helper Functions ----
 
