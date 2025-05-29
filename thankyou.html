@@ -158,80 +158,88 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('orderId');
-        const paymentIdFromUrl = urlParams.get('paymentId');
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+              const firebaseConfig = {
+                apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
+                authDomain: "aamoda-pickles.firebaseapp.com",
+                projectId: "aamoda-pickles",
+                storageBucket: "aamoda-pickles.firebasestorage.app",
+                messagingSenderId: "1009552622686",
+                appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
+                measurementId: "G-D1CVE3WP7N"
+              };
+              firebase.initializeApp(firebaseConfig);
+              const db = firebase.firestore();
+            document.addEventListener('DOMContentLoaded', () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const orderId = urlParams.get('orderId');
+                const paymentIdFromUrl = urlParams.get('paymentId');
 
-        const paymentIdElement = document.getElementById('paymentId');
-        const orderIdElement = document.getElementById('orderId');
-        const customerNameElement = document.getElementById('customerName');
-        const customerEmailElement = document.getElementById('customerEmail');
-        const customerPhoneElement = document.getElementById('customerPhone');
-        const customerAddressElement = document.getElementById('customerAddress');
-        const customerCityElement = document.getElementById('customerCity');
-        const customerStateElement = document.getElementById('customerState');
-        const customerZipElement = document.getElementById('customerZip');
-        const customerCountryElement = document.getElementById('customerCountry');
-        const totalAmountElement = document.getElementById('totalAmount');
-        const shippingCostElement = document.getElementById('shippingCost');
-        const orderItemsContainer = document.getElementById('orderItems');
+                const paymentIdElement = document.getElementById('paymentId');
+                const orderIdElement = document.getElementById('orderId');
+                const customerNameElement = document.getElementById('customerName');
+                const customerEmailElement = document.getElementById('customerEmail');
+                const customerPhoneElement = document.getElementById('customerPhone');
+                const customerAddressElement = document.getElementById('customerAddress');
+                const customerCityElement = document.getElementById('customerCity');
+                const customerStateElement = document.getElementById('customerState');
+                const customerZipElement = document.getElementById('customerZip');
+                const customerCountryElement = document.getElementById('customerCountry');
+                const totalAmountElement = document.getElementById('totalAmount');
+                const shippingCostElement = document.getElementById('shippingCost');
+                const orderItemsContainer = document.getElementById('orderItems');
 
-        if (paymentIdElement) {
-            paymentIdElement.textContent = paymentIdFromUrl || "Not Available";
-        }
+                if (paymentIdElement) {
+                    paymentIdElement.textContent = paymentIdFromUrl || "Not Available";
+                }
 
-        if (orderId) {
-            db.collection('orders').doc(orderId).get()
-                .then(doc => {
-                    if (doc.exists) {
-                        const order = doc.data();
-                        console.log('Order details retrieved from Firestore:', order);
+                if (orderId) {
+                    db.collection('orders').doc(orderId).get()
+                        .then(doc => {
+                            if (doc.exists) {
+                                const order = doc.data();
+                                console.log('Order details retrieved from Firestore:', order);
 
-                        if (orderIdElement) orderIdElement.textContent = order.orderId;
-                        if (customerNameElement) customerNameElement.textContent = order.fullName;
-                        if (customerEmailElement) customerEmailElement.textContent = order.email;
-                        if (customerPhoneElement) customerPhoneElement.textContent = order.phone;
-                        if (customerAddressElement) customerAddressElement.textContent = order.address;
-                        if (customerCityElement) customerCityElement.textContent = order.city;
-                        if (customerStateElement) customerStateElement.textContent = order.state;
-                        if (customerZipElement) customerZipElement.textContent = order.zipCode;
-                        if (customerCountryElement) customerCountryElement.textContent = order.country;
-                        if (totalAmountElement) totalAmountElement.textContent = order.totalAmount.toFixed(2);
-                        if (shippingCostElement) shippingCostElement.textContent = order.shippingCost.toFixed(2);
+                                if (orderIdElement) orderIdElement.textContent = order.orderId;
+                                if (customerNameElement) customerNameElement.textContent = order.fullName;
+                                if (customerEmailElement) customerEmailElement.textContent = order.email;
+                                if (customerPhoneElement) customerPhoneElement.textContent = order.phone;
+                                if (customerAddressElement) customerAddressElement.textContent = order.address;
+                                if (customerCityElement) customerCityElement.textContent = order.city;
+                                if (customerStateElement) customerStateElement.textContent = order.state;
+                                if (customerZipElement) customerZipElement.textContent = order.zipCode;
+                                if (customerCountryElement) customerCountryElement.textContent = order.country;
+                                if (totalAmountElement) totalAmountElement.textContent = order.totalAmount.toFixed(2);
+                                if (shippingCostElement) shippingCostElement.textContent = order.shippingCost.toFixed(2);
 
-                        if (order.items && Array.isArray(order.items)) {
-                            order.items.forEach(item => {
-                                const itemDiv = document.createElement('div');
-                                itemDiv.classList.add('order-item');
-                                itemDiv.innerHTML = `
-                                    <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
-                                    <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
-                                `;
-                                orderItemsContainer.appendChild(itemDiv);
-                            });
-                        }
+                                if (order.items && Array.isArray(order.items)) {
+                                    order.items.forEach(item => {
+                                        const itemDiv = document.createElement('div');
+                                        itemDiv.classList.add('order-item');
+                                        itemDiv.innerHTML = `
+                                            <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
+                                            <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                        `;
+                                        orderItemsContainer.appendChild(itemDiv);
+                                    });
+                                }
 
-                        // No need to rely on localStorage anymore for order data
-                        // localStorage.removeItem('tempOrderData');
-                        // localStorage.removeItem('paymentId');
-
-                    } else {
-                        document.querySelector('.thank-you-container').innerHTML =
-                            '<p class="text-center">Order details not found for ID: ' + orderId + '. Please contact support.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error retrieving order from Firestore:', error);
+                            } else {
+                                document.querySelector('.thank-you-container').innerHTML =
+                                    '<p class="text-center">Order details not found for ID: ' + orderId + '. Please contact support.</p>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error retrieving order from Firestore:', error);
+                            document.querySelector('.thank-you-container').innerHTML =
+                                '<p class="text-center">Error retrieving order details. Please contact support.</p>';
+                        });
+                } else {
                     document.querySelector('.thank-you-container').innerHTML =
-                        '<p class="text-center">Error retrieving order details. Please contact support.</p>';
-                });
-        } else {
-            document.querySelector('.thank-you-container').innerHTML =
-                '<p class="text-center">No Order ID provided. Please contact support.</p>';
-        }
-    });
-</script>
+                        '<p class="text-center">No Order ID provided. Please contact support.</p>';
+                }
+            });
+        </script>
 </body>
 
 </html>
