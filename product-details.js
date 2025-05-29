@@ -1,279 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - Aamoda Pickles</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <style>
-        /* Custom styles for product details page */
-        @media (max-width: 767.98px) {
-            .product-image-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 0px;
-            }
-            #add-to-cart-details-btn,
-            #view-cart-details-btn {
-                display: inline-block; /* Be explicit for desktop too */
-                box-sizing: border-box; /* Consistent box-sizing */
-                padding: 10px 20px !important;
-                font-size: 1.1rem !important;
-                margin-bottom: 10px !important;
-                width: 48% !important; /* Force approximate half width */
-            }
-            .mb-3 { /* Adjust margin for the quantity select */
-                margin-bottom: 15px;
-            }
-            .quantity-controls {
-                display: flex;
-                align-items: center;
-                margin-bottom: 15px;
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    const productNameDetails = document.getElementById('product-name-details');
+    const productImageDetails = document.getElementById('product-image-details');
+    const productDescriptionDetails = document.getElementById('product-description-details');
+    const productIngredientsDetails = document.getElementById('product-ingredients-details');
+    const quantityDetailsSelect = document.getElementById('quantity-details');
+    const addToCartDetailsBtn = document.getElementById('add-to-cart-details-btn');
+    const addToCartMessage = document.getElementById('add-to-cart-message');
+
+    if (productId) {
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            productNameDetails.textContent = product.name;
+            productImageDetails.src = product.image;
+            productImageDetails.alt = product.name;
+            productDescriptionDetails.textContent = product.description || 'No description available.';
+            productIngredientsDetails.textContent = product.ingredients ? product.ingredients.join(', ') : 'No ingredients listed.';
+
+            // Populate quantity options
+            for (const key in product.prices) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${key} - ₹${product.prices[key]}`;
+                quantityDetailsSelect.appendChild(option);
             }
 
-            .quantity-input-wrapper {
-                display: flex;
-                align-items: center;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                overflow: hidden;
-                width: 100px; /* Adjust width for mobile */
-            }
+            addToCartDetailsBtn.addEventListener('click', () => {
+                const selectedQuantityKey = quantityDetailsSelect.value;
+                addToCart(productId, selectedQuantityKey, 1);
+                addToCartMessage.style.display = 'block';
+                setTimeout(() => {
+                    addToCartMessage.style.display = 'none';
+                }, 2000); // Hide message after 2 seconds
+            });
 
-            .quantity-btn {
-                background: none;
-                border: none;
-                padding: 8px 10px;
-                cursor: pointer;
-                font-size: 1em;
-            }
-
-            .quantity-input-wrapper input[type="number"] {
-                width: 40px;
-                padding: 8px 5px;
-                text-align: center;
-                border: none;
-                -webkit-appearance: none;
-                -moz-appearance: textfield;
-            }
+            updateCartIcon(); // Ensure cart icon is updated on page load
+        } else {
+            document.querySelector('.container > .row').innerHTML = '<p class="text-danger">Product not found.</p>';
         }
-        .product-details-info {
-            padding-left: 10px; /* Add some space between image and text */
-        }
-        .add-to-cart-section {
-            margin-top: 30px; /* Add space above the add to cart elements */
-            display: flex; /* Enable flexbox for buttons on desktop */
-            gap: 10px; /* Space between buttons on desktop */
-            align-items: flex-start; /* Align items vertically on desktop */
-            flex-wrap: wrap; /* Allow buttons to wrap on smaller desktops */
-        }
-
-        @media (min-width: 768px) {
-            .product-image-container {
-                /* You can adjust these values to increase the image size on desktop */
-                max-width: 400px; /* Example: Set a maximum width */
-                /* You might also want to adjust height or use other properties like width: auto; height: auto; */
-            }
-            .add-to-cart-section {
-                justify-content: flex-start; /* Align buttons to the left on desktop */
-                align-items: center; /* Align items vertically on desktop */
-            }
-            .quantity-controls {
-                display: flex;
-                align-items: center;
-                margin-bottom: 15px; /* Adjust spacing */
-            }
-
-            .quantity-input-wrapper {
-                display: flex;
-                align-items: center;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                overflow: hidden;
-                width: 120px; /* Adjust width as needed */
-            }
-
-            .quantity-btn {
-                background: none;
-                border: none;
-                padding: 8px 10px;
-                cursor: pointer;
-                font-size: 1em;
-            }
-
-            .quantity-input-wrapper input[type="number"] {
-                width: 60px;
-                padding: 8px 5px;
-                text-align: center;
-                border: none;
-                -webkit-appearance: none;
-                -moz-appearance: textfield;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container ">
-            <a class="navbar-brand" href="#">
-                <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
-            </a>
-            <div class="d-flex align-items-center d-lg-none">
-                <a class="nav-link pe-2" href="cart.html">
-                    <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
-                </a>
-                <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-search text-white"></i>
-                    <span class="bg menu ms-2">Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav m-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
-                        </a>
-                    </li>
-                </ul>
-                <form class="d-flex ms-lg-auto" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
-                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                    <div id="searchResults" class="position-absol     ute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <section class="container" >
-        <div class="row" style="padding-top:110px;" >
-            <div class="col-md-6 product-image-container style="padding-top:110px;"     "     >
-                <img id="product-image-details" src="" class="img-fluid "     alt="Product Image">
-            </div>
-            <div class="col-md-6 product-details-info mt-0" >
-                <h3 id="product-name-details" ></h3>
-                <p class="lead" id="product-description-details"></p>
-                <div>
-                    <h3 >Ingredients:</h3>
-                    <p id="product-ingredients-details"></p>
-                </div>
-                <div class="add-to-cart-section">
-                    <div class="mb-3">
-                        <label for="quantity-details-select" class="form-label">Select Quantity:</label>
-                        <select class="form-select" id="quantity-details-select">
-                        </select>
-                    </div>
-                    <div class="quantity-controls">
-                        <label for="item-quantity" class="form-label me-2 mb-0">Quantity:</label>
-                        <div class="quantity-input-wrapper">
-                            <button type="button" id="decrease-quantity" class="quantity-btn">-</button>
-                            <input type="number" id="item-quantity" class="form-control" value="1" min="1">
-                            <button type="button" id="increase-quantity" class="quantity-btn">+</button>
-                        </div>
-                    </div>
-                    <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
-                    <a href="cart.html" id="view-cart-details-btn" class="btn btn-outline-primary">View Cart</a>
-                    <p id="add-to-cart-message" class="mt-2 text-success" style="display: none;">Item added to cart!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="contact-section py-5 bg text-white">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4 text-center mb-4 mb-md-0">
-                    <img src="logo.png" class="img-fluid" style="max-height: 250px;" alt="Aamoda Pickles Logo">
-                </div>
-                <div class="col-md-8 text-center text-md-start">
-                    <h2 style="padding: 10px;">Contact Us</h2>
-                    <p>We'd love to hear from you! Connect with us through:</p>
-                    <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"     class="btn btn-success">📞 WhatsApp</a>
-                        <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
-                        <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
-                        <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <footer class="footer bg-warning text-center py-4">
-        <p>© 2025 Aamoda Pickles. All rights reserved.</p>
-        <div class="container mt-2">
-            <a href="terms.html" class="text-red mx-2">Terms & Conditions</a> |
-            <a href="shipping.html" class="text-red mx-2">Shipping Policy</a> |
-            <a href="contact.html" class="text-red mx-2">Contact Us</a>
-            <a href="refundpolicy.html" class="text-red mx-2">Cancel & refund Policy</a>
-            <a href="privacypolicy.html" class="text-red mx-2">Privacy Policy</a>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="products.js"></script>
-    <script src="cart.js"></script>
-    <script src="product-details.js"></script>
-    <script>
-    // Ensure cart count is updated on page load for terms page
-    document.addEventListener('DOMContentLoaded', () => {
-        updateCartIcon();
-    });
-    const searchInput = document.getElementById('searchInput');
-                        const searchResultsDiv = document.getElementById('searchResults');
-
-                        searchInput.addEventListener('input', () => {
-                        const searchTerm = searchInput.value.trim().toLowerCase();
-                        searchResultsDiv.innerHTML = ''; // Clear previous suggestions
-                        searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
-
-                        if (searchTerm) {
-                            const matchingProducts = products.filter(product =>
-                                product.name.toLowerCase().startsWith(searchTerm)
-                            );
-
-                            if (matchingProducts.length > 0) {
-                                searchResultsDiv.style.display = 'block';
-                                const suggestionsList = document.createElement('ul');
-                                suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
-
-                                matchingProducts.forEach(product => {
-                                    const listItem = document.createElement('li');
-                                    listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
-                                    listItem.textContent = product.name;
-                                    listItem.addEventListener('click', () => {
-                                        window.location.href = `product-details.html?id=${product.id}`;
-                                        searchInput.value = ''; // Clear input after selection
-                                        searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
-                                    });
-                                    suggestionsList.appendChild(listItem);
-                                });
-                                searchResultsDiv.appendChild(suggestionsList);
-                            }
-                        }
-                    });
-
-                    // Hide suggestions when clicking outside the search input and results
-                    document.addEventListener('click', (event) => {
-                        if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
-                            searchResultsDiv.style.display = 'none';
-                        }
-                    });
-    </script>
-</body>
-</html>
+    } else {
+        document.querySelector('.container > .row').innerHTML = '<p class="text-danger">Invalid product ID.</p>';
+    }
+});

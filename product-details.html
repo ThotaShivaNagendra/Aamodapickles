@@ -26,12 +26,44 @@
             #view-cart-details-btn {
                 display: inline-block; /* Be explicit for desktop too */
                 box-sizing: border-box; /* Consistent box-sizing */
-                padding: 10px 20px;
-                font-size: 1.1rem;
-                margin-bottom: 20px;
+                padding: 10px 20px !important;
+                font-size: 1.1rem !important;
+                margin-bottom: 10px !important;
+                width: 48% !important; /* Force approximate half width */
             }
             .mb-3 { /* Adjust margin for the quantity select */
                 margin-bottom: 15px;
+            }
+            .quantity-controls {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .quantity-input-wrapper {
+                display: flex;
+                align-items: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                overflow: hidden;
+                width: 100px; /* Adjust width for mobile */
+            }
+
+            .quantity-btn {
+                background: none;
+                border: none;
+                padding: 8px 10px;
+                cursor: pointer;
+                font-size: 1em;
+            }
+
+            .quantity-input-wrapper input[type="number"] {
+                width: 40px;
+                padding: 8px 5px;
+                text-align: center;
+                border: none;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
             }
         }
         .product-details-info {
@@ -41,10 +73,10 @@
             margin-top: 30px; /* Add space above the add to cart elements */
             display: flex; /* Enable flexbox for buttons on desktop */
             gap: 10px; /* Space between buttons on desktop */
-            align-items: center; /* Align buttons vertically on desktop */
+            align-items: flex-start; /* Align items vertically on desktop */
             flex-wrap: wrap; /* Allow buttons to wrap on smaller desktops */
         }
-        
+
         @media (min-width: 768px) {
             .product-image-container {
                 /* You can adjust these values to increase the image size on desktop */
@@ -53,12 +85,44 @@
             }
             .add-to-cart-section {
                 justify-content: flex-start; /* Align buttons to the left on desktop */
+                align-items: center; /* Align items vertically on desktop */
+            }
+            .quantity-controls {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px; /* Adjust spacing */
+            }
+
+            .quantity-input-wrapper {
+                display: flex;
+                align-items: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                overflow: hidden;
+                width: 120px; /* Adjust width as needed */
+            }
+
+            .quantity-btn {
+                background: none;
+                border: none;
+                padding: 8px 10px;
+                cursor: pointer;
+                font-size: 1em;
+            }
+
+            .quantity-input-wrapper input[type="number"] {
+                width: 60px;
+                padding: 8px 5px;
+                text-align: center;
+                border: none;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
             }
         }
     </style>
 </head>
 <body>
-   <nav class="navbar navbar-expand-lg custom-navbar">
+    <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container ">
             <a class="navbar-brand" href="#">
                 <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
@@ -89,8 +153,8 @@
                 <form class="d-flex ms-lg-auto" id="searchForm">
                     <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
                     <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                    <div id="searchResults" class="position-absol     ute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
-                        </div>
+                    <div id="searchResults" class="position-absol     ute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
                 </form>
             </div>
         </div>
@@ -98,8 +162,8 @@
 
     <section class="container" >
         <div class="row" style="padding-top:110px;" >
-            <div class="col-md-6 product-image-container style="padding-top:110px;"     "     >
-                <img id="product-image-details" src="" class="img-fluid "     alt="Product Image">
+            <div class="col-md-6 product-image-container style="padding-top:110px;"     "     >
+                <img id="product-image-details" src="" class="img-fluid "     alt="Product Image">
             </div>
             <div class="col-md-6 product-details-info mt-0" >
                 <h3 id="product-name-details" ></h3>
@@ -110,9 +174,17 @@
                 </div>
                 <div class="add-to-cart-section">
                     <div class="mb-3">
-                        <label for="quantity-details" class="form-label">Select Quantity:</label>
-                        <select class="form-select" id="quantity-details">
+                        <label for="quantity-details-select" class="form-label">Select Quantity:</label>
+                        <select class="form-select" id="quantity-details-select">
                         </select>
+                    </div>
+                    <div class="quantity-controls">
+                        <label for="item-quantity" class="form-label me-2 mb-0">Quantity:</label>
+                        <div class="quantity-input-wrapper">
+                            <button type="button" id="decrease-quantity" class="quantity-btn">-</button>
+                            <input type="number" id="item-quantity" class="form-control" value="1" min="1">
+                            <button type="button" id="increase-quantity" class="quantity-btn">+</button>
+                        </div>
                     </div>
                     <button id="add-to-cart-details-btn" class="btn btn-success">Add to Cart</button>
                     <a href="cart.html" id="view-cart-details-btn" class="btn btn-outline-primary">View Cart</a>
@@ -131,7 +203,7 @@
                     <h2 style="padding: 10px;">Contact Us</h2>
                     <p>We'd love to hear from you! Connect with us through:</p>
                     <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"     class="btn btn-success">📞 WhatsApp</a>
+                        <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"     class="btn btn-success">📞 WhatsApp</a>
                         <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
                         <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
                         <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
