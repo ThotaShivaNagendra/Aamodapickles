@@ -143,72 +143,72 @@
             }
         }
         /* Put the remove button on a new line on phones */
-        @media (max-width: 600px) {
-            .cart-item {
-                flex-direction: column; /* Stack items vertically */
-                align-items: flex-start; /* Align items to the left */
-            }
-
-            .cart-item-actions {
-                width: 100%; /* Make the button container take full width */
-                text-align: right; /* Align the button to the right */
-                margin-top: 10px; /* Add some space above the button */
-            }
-
-            .cart-item-actions button {
-                margin-left: 0; /* Remove any left margin on the button */
-                width: auto; /* Let the button size itself */
-            }
-
-            .cart-item img {
-                margin-right: 0; /* Remove right margin from the image */
-                margin-bottom: 10px; /* Add some space below the image */
-            }
+    @media (max-width: 600px) {
+        .cart-item {
+            flex-direction: column; /* Stack items vertically */
+            align-items: flex-start; /* Align items to the left */
         }
+
+        .cart-item-actions {
+            width: 100%; /* Make the button container take full width */
+            text-align: right; /* Align the button to the right */
+            margin-top: 10px; /* Add some space above the button */
+        }
+
+        .cart-item-actions button {
+            margin-left: 0; /* Remove any left margin on the button */
+            width: auto; /* Let the button size itself */
+        }
+
+        .cart-item img {
+            margin-right: 0; /* Remove right margin from the image */
+            margin-bottom: 10px; /* Add some space below the image */
+        }
+    }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container ">
-            <a class="navbar-brand" href="#">
-                <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container ">
+        <a class="navbar-brand" href="#">
+            <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+            <a class="nav-link pe-2" href="cart.html">
+                <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
             </a>
-            <div class="d-flex align-items-center d-lg-none">
-                <a class="nav-link pe-2" href="cart.html">
-                    <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
-                </a>
-                <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-search text-white"></i>
-                    <span class="bg menu ms-2">Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav m-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
-                        </a>
-                    </li>
-                </ul>
-                <form class="d-flex ms-lg-auto" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
-                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                    <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
-                    </div>
-                </form>
-            </div>
+            <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-search text-white"></i>
+                <span class="bg menu ms-2">Menu</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
+                <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
+                <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex ms-lg-auto" id="searchForm">
+                <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" id="searchInput">
+                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2" style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
+            </form>
+        </div>
+    </div>
     </nav>
     <section class=" bg">
         <div class="container ">
-            <h2 class="text-center mb-4">Your Shopping Cart</h2>
+            <h2 class="text-center mb-4">Your Shoping Cart</h2>
         </div>
     </section>
 
@@ -291,33 +291,33 @@
                 if (window.innerWidth <= 600) {
                     quantityControls = `
                         <div class="quantity-controls-mobile">
-                            <button onclick="changeQuantity('<span class="math-inline">\{item\.cartItemId\}', \-1\)"\>\-</button\>
-<input type\="number" id\="quantity\-</span>{item.cartItemId}" value="<span class="math-inline">\{item\.count\}" min\="1" onchange\="updateQuantity\('</span>{item.cartItemId}', this.value)">
+                            <button onclick="changeQuantity('${item.cartItemId}', -1)">-</button>
+                            <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
                             <button onclick="changeQuantity('${item.cartItemId}', 1)">+</button>
                         </div>
                     `;
                 } else {
                     quantityControls = `
                         <div class="quantity-input-wrapper">
-                            <input type="number" id="quantity-<span class="math-inline">\{item\.cartItemId\}" value\="</span>{item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
+                            <input type="number" id="quantity-${item.cartItemId}" value="${item.count}" min="1" onchange="updateQuantity('${item.cartItemId}', this.value)">
                         </div>
                     `;
                 }
 
                 const cartItemHtml = `
                     <div class="cart-item">
-                        <img src="<span class="math-inline">\{item\.image\}" alt\="</span>{item.name}">
+                        <img src="${item.image}" alt="${item.name}">
                         <div class="cart-item-details">
-                            <h4><span class="math-inline">\{item\.name\} \(</span>{item.quantityKey})</h4>
-                            <p>Price per unit: ₹<span class="math-inline">\{item\.pricePerUnit\}</p\>
-<div class\="cart\-item\-quantity"\>
-<label for\="quantity\-</span>{item.cartItemId}" class="form-label me-2 mb-0">Quantity:</label>
-                                <span class="math-inline">\{quantityControls\}
-<p class\="mt\-2"\>Item Total\: ₹<span id\="item\-total\-</span>{item.cartItemId}"><span class="math-inline">\{itemTotal\}</span\></p\>
-</div\>
-</div\>
-<div class\="cart\-item\-actions"\>
-<button class\="remove\-item\-btn" data\-cart\-item\-id\="</span>{item.cartItemId}">Remove</button>
+                            <h4>${item.name} (${item.quantityKey})</h4>
+                            <p>Price per unit: ₹${item.pricePerUnit}</p>
+                            <div class="cart-item-quantity">
+                                <label for="quantity-${item.cartItemId}" class="form-label me-2 mb-0">Quantity:</label>
+                                ${quantityControls}
+                                <p class="mt-2">Item Total: ₹<span id="item-total-${item.cartItemId}">${itemTotal}</span></p>
+                            </div>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="remove-item-btn" data-cart-item-id="${item.cartItemId}">Remove</button>
                         </div>
                     </div>
                 `;
@@ -359,59 +359,49 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadCart(); // Load the cart data first
-            renderCart(); // Then render the cart based on the loaded data
+            renderCart();
             updateCartIcon();
-
-            // Add event listener for the clear cart button
-            const clearCartBtn = document.getElementById('clear-cart-btn');
-            clearCartBtn.addEventListener('click', () => {
-                clearCart(); // Call the clearCart function from cart.js
-                renderCart(); // Re-render the cart to show it's empty
-                updateCartIcon(); // Update the cart icon count
-            });
         });
-
         const searchInput = document.getElementById('searchInput');
-        const searchResultsDiv = document.getElementById('searchResults');
+                const searchResultsDiv = document.getElementById('searchResults');
 
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            searchResultsDiv.innerHTML = ''; // Clear previous suggestions
-            searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
+                searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                searchResultsDiv.innerHTML = ''; // Clear previous suggestions
+                searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
 
-            if (searchTerm) {
-                const matchingProducts = products.filter(product =>
-                    product.name.toLowerCase().startsWith(searchTerm)
-                );
+                if (searchTerm) {
+                    const matchingProducts = products.filter(product =>
+                        product.name.toLowerCase().startsWith(searchTerm)
+                    );
 
-                if (matchingProducts.length > 0) {
-                    searchResultsDiv.style.display = 'block';
-                    const suggestionsList = document.createElement('ul');
-                    suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
+                    if (matchingProducts.length > 0) {
+                        searchResultsDiv.style.display = 'block';
+                        const suggestionsList = document.createElement('ul');
+                        suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
 
-                    matchingProducts.forEach(product => {
-                        const listItem = document.createElement('li');
-                        listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
-                        listItem.textContent = product.name;
-                        listItem.addEventListener('click', () => {
-                            window.location.href = `product-details.html?id=${product.id}`;
-                            searchInput.value = ''; // Clear input after selection
-                            searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                        matchingProducts.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
+                            listItem.textContent = product.name;
+                            listItem.addEventListener('click', () => {
+                                window.location.href = `product-details.html?id=${product.id}`;
+                                searchInput.value = ''; // Clear input after selection
+                                searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                            });
+                            suggestionsList.appendChild(listItem);
                         });
-                        suggestionsList.appendChild(listItem);
-                    });
-                    searchResultsDiv.appendChild(suggestionsList);
-                }
-            }
-        });
+                        searchResultsDiv.appendChild(suggestionsList);
+                 }
+        }
+    });
 
-        // Hide suggestions when clicking outside the search input and results
-        document.addEventListener('click', (event) => {
-            if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
-                searchResultsDiv.style.display = 'none';
-            }
-        });
+    // Hide suggestions when clicking outside the search input and results
+    document.addEventListener('click', (event) => {
+        if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+            searchResultsDiv.style.display = 'none';
+        }
+    });
     </script>
 </body>
 
