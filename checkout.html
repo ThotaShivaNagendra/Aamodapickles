@@ -704,6 +704,8 @@
                               cartItemId: item.cartItemId,
                               count: item.count,
                               pricePerUnit: item.pricePerUnit,
+                              name: item.product.name,  // Access name from item.product
+                              weight: item.product.weight
                           }));
 
                           console.log("Processed items for Firestore:", JSON.stringify(processedItems)); // Debugging the processed items
