@@ -172,6 +172,7 @@
               };
               firebase.initializeApp(firebaseConfig);
               const db = firebase.firestore();
+
             document.addEventListener('DOMContentLoaded', () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const orderId = urlParams.get('orderId');
@@ -216,16 +217,11 @@
 
                                 if (order.items && Array.isArray(order.items)) {
                                     order.items.forEach(item => {
-                                        const itemDiv = document.createElement('div');
-                                        itemDiv.classList.add('order-item');
                                         itemDiv.innerHTML = `
-                                            <span>${item.name} (${item.quantityKey}) x ${item.count}</span>
-                                            <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                            <span>cartItemId: ${item.cartItemId}, Count: ${item.count}, Price: ₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
                                         `;
-                                        orderItemsContainer.appendChild(itemDiv);
                                     });
                                 }
-
                             } else {
                                 document.querySelector('.thank-you-container').innerHTML =
                                     '<p class="text-center">Order details not found for ID: ' + orderId + '. Please contact support.</p>';
