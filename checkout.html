@@ -665,8 +665,7 @@
                 }
             });
 
-
-            // ----  Razorpay Integration ----
+// ----  Razorpay Integration ----
         checkoutForm.addEventListener('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
 
@@ -692,43 +691,43 @@
                 description: "Order from Aamoda Pickles",
                 image: "logo.png",
                 handler: function (response) {
-                console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
-                clearCart();
-                // Store payment ID in localStorage
-                localStorage.setItem('paymentId', response.razorpay_payment_id);
-                window.location.href = 'thankyou.html'; // Redirect to thankyou.html
+                    console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
+                    clearCart();
+                    // Store payment ID in localStorage
+                    localStorage.setItem('paymentId', response.razorpay_payment_id);
+                    window.location.href = 'thankyou.html'; // Redirect to thankyou.html
 
-                const orderData = {
-                    fullName: fullName,
-                    email: email,
-                    phone: phone,
-                    address: address,
-                    city: city,
-                    state: state,
-                    zip: zipCode,
-                    country: country,
-                    shippingCost: currentShippingCost,
-                    totalAmount: totalAmountPayable,
-                    paymentId: response.razorpay_payment_id,
-                    items: getCart(),
-                    orderDate: firebase.firestore.FieldValue.serverTimestamp()
-                };
+                    const orderData = {
+                        fullName: fullName,
+                        email: email,
+                        phone: phone,
+                        address: address,
+                        city: city,
+                        state: state,
+                        zip: zipCode,
+                        country: country,
+                        shippingCost: currentShippingCost,
+                        totalAmount: totalAmountPayable,
+                        paymentId: response.razorpay_payment_id,
+                        items: getCart(),
+                        orderDate: firebase.firestore.FieldValue.serverTimestamp()
+                    };
 
-                db.collection('orders')
-                    .add(orderData)
-                    .then((docRef) => {
-                        console.log("Order saved to Firestore with ID: ", docRef.id);
-                        //  IMPORTANT:  We are NOT sending emails here due to the 'completely free' constraint.
-                        //  In a real application, you would use a service like SendGrid/Mailgun (costs money)
-                        //  or Firebase Cloud Functions (has a free tier but can incur costs).
-                        //  Instead, we are relying on displaying order details on thankyou.html.
-                        localStorage.setItem('tempOrderData', JSON.stringify(orderData)); // Temporarily save order data
-                    })
-                    .catch((error) => {
-                        console.error("Error saving order to Firestore: ", error);
-                        alert("Error saving order. Please contact support.");
-                    });
-            },
+                    db.collection('orders')
+                        .add(orderData)
+                        .then((docRef) => {
+                            console.log("Order saved to Firestore with ID: ", docRef.id);
+                            //  IMPORTANT:  We are NOT sending emails here due to the 'completely free' constraint.
+                            //  In a real application, you would use a service like SendGrid/Mailgun (costs money)
+                            //  or Firebase Cloud Functions (has a free tier but can incur costs).
+                            //  Instead, we are relying on displaying order details on thankyou.html.
+                            localStorage.setItem('tempOrderData', JSON.stringify(orderData)); // Temporarily save order data
+                        })
+                        .catch((error) => {
+                            console.error("Error saving order to Firestore: ", error);
+                            alert("Error saving order. Please contact support.");
+                        });
+                },
                 prefill: {
                     name: fullName,
                     email: email,
@@ -761,8 +760,7 @@
             });
             rzp.open();
         });
-      });
-      
+    });
     </script>
 </body>
 
