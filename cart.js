@@ -37,7 +37,7 @@ function addToCart(productId, quantityKey, count) {
     }
 
     // Create a unique identifier for the cart item based on product ID and quantity key
-    const cartItemId = `${productId}-${quantityKey}`;
+    const cartItemId = generateCartItemId(productId, quantityKey);
 
     // Find if the item already exists in the cart
     const existingItemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
@@ -124,6 +124,10 @@ function updateCartIcon() {
 // Function to get product details by ID from the products array
 function getProductById(productId) {
     return products.find(product => product.id === productId);
+}
+
+function generateCartItemId(productId, quantityKey) {
+    return `${productId}-${quantityKey}`;
 }
 
 // Load the cart when the script is first loaded (on page load)

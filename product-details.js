@@ -50,21 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             addToCartDetailsBtn.addEventListener('click', () => {
                 const selectedQuantityKey = quantityDetailsSelect.value;
-                const itemCount = parseInt(quantityInput.value); // Get the count from the number input
+                const itemCount = parseInt(quantityInput.value);
 
                 if (selectedQuantityKey && !isNaN(itemCount) && itemCount > 0) {
-                    addToCart(productId, selectedQuantityKey, itemCount); // Pass both key and count
+                    addToCart(productId, selectedQuantityKey, itemCount); // Call addToCart from cart.js
                     addToCartMessage.style.display = 'block';
                     setTimeout(() => {
                         addToCartMessage.style.display = 'none';
-                    }, 2000); // Hide message after 2 seconds
-                    updateCartIcon();
+                    }, 2000);
                 } else {
-                    alert('Please select a quantity and a valid count.'); // Optional: Inform the user
+                    alert('Please select a quantity and a valid count.');
                 }
             });
 
-            updateCartIcon(); // Ensure cart icon is updated on page load
         } else {
             document.querySelector('.container > .row').innerHTML = '<p class="text-danger">Product not found.</p>';
         }
@@ -72,75 +70,3 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.container > .row').innerHTML = '<p class="text-danger">Invalid product ID.</p>';
     }
 });
-
-// Helper function to get product details (assuming it exists in your cart.js or a common utility file)
-function getProductDetails(productId) {
-    const products = getProducts(); // Assuming getProducts() is in products.js
-    return products.find(product => product.id === productId);
-}
-
-// Function to add to cart (this function likely resides in your cart.js)
-// Make sure it can handle productId, quantityKey, and count
-function addToCart(productId, quantityKey, count) {
-    let cart = getCart();
-    const cartItemId = generateCartItemId(productId, quantityKey);
-    const existingItem = cart.find(item => item.cartItemId === cartItemId);
-    const productDetails = getProductDetails(productId);
-
-    if (productDetails && productDetails.prices && productDetails.prices[quantityKey]) {
-        const pricePerUnit = productDetails.prices[quantityKey];
-        const name = productDetails.name;
-        const image = productDetails.image;
-
-        if (existingItem) {
-            existingItem.count += count;
-        } else {
-            cart.push({
-                cartItemId: cartItemId,
-                id: productId,
-                name: name,
-                quantityKey: quantityKey,
-                count: count,
-                pricePerUnit: pricePerUnit,
-                image: image
-            });
-        }
-        saveCart(cart);
-    } else {
-        console.error('Error adding to cart: Product details or price not found.');
-    }
-}
-
-// These functions should be in your cart.js file
-function getCart() {
-    const cartData = localStorage.getItem('cart');
-    return cartData ? JSON.parse(cartData) : [];
-}
-
-function saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function updateCartIcon() {
-    const cart = getCart();
-    const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
-    const cartIconCountDesktop = document.getElementById('cart-icon-count-desktop');
-    const cartIconCountMobile = document.getElementById('cart-icon-count-mobile');
-    if (cartIconCountDesktop) cartIconCountDesktop.textContent = totalItems;
-    if (cartIconCountMobile) cartIconCountMobile.textContent = totalItems;
-}
-
-// This function should be in your cart.js file
-function generateCartItemId(productId, quantityKey) {
-    return `${productId}-${quantityKey}`;
-}
-
-// This function should be in your products.js file
-function getProducts() {
-    try {
-        return JSON.parse(localStorage.getItem('products')) || [];
-    } catch (error) {
-        console.error("Error parsing products from localStorage:", error);
-        return [];
-    }
-}
