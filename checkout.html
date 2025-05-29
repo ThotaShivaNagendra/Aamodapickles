@@ -701,11 +701,11 @@
                           console.log("Full cart contents:", JSON.stringify(cartItems)); // Debugging the full cart
 
                           const processedItems = cartItems.map(item => ({
+                              cartItemId: item.cartItemId,
                               name: item.product.name,  
                               weight: item.product.weight,
                               count: item.count,
                               pricePerUnit: item.pricePerUnit
-                              
                           }));
 
                           console.log("Processed items for Firestore:", JSON.stringify(processedItems)); // Debugging the processed items
