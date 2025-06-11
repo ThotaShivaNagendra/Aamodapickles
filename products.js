@@ -47,9 +47,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 450,
+            '500gm': 900,
+            '1kg': 1800
         },
         weights: {
             '250gm': 250,
@@ -58,6 +58,24 @@ const products = [
         },
         description: 'Rich and savory non-vegetarian pickle prepared with succulent mutton pieces and a unique mix of traditional spices.',
         ingredients: ['Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Vinegar', 'Salt', 'Edible Oil']
+    },
+    {
+        id: 'Boneless-mutton-pickle',
+        name: 'Boneless Mutton Pickle',
+        image: 'mutton.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 550,
+            '500gm': 1100,
+            '1kg': 2200
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'Rich and savory non-vegetarian pickle prepared with Boneless mutton pieces and a unique mix of traditional spices.',
+        ingredients: ['Boneless Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Vinegar', 'Salt', 'Edible Oil']
     },
     {
         id: 'prawns-pickle',
@@ -443,9 +461,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 450,
-            '500gm': 900,
-            '1kg': 1800
+            '250gm': 500,
+            '500gm': 1000,
+            '1kg': 2000
         },
         weights: {
             '250gm': 250,
