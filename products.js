@@ -455,6 +455,7 @@ const products = [
         description: 'A rich and flavorful non-vegetarian pickle blending the tanginess of Gongura leaves with tender mutton pieces and a robust mix of spices.',
         ingredients: ['Mutton Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
     },
+    
      {
         id: 'Boneless-mutton-pickle',
         name: 'Boneless Mutton Pickle',
@@ -472,6 +473,42 @@ const products = [
         },
         description: 'Rich and savory non-vegetarian pickle prepared with Boneless mutton pieces and a unique mix of traditional spices.',
         ingredients: ['Boneless Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Vinegar', 'Salt', 'Edible Oil']
+    },
+    {
+        id: 'boneless-gongura-chicken-pickle',
+        name: 'Boneless Gongura Chicken Pickle',
+        image: 'gongurachicken.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 300,
+            '500gm': 600,
+            '1kg': 1200
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A spicy and tangy non-vegetarian pickle combining the unique sourness of Gongura leaves with tender chicken pieces and aromatic spices.',
+        ingredients: ['Boneless Chicken Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
+    },
+    {
+        id: 'boneless-gongura-mutton-pickle',
+        name: 'Boneless Gongura Mutton Pickle',
+        image: 'gonguramutton.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 550,
+            '500gm': 1100,
+            '1kg': 2200
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A rich and flavorful non-vegetarian pickle blending the tanginess of Gongura leaves with tender mutton pieces and a robust mix of spices.',
+        ingredients: ['Boneless Mutton Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
     },
     {
         id: 'karam-podi',
