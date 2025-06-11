@@ -65,9 +65,9 @@ const products = [
         image: 'prawns.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 350,
-            '500gm': 700,
-            '1kg': 1400
+            '250gm': 400,
+            '500gm': 800,
+            '1kg': 1600
         },
         weights: {
             '250gm': 250,
@@ -425,9 +425,9 @@ const products = [
         image: 'gonguraprawn.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 450,
+            '500gm': 900,
+            '1kg': 1800
         },
         weights: {
             '250gm': 250,
