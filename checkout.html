@@ -677,15 +677,7 @@
         const functions = firebase.functions();
         // If your functions are not in 'us-central1' region, specify it:
         // const functions = firebase.functions('your-region');
-        })
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const checkoutForm = document.getElementById('checkout-form'); // Corrected ID
-            const orderSubtotalElement = document.getElementById('order-subtotal');
-            const shippingCostElement = document.getElementById('shipping-cost');
-            const orderTotalElement = document.getElementById('order-total'); // Corrected ID
-            const orderSummaryItemsDiv = document.getElementById('order-summary-items');
-
+      
             // Function to update the displayed cart total and items on the checkout page
             function updateCheckoutDisplay() {
                 const cartItems = getCart(); // Get cart items from cart.js
@@ -722,53 +714,6 @@
 
             // Call updateCheckoutDisplay when the page loads
             updateCheckoutDisplay();
-
-            // --- Your existing search functionality (keep this as is) ---
-            const searchInput = document.getElementById('searchInput');
-            const searchResultsDiv = document.getElementById('searchResults');
-
-            if (searchInput && searchResultsDiv) {
-                searchInput.addEventListener('input', () => {
-                    const searchTerm = searchInput.value.toLowerCase();
-                    searchResultsDiv.innerHTML = ''; // Clear previous results
-
-                    if (searchTerm.length > 0) {
-                        const matchingProducts = products.filter(product =>
-                            product.name.toLowerCase().includes(searchTerm)
-                        );
-
-                        if (matchingProducts.length > 0) {
-                            searchResultsDiv.style.display = 'block';
-                            const suggestionsList = document.createElement('ul');
-                            suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
-
-                            matchingProducts.forEach(product => {
-                                const listItem = document.createElement('li');
-                                listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
-                                listItem.textContent = product.name;
-                                listItem.addEventListener('click', () => {
-                                    window.location.href = `product-details.html?id=${product.id}`;
-                                    searchInput.value = ''; // Clear input after selection
-                                    searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
-                                });
-                                suggestionsList.appendChild(listItem);
-                            });
-                            searchResultsDiv.appendChild(suggestionsList);
-                        } else {
-                            searchResultsDiv.style.display = 'none';
-                        }
-                    } else {
-                        searchResultsDiv.style.display = 'none';
-                    }
-                });
-
-                document.addEventListener('click', (event) => {
-                    if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
-                        searchResultsDiv.style.display = 'none';
-                    }
-                });
-            }
-
             // --- Razorpay Integration (using Firebase Cloud Functions) ---
             if (checkoutForm) { // Ensure the form element exists
                 checkoutForm.addEventListener('submit', async function (e) {
