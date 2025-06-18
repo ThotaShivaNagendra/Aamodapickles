@@ -101,12 +101,19 @@ function removeCartItem(cartItemId) {
 
 // Function to get the current cart contents
 function getCart() {
-    return cart;
+    // Ensure this correctly loads from localStorage
+    const storedCart = localStorage.getItem('cart');
+    return storedCart ? JSON.parse(storedCart) : [];
 }
 
 // Function to calculate the total price of all items in the cart
 function calculateCartTotal() {
-    return cart.reduce((total, item) => total + (item.pricePerUnit * item.count), 0);
+    return cart.reduce((total, item) => {
+        // Ensure item.pricePerUnit and item.count are numbers
+        const price = parseFloat(item.pricePerUnit) || 0;
+        const count = parseInt(item.count) || 0;
+        return total + (price * count);
+    }, 0);
 }
 
 // Function to clear the entire cart
@@ -140,6 +147,7 @@ function getProductById(productId) {
 function generateCartItemId(productId, quantityKey) {
     return `${productId}-${quantityKey}`;
 }
+
 
 // Load the cart when the script is first loaded (on page load)
 document.addEventListener('DOMContentLoaded', loadCart);

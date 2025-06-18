@@ -673,7 +673,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             const checkoutForm = document.getElementById('checkoutForm');
             const orderTotalElement = document.getElementById('orderTotal');
+        function updateCheckoutTotalDisplay() {
+        const cartTotal = calculateCartTotal(); // This function is from cart.js
+        const shippingCost = 0; // Or call calculateShipping() if you have it
+        const grandTotal = cartTotal + shippingCost;
+        orderTotalElement.textContent = grandTotal.toFixed(2); // Display with 2 decimal places
+    }
+    // Call it once when the page loads
+    updateCheckoutTotalDisplay();
 
+    // Optional: If you have a way to change shipping or apply discounts
+    // that affects the total display without form submission, call
+    // updateCheckoutTotalDisplay() again when those values change
             // --- Your existing search functionality (keep this as is) ---
             const searchInput = document.getElementById('searchInput');
             const searchResultsDiv = document.getElementById('searchResults');
