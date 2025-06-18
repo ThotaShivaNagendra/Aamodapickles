@@ -774,6 +774,7 @@
                 checkoutForm.addEventListener('submit', async function (e) {
                     e.preventDefault(); // Prevent the default form submission
 
+
                     // --- 1. Gather Client-Side Customer & Cart Data ---
                     const fullName = document.getElementById('fullName').value;
                     const email = document.getElementById('email').value;
@@ -794,9 +795,18 @@
                         alert('Your cart is empty. Please add items before checking out.');
                         return;
                     }
+                    
 
                     // Optional: Show loading indicator / Disable button
-                    const payNowButton = document.getElementById('payNowButton');
+                    const payNowButton = document.getElementById('pay-now-button');
+  const checkoutForm = document.getElementById('checkout-form');
+
+  if (payNowButton && checkoutForm) {
+      payNowButton.addEventListener('click', (event) => {
+          event.preventDefault(); // prevent default
+          checkoutForm.requestSubmit(); // trigger Razorpay logic
+      });
+  }
                     if (payNowButton) payNowButton.disabled = true;
 
                     try {
