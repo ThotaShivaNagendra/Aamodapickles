@@ -516,7 +516,7 @@
 
             // ----  Order Summary Population and Initial Calculations ----
             cart.forEach(item => {
-                const product = getProductById(item.id);
+                const product = getProductById(item.cartItemId);
 
                 if (!product) {
                     console.error('Product not found in products.js for ID:', item.id);
