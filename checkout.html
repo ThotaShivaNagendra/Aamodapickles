@@ -679,19 +679,6 @@
             const orderTotalElement = document.getElementById('order-total'); // Corrected ID
             const orderSummaryItemsDiv = document.getElementById('order-summary-items');
 
-
-            // Function to calculate shipping cost
-            function calculateShipping(cartTotal) {
-                const freeShippingThreshold = 3000; // Rs. 3000
-                const defaultShippingCost = 80; // Example shipping cost
-
-                if (cartTotal >= freeShippingThreshold) {
-                    return 0; // Free shipping
-                } else {
-                    return defaultShippingCost;
-                }
-            }
-
             // Function to update the displayed cart total and items on the checkout page
             function updateCheckoutDisplay() {
                 const cartItems = getCart(); // Get cart items from cart.js
