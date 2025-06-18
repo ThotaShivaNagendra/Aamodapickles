@@ -107,6 +107,7 @@ function getCart() {
 }
 
 // Function to calculate the total price of all items in the cart
+// In cart.js
 function calculateCartTotal() {
     return cart.reduce((total, item) => {
         // Ensure item.pricePerUnit and item.count are numbers
@@ -115,7 +116,6 @@ function calculateCartTotal() {
         return total + (price * count);
     }, 0);
 }
-
 // Function to clear the entire cart
 function clearCart() {
     cart = [];

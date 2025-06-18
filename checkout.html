@@ -671,20 +671,62 @@
         // const functions = firebase.functions('your-region');
 
         document.addEventListener('DOMContentLoaded', () => {
-            const checkoutForm = document.getElementById('checkoutForm');
-            const orderTotalElement = document.getElementById('orderTotal');
-        function updateCheckoutTotalDisplay() {
-        const cartTotal = calculateCartTotal(); // This function is from cart.js
-        const shippingCost = 0; // Or call calculateShipping() if you have it
-        const grandTotal = cartTotal + shippingCost;
-        orderTotalElement.textContent = grandTotal.toFixed(2); // Display with 2 decimal places
-    }
-    // Call it once when the page loads
-    updateCheckoutTotalDisplay();
+            const checkoutForm = document.getElementById('checkout-form'); // Corrected ID
+            const orderSubtotalElement = document.getElementById('order-subtotal');
+            const shippingCostElement = document.getElementById('shipping-cost');
+            const orderTotalElement = document.getElementById('order-total'); // Corrected ID
+            const orderSummaryItemsDiv = document.getElementById('order-summary-items');
 
-    // Optional: If you have a way to change shipping or apply discounts
-    // that affects the total display without form submission, call
-    // updateCheckoutTotalDisplay() again when those values change
+
+            // Function to calculate shipping cost
+            function calculateShipping(cartTotal) {
+                const freeShippingThreshold = 3000; // Rs. 3000
+                const defaultShippingCost = 80; // Example shipping cost
+
+                if (cartTotal >= freeShippingThreshold) {
+                    return 0; // Free shipping
+                } else {
+                    return defaultShippingCost;
+                }
+            }
+
+            // Function to update the displayed cart total and items on the checkout page
+            function updateCheckoutDisplay() {
+                const cartItems = getCart(); // Get cart items from cart.js
+                const cartSubtotal = calculateCartTotal(); // Get subtotal from cart.js
+                const shippingCost = calculateShipping(cartSubtotal);
+                const grandTotal = cartSubtotal + shippingCost;
+
+                // Update HTML elements
+                orderSubtotalElement.textContent = cartSubtotal.toFixed(2);
+                shippingCostElement.textContent = shippingCost.toFixed(2);
+                orderTotalElement.textContent = grandTotal.toFixed(2);
+
+                // Display cart items in the summary
+                orderSummaryItemsDiv.innerHTML = ''; // Clear previous items
+                if (cartItems.length === 0) {
+                    orderSummaryItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+                } else {
+                    cartItems.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-2', 'border-bottom', 'pb-2');
+                        // Ensure product.name and product.image are available in your cart items for best display
+                        // If not, you might need to adjust your addToCart function in cart.js
+                        itemDiv.innerHTML = `
+                            <div class="d-flex align-items-center">
+                                ${item.image ? `<img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">` : ''}
+                                <span>${item.name || 'Product'} (${item.quantityKey}) x ${item.count}</span>
+                            </div>
+                            <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                        `;
+                        orderSummaryItemsDiv.appendChild(itemDiv);
+                    });
+                }
+            }
+
+            // Call updateCheckoutDisplay when the page loads
+            updateCheckoutDisplay();
+
             // --- Your existing search functionality (keep this as is) ---
             const searchInput = document.getElementById('searchInput');
             const searchResultsDiv = document.getElementById('searchResults');
@@ -746,10 +788,10 @@
                     const zipCode = document.getElementById('zip').value;
                     const country = document.getElementById('country').value;
 
-                    // Assuming these functions are available from cart.js
-                    const currentShippingCost = 0; // Implement calculateShipping() if needed
                     const cartItems = getCart(); // Get the current cart from cart.js
-                    const totalWeight = calculateTotalWeight(); // Get total weight from cart.js
+                    const totalWeight = calculateTotalWeight(); // Get total weight from cart.js (ensure this exists in cart.js)
+                    const currentShippingCost = calculateShipping(calculateCartTotal()); // Use the same shipping calculation
+
 
                     // Basic validation: Ensure cart is not empty
                     if (!cartItems || cartItems.length === 0) {
@@ -857,7 +899,7 @@
                         // Handle payment failures that occur within the Razorpay pop-up
                         rzp.on('payment.failed', function (response) {
                             console.error("Razorpay Payment Failed:", response.error);
-                            alert(`Payment failed. Please try again or use another method.\nReason: ${response.error.description}`);
+                            alert(`Payment failed. Please try again or use another method.\\nReason: ${response.error.description}`);
                             if (payNowButton) payNowButton.disabled = false; // Re-enable button on failure
                         });
 
