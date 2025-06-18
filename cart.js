@@ -18,50 +18,61 @@ function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Function to add an item to the cart
-// productId: The unique ID of the product
-// quantityKey: The selected quantity (e.g., '250gm', '500gm', '1kg', 'piece')
-// count: The number of units of this specific quantity (e.g., 2 for two 250gm packs)
+// In cart.js - Find and modify your addToCart function
 function addToCart(productId, quantityKey, count) {
-    // Find the product in the global 'products' array (from products.js)
-    const product = getProductById(productId); // Use getProductById
+    const product = getProductById(productId); // This gets product details (from 'products' array, likely from products.js)
+
     if (!product) {
         console.error('Product not found:', productId);
         return;
     }
 
-    // Check if the selected quantity key exists for this product
-    if (!product.prices[quantityKey]) {
-        console.error(`Quantity key "${quantityKey}" not found for product "${productId}"`);
+    // Ensure product.prices[quantityKey] exists before proceeding
+    if (!product.prices || typeof product.prices[quantityKey] === 'undefined') {
+        console.error(`Price for quantity key "<span class="math-inline">\{quantityKey\}" not found for product "</span>{productId}".`);
         return;
     }
 
-    // Create a unique identifier for the cart item based on product ID and quantity key
-    const cartItemId = generateCartItemId(productId, quantityKey);
+    const pricePerUnit = product.prices[quantityKey];
 
-    // Find if the item already exists in the cart
-    const existingItemIndex = cart.findIndex(item => item.cartItemId === cartItemId);
+    const existingItem = cart.find(item => item.id === productId && item.quantityKey === quantityKey);
 
-    if (existingItemIndex > -1) {
-        // If item exists, update its count
-        cart[existingItemIndex].count += parseInt(count, 10); // Ensure count is treated as a number
+    if (existingItem) {
+        existingItem.count += count;
     } else {
-        // If item does not exist, add it to the cart
+        // Generate a unique cart item ID (ensure generateCartItemId is defined in cart.js)
+        const cartItemId = generateCartItemId(productId, quantityKey);
+
         cart.push({
-            cartItemId: cartItemId, // Unique ID for this specific cart entry
-            id: productId,
-            name: product.name,
-            image: product.image,
-            quantityKey: quantityKey, // e.g., '250gm'
-            pricePerUnit: product.prices[quantityKey], // Price for one unit of this quantity
-            count: parseInt(count, 10) // Ensure count is treated as a number
+            cartItemId: cartItemId,     // Unique ID for this specific cart entry
+            id: productId,              // Product ID
+            name: product.name,         // <-- ADD THIS LINE (if not already present)
+            image: product.image,       // <-- ADD THIS LINE (if not already present)
+            quantityKey: quantityKey,   // e.g., '250gm'
+            count: count,               // Number of units of this specific quantity
+            pricePerUnit: pricePerUnit  // Price for a single unit of this quantity
         });
     }
-    saveCart(); // Save the updated cart to localStorage
-    updateCartIcon(); // Update the cart count in the UI
-    alert('Item added to cart!'); // Inform the user
+    saveCart(); // Save changes to localStorage
+    updateCartIcon(); // Update cart icon
+    console.log("Item added to cart:", { productId, quantityKey, count, product });
 }
+function calculateTotalWeight() {
+    let totalWeight = 0; // in grams
+    const currentCart = getCart();
 
+    currentCart.forEach(item => {
+        const product = getProductById(item.id); // Assuming getProductById is accessible here
+
+        if (product && product.weights && typeof product.weights[item.quantityKey] !== 'undefined') {
+            totalWeight += product.weights[item.quantityKey] * item.count;
+        } else {
+            console.warn(`Weight data for product ID ${item.id}, quantity key ${item.quantityKey} not found or invalid.`);
+            // You might want to handle this error or assign a default weight
+        }
+    });
+    return totalWeight; // Returns total weight in grams
+}
 // Function to update the quantity of an item in the cart
 // cartItemId: The unique identifier of the cart item (product ID + quantity key)
 // newCount: The new count for this item

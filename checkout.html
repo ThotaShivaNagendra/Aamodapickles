@@ -198,6 +198,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="products.js"></script>
     <script src="cart.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-functions-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             updateCartIcon();
@@ -644,144 +648,225 @@
                 }
             });
 
-            // Hide suggestions when clicking outside the search input and results
-            document.addEventListener('click', (event) => {
-                if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
-                    searchResultsDiv.style.display = 'none';
-                }
-            });
-            
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-              const firebaseConfig = {
-                apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
-                authDomain: "aamoda-pickles.firebaseapp.com",
-                projectId: "aamoda-pickles",
-                storageBucket: "aamoda-pickles.firebasestorage.app",
-                messagingSenderId: "1009552622686",
-                appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
-                measurementId: "G-D1CVE3WP7N"
-              };
-              firebase.initializeApp(firebaseConfig);
-              const db = firebase.firestore();
-            
+            // Firebase configuration (replace with your actual project config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
+            authDomain: "aamoda-pickles.firebaseapp.com",
+            projectId: "aamoda-pickles",
+            storageBucket: "aamoda-pickles.firebasestorage.app",
+            messagingSenderId: "1009552622686",
+            appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
+            measurementId: "G-D1CVE3WP7N"
+        };
 
-          // ----  Razorpay Integration ----
-                  checkoutForm.addEventListener('submit', function (e) {
-                      e.preventDefault(); // Prevent default form submission
+        // Initialize Firebase if not already
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
 
-                      // Get form data
-                      const fullName = document.getElementById('fullName').value;
-                      const email = document.getElementById('email').value;
-                      const phone = document.getElementById('phone').value;
-                      const address = document.getElementById('address').value;
-                      const city = document.getElementById('city').value;
-                      const state = document.getElementById('state').value;
-                      const zipCode = document.getElementById('zip').value;
-                      const country = document.getElementById('country').value;
+        const db = firebase.firestore();
+        // Get Firebase Functions service instance
+        const functions = firebase.functions();
+        // If your functions are not in 'us-central1' region, specify it:
+        // const functions = firebase.functions('your-region');
 
-                      // Recalculate shipping just before payment to ensure latest values
-                      const currentShippingCost = calculateShipping();
-                      const totalAmountPayable = parseFloat(orderTotalElement.textContent);
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkoutForm = document.getElementById('checkoutForm');
+            const orderTotalElement = document.getElementById('orderTotal');
 
-                      // Generate a unique Order ID
-                      const orderId = generateOrderId();
+            // --- Your existing search functionality (keep this as is) ---
+            const searchInput = document.getElementById('searchInput');
+            const searchResultsDiv = document.getElementById('searchResults');
 
-                      const options = {
-                          key: "rzp_live_3InjjEzd3LUWLP",
-                          amount: totalAmountPayable * 100,
-                          currency: "INR",
-                          name: "Aamoda Pickles",
-                          description: "Order from Aamoda Pickles",
-                          image: "logo.png",
-                          handler: function (response) {
-                          console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
+            if (searchInput && searchResultsDiv) {
+                searchInput.addEventListener('input', () => {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    searchResultsDiv.innerHTML = ''; // Clear previous results
 
-                          
-                          const cartItems = getCart();
-                          console.log("Full cart contents:", JSON.stringify(cartItems)); // Debugging the full cart
+                    if (searchTerm.length > 0) {
+                        const matchingProducts = products.filter(product =>
+                            product.name.toLowerCase().includes(searchTerm)
+                        );
 
-                          const processedItems = cartItems.map(item => ({
-                              cartItemId: item.cartItemId,
-                              count: item.count,
-                              pricePerUnit: item.pricePerUnit,
-                          }));
+                        if (matchingProducts.length > 0) {
+                            searchResultsDiv.style.display = 'block';
+                            const suggestionsList = document.createElement('ul');
+                            suggestionsList.classList.add('list-unstyled', 'm-0', 'p-0');
 
-                          console.log("Processed items for Firestore:", JSON.stringify(processedItems)); // Debugging the processed items
-                          if (!cartItems || cartItems.length === 0) {
-                              console.warn("Cart is empty! Order will be saved without items.");
-                          }
+                            matchingProducts.forEach(product => {
+                                const listItem = document.createElement('li');
+                                listItem.classList.add('p-2', 'border-bottom', 'cursor-pointer');
+                                listItem.textContent = product.name;
+                                listItem.addEventListener('click', () => {
+                                    window.location.href = `product-details.html?id=${product.id}`;
+                                    searchInput.value = ''; // Clear input after selection
+                                    searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                                });
+                                suggestionsList.appendChild(listItem);
+                            });
+                            searchResultsDiv.appendChild(suggestionsList);
+                        } else {
+                            searchResultsDiv.style.display = 'none';
+                        }
+                    } else {
+                        searchResultsDiv.style.display = 'none';
+                    }
+                });
 
-                          const orderData = {
-                              orderId: orderId,
-                              fullName: fullName,
-                              email: email,
-                              phone: phone,
-                              address: address,
-                              city: city,
-                              state: state,
-                              zipCode: zipCode,
-                              country: country,
-                              shippingCost: currentShippingCost,
-                              totalAmount: totalAmountPayable,
-                              paymentId: response.razorpay_payment_id,
-                              items: processedItems, // Save the cart items
-                              orderDate: firebase.firestore.FieldValue.serverTimestamp()
-                          };
+                document.addEventListener('click', (event) => {
+                    if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+                        searchResultsDiv.style.display = 'none';
+                    }
+                });
+            }
 
-                          console.log("Order data to be saved:", JSON.stringify(orderData)); // Debug: Check all data
+            // --- Razorpay Integration (using Firebase Cloud Functions) ---
+            if (checkoutForm) { // Ensure the form element exists
+                checkoutForm.addEventListener('submit', async function (e) {
+                    e.preventDefault(); // Prevent the default form submission
 
-                          db.collection('orders')
-                              .doc(orderId)
-                              .set(orderData)
-                              .then(() => {
-                                  console.log("Order saved to Firestore with ID: ", orderId);
-                                  clearCart(); // Clear cart *after* successful save
-                                  window.location.href = `thankyou.html?orderId=${orderId}&paymentId=${response.razorpay_payment_id}`;
-                              })
-                              .catch((error) => {
-                                  console.error("Error saving order to Firestore: ", error);
-                                  alert("Error saving order. Please contact support.");
-                              });
-                      },
-                          prefill: {
-                              name: fullName,
-                              email: email,
-                              contact: phone
-                          },
-                          notes: {
-                              address: address,
-                              city: city,
-                              state: state,
-                              zip: zipCode,
-                              country: country,
-                              shippingCost: currentShippingCost,
-                              totalWeight: totalWeight / 1000
-                          },
-                          theme: {
-                              color: "#400607"
-                          },
-                          modal: {
-                              ondismiss: function () {
-                                  console.log("Payment popup closed by user.");
-                                  alert("Payment popup was closed. If you need help, feel free to contact us.");
-                              }
-                          }
-                      };
+                    // --- 1. Gather Client-Side Customer & Cart Data ---
+                    const fullName = document.getElementById('fullName').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const address = document.getElementById('address').value;
+                    const city = document.getElementById('city').value;
+                    const state = document.getElementById('state').value;
+                    const zipCode = document.getElementById('zip').value;
+                    const country = document.getElementById('country').value;
 
-                      const rzp = new Razorpay(options);
-                      rzp.on('payment.failed', function (response) {
-                          console.error("Payment failed:", response.error);
-                          alert("Payment failed. Please try again.\nReason: " + response.error.description);
-                      });
-                      rzp.open();
-                  });
+                    // Assuming these functions are available from cart.js
+                    const currentShippingCost = 0; // Implement calculateShipping() if needed
+                    const cartItems = getCart(); // Get the current cart from cart.js
+                    const totalWeight = calculateTotalWeight(); // Get total weight from cart.js
 
-                  function generateOrderId() {
-                      const timestamp = Date.now().toString(36);
-                      const random = Math.random().toString(36).substr(2, 5);
-                      return timestamp + '-' + random;
-                  }
-              });
+                    // Basic validation: Ensure cart is not empty
+                    if (!cartItems || cartItems.length === 0) {
+                        alert('Your cart is empty. Please add items before checking out.');
+                        return;
+                    }
+
+                    // Optional: Show loading indicator / Disable button
+                    const payNowButton = document.getElementById('payNowButton');
+                    if (payNowButton) payNowButton.disabled = true;
+
+                    try {
+                        console.log("Attempting to create Razorpay Order via Cloud Function...");
+
+                        // --- 2. Call Server-Side Cloud Function: `createRazorpayOrder` ---
+                        // This sends your cart and customer details to the backend to
+                        // securely create a Razorpay order and validate the amount.
+                        const createOrderCallable = functions.httpsCallable('createRazorpayOrder');
+
+                        const orderCreationResponse = await createOrderCallable({
+                            cartItems: cartItems, // Send the full cart items for server-side price validation
+                            customerDetails: {
+                                fullName: fullName, email: email, phone: phone,
+                                address: address, city: city, state: state, zipCode: zipCode, country: country,
+                            },
+                            shippingCost: currentShippingCost,
+                            totalWeightKg: totalWeight / 1000, // Convert grams to KG for server notes
+                        });
+
+                        // Destructure the secure response from the Cloud Function
+                        const { orderId: razorpayOrderId, amount: verifiedAmount, currency: verifiedCurrency } = orderCreationResponse.data;
+
+                        console.log(`Received Razorpay Order ID from server: ${razorpayOrderId}`);
+
+                        // --- 3. Configure and Open Razorpay Checkout Pop-up ---
+                        const options = {
+                            key: "rzp_live_3InjjEzd3LUWLP", // Your PUBLIC Razorpay Key ID (rzp_live_... or rzp_test_...)
+                            amount: verifiedAmount,         // *** SECURE AMOUNT FROM SERVER *** (in paise)
+                            currency: verifiedCurrency,     // *** CURRENCY FROM SERVER ***
+                            order_id: razorpayOrderId,      // *** SECURE ORDER ID FROM SERVER ***
+                            name: "Aamoda Pickles",
+                            description: "Order from Aamoda Pickles",
+                            image: "/logo.png", // Path to your logo image
+                            handler: function (response) {
+                                // This function is called by Razorpay upon successful payment in the pop-up.
+                                console.log("Payment successful in Razorpay pop-up. Now verifying payment on server...");
+
+                                // --- 4. Call Server-Side Cloud Function: `processRazorpayPayment` ---
+                                // This sends Razorpay's response to your backend for secure signature verification
+                                // and saving the order to Firestore.
+                                const processPaymentCallable = functions.httpsCallable('processRazorpayPayment');
+
+                                // Generate a unique internal order ID for your Firestore record
+                                const internalOrderId = generateOrderId(); // This function is defined below
+
+                                processPaymentCallable({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id, // The same order ID received from createRazorpayOrder
+                                    razorpay_signature: response.razorpay_signature, // Crucial for server-side verification
+                                    internalOrderId: internalOrderId, // Your unique ID for this order in Firestore
+                                    customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
+                                    cartItems: getCart(), // Send full cart items to be saved with the order
+                                    shippingCost: currentShippingCost,
+                                    totalAmount: parseFloat(orderTotalElement.textContent) // Client's displayed total (for record, server has already verified)
+                                })
+                                .then(() => {
+                                    console.log("Order successfully processed and saved to Firestore via Cloud Function.");
+                                    clearCart(); // Clear the cart *after* successful server-side processing
+                                    // Redirect to a thank you page
+                                    window.location.href = `thankyou.html?orderId=${internalOrderId}&paymentId=${response.razorpay_payment_id}`;
+                                })
+                                .catch((error) => {
+                                    console.error("Error processing payment on server:", error);
+                                    alert(`There was an issue finalizing your order after payment. Please contact support with Payment ID: ${response.razorpay_payment_id || 'N/A'}`);
+                                })
+                                .finally(() => {
+                                    // Re-enable button
+                                    if (payNowButton) payNowButton.disabled = false;
+                                });
+                            },
+                            // Prefill customer details in Razorpay pop-up for convenience
+                            prefill: {
+                                name: fullName,
+                                email: email,
+                                contact: phone
+                            },
+                            // Notes visible in your Razorpay dashboard
+                            notes: {
+                                address: address, city: city, state: state, zip: zipCode, country: country,
+                                shippingCost: currentShippingCost, totalWeightKg: totalWeight / 1000
+                            },
+                            theme: {
+                                color: "#400607" // Your brand color
+                            },
+                            modal: {
+                                ondismiss: function() {
+                                    console.log("Razorpay payment pop-up closed by user.");
+                                    alert("Payment cancelled. If you need help, feel free to contact us.");
+                                }
+                            }
+                        };
+
+                        const rzp = new Razorpay(options);
+
+                        // Handle payment failures that occur within the Razorpay pop-up
+                        rzp.on('payment.failed', function (response) {
+                            console.error("Razorpay Payment Failed:", response.error);
+                            alert(`Payment failed. Please try again or use another method.\nReason: ${response.error.description}`);
+                            if (payNowButton) payNowButton.disabled = false; // Re-enable button on failure
+                        });
+
+                        rzp.open(); // Open the Razorpay checkout pop-up
+
+                    } catch (error) {
+                        console.error("Error during payment initiation or Cloud Function call:", error);
+                        alert(`Failed to start payment: ${error.message || 'An unknown error occurred'}. Please try again or contact support.`);
+                        if (payNowButton) payNowButton.disabled = false; // Re-enable button on any error
+                    }
+                });
+            }
+        });
+
+        // Helper function to generate a unique ID for your Firestore orders
+        function generateOrderId() {
+            const timestamp = Date.now().toString(36);
+            const random = Math.random().toString(36).substr(2, 5);
+            return timestamp + '-' + random;
+        }
     </script>
 </body>
 
