@@ -108,8 +108,11 @@ function getCart() {
 
 // Function to calculate the total price of all items in the cart
 // In cart.js
+// In cart.js
 function calculateCartTotal() {
-    return cart.reduce((total, item) => {
+    // Get the most up-to-date cart directly from localStorage
+    const currentCart = getCart(); // <--- IMPORTANT CHANGE HERE
+    return currentCart.reduce((total, item) => {
         // Ensure item.pricePerUnit and item.count are numbers
         const price = parseFloat(item.pricePerUnit) || 0;
         const count = parseInt(item.count) || 0;
