@@ -648,229 +648,99 @@
                   }
                 }
             });
-            const payNowButton = document.getElementById('pay-now-button');
+            const checkoutForm = document.getElementById('checkout-form');
+      const payNowButton = document.getElementById('pay-now-button');
+      const orderTotalElement = document.getElementById('order-total');
 
-    payNowButton.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default behavior
-    checkoutForm.requestSubmit(); // Trigger form's submit event which has Razorpay logic
-});
-
-
-            // Firebase configuration (replace with your actual project config)
-        const firebaseConfig = {
-            apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
-            authDomain: "aamoda-pickles.firebaseapp.com",
-            projectId: "aamoda-pickles",
-            storageBucket: "aamoda-pickles.firebasestorage.app",
-            messagingSenderId: "1009552622686",
-            appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
-            measurementId: "G-D1CVE3WP7N"
-        };
-
-        // Initialize Firebase if not already
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-
-        const db = firebase.firestore();
-        // Get Firebase Functions service instance
-        const functions = firebase.functions();
-        // If your functions are not in 'us-central1' region, specify it:
-        // const functions = firebase.functions('your-region');
-      
-            // Function to update the displayed cart total and items on the checkout page
-            function updateCheckoutDisplay() {
-                const cartItems = getCart(); // Get cart items from cart.js
-                const cartSubtotal = calculateCartTotal(); // Get subtotal from cart.js
-                const shippingCost = calculateShipping(cartSubtotal);
-                const grandTotal = cartSubtotal + shippingCost;
-
-                // Update HTML elements
-                orderSubtotalElement.textContent = cartSubtotal.toFixed(2);
-                shippingCostElement.textContent = shippingCost.toFixed(2);
-                orderTotalElement.textContent = grandTotal.toFixed(2);
-
-                // Display cart items in the summary
-                orderSummaryItemsDiv.innerHTML = ''; // Clear previous items
-                if (cartItems.length === 0) {
-                    orderSummaryItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
-                } else {
-                    cartItems.forEach(item => {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-2', 'border-bottom', 'pb-2');
-                        // Ensure product.name and product.image are available in your cart items for best display
-                        // If not, you might need to adjust your addToCart function in cart.js
-                        itemDiv.innerHTML = `
-                            <div class="d-flex align-items-center">
-                                ${item.image ? `<img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">` : ''}
-                                <span>${item.name || 'Product'} (${item.quantityKey}) x ${item.count}</span>
-                            </div>
-                            <span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
-                        `;
-                        orderSummaryItemsDiv.appendChild(itemDiv);
-                    });
-                }
-            }
-
-            // Call updateCheckoutDisplay when the page loads
-            updateCheckoutDisplay();
-            // --- Razorpay Integration (using Firebase Cloud Functions) ---
-            if (checkoutForm) { // Ensure the form element exists
-                checkoutForm.addEventListener('submit', async function (e) {
-                    e.preventDefault(); // Prevent the default form submission
-
-
-                    // --- 1. Gather Client-Side Customer & Cart Data ---
-                    const fullName = document.getElementById('fullName').value;
-                    const email = document.getElementById('email').value;
-                    const phone = document.getElementById('phone').value;
-                    const address = document.getElementById('address').value;
-                    const city = document.getElementById('city').value;
-                    const state = document.getElementById('state').value;
-                    const zipCode = document.getElementById('zip').value;
-                    const country = document.getElementById('country').value;
-
-                    const cartItems = getCart(); // Get the current cart from cart.js
-                    const totalWeight = calculateTotalWeight(); // Get total weight from cart.js (ensure this exists in cart.js)
-                    const currentShippingCost = calculateShipping(calculateCartTotal()); // Use the same shipping calculation
-
-
-                    // Basic validation: Ensure cart is not empty
-                    if (!cartItems || cartItems.length === 0) {
-                        alert('Your cart is empty. Please add items before checking out.');
-                        return;
-                    }
-                    
-
-                    // Optional: Show loading indicator / Disable button
-                    const payNowButton = document.getElementById('pay-now-button');
-  const checkoutForm = document.getElementById('checkout-form');
-
-  if (payNowButton && checkoutForm) {
-      payNowButton.addEventListener('click', (event) => {
-          event.preventDefault(); // prevent default
-          checkoutForm.requestSubmit(); // trigger Razorpay logic
-      });
-  }
-                    if (payNowButton) payNowButton.disabled = true;
-
-                    try {
-                        console.log("Attempting to create Razorpay Order via Cloud Function...");
-
-                        // --- 2. Call Server-Side Cloud Function: `createRazorpayOrder` ---
-                        // This sends your cart and customer details to the backend to
-                        // securely create a Razorpay order and validate the amount.
-                        const createOrderCallable = functions.httpsCallable('createRazorpayOrder');
-
-                        const orderCreationResponse = await createOrderCallable({
-                            cartItems: cartItems, // Send the full cart items for server-side price validation
-                            customerDetails: {
-                                fullName: fullName, email: email, phone: phone,
-                                address: address, city: city, state: state, zipCode: zipCode, country: country,
-                            },
-                            shippingCost: currentShippingCost,
-                            totalWeightKg: totalWeight / 1000, // Convert grams to KG for server notes
-                        });
-
-                        // Destructure the secure response from the Cloud Function
-                        const { orderId: razorpayOrderId, amount: verifiedAmount, currency: verifiedCurrency } = orderCreationResponse.data;
-
-                        console.log(`Received Razorpay Order ID from server: ${razorpayOrderId}`);
-
-                        // --- 3. Configure and Open Razorpay Checkout Pop-up ---
-                        const options = {
-                            key: "rzp_live_3InjjEzd3LUWLP", // Your PUBLIC Razorpay Key ID (rzp_live_... or rzp_test_...)
-                            amount: verifiedAmount,         // *** SECURE AMOUNT FROM SERVER *** (in paise)
-                            currency: verifiedCurrency,     // *** CURRENCY FROM SERVER ***
-                            order_id: razorpayOrderId,      // *** SECURE ORDER ID FROM SERVER ***
-                            name: "Aamoda Pickles",
-                            description: "Order from Aamoda Pickles",
-                            image: "/logo.png", // Path to your logo image
-                            handler: function (response) {
-                                // This function is called by Razorpay upon successful payment in the pop-up.
-                                console.log("Payment successful in Razorpay pop-up. Now verifying payment on server...");
-
-                                // --- 4. Call Server-Side Cloud Function: `processRazorpayPayment` ---
-                                // This sends Razorpay's response to your backend for secure signature verification
-                                // and saving the order to Firestore.
-                                const processPaymentCallable = functions.httpsCallable('processRazorpayPayment');
-
-                                // Generate a unique internal order ID for your Firestore record
-                                const internalOrderId = generateOrderId(); // This function is defined below
-
-                                processPaymentCallable({
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_order_id: response.razorpay_order_id, // The same order ID received from createRazorpayOrder
-                                    razorpay_signature: response.razorpay_signature, // Crucial for server-side verification
-                                    internalOrderId: internalOrderId, // Your unique ID for this order in Firestore
-                                    customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
-                                    cartItems: getCart(), // Send full cart items to be saved with the order
-                                    shippingCost: currentShippingCost,
-                                    totalAmount: parseFloat(orderTotalElement.textContent) // Client's displayed total (for record, server has already verified)
-                                })
-                                .then(() => {
-                                    console.log("Order successfully processed and saved to Firestore via Cloud Function.");
-                                    clearCart(); // Clear the cart *after* successful server-side processing
-                                    // Redirect to a thank you page
-                                    window.location.href = `thankyou.html?orderId=${internalOrderId}&paymentId=${response.razorpay_payment_id}`;
-                                })
-                                .catch((error) => {
-                                    console.error("Error processing payment on server:", error);
-                                    alert(`There was an issue finalizing your order after payment. Please contact support with Payment ID: ${response.razorpay_payment_id || 'N/A'}`);
-                                })
-                                .finally(() => {
-                                    // Re-enable button
-                                    if (payNowButton) payNowButton.disabled = false;
-                                });
-                            },
-                            // Prefill customer details in Razorpay pop-up for convenience
-                            prefill: {
-                                name: fullName,
-                                email: email,
-                                contact: phone
-                            },
-                            // Notes visible in your Razorpay dashboard
-                            notes: {
-                                address: address, city: city, state: state, zip: zipCode, country: country,
-                                shippingCost: currentShippingCost, totalWeightKg: totalWeight / 1000
-                            },
-                            theme: {
-                                color: "#400607" // Your brand color
-                            },
-                            modal: {
-                                ondismiss: function() {
-                                    console.log("Razorpay payment pop-up closed by user.");
-                                    alert("Payment cancelled. If you need help, feel free to contact us.");
-                                }
-                            }
-                        };
-
-                        const rzp = new Razorpay(options);
-
-                        // Handle payment failures that occur within the Razorpay pop-up
-                        rzp.on('payment.failed', function (response) {
-                            console.error("Razorpay Payment Failed:", response.error);
-                            alert(`Payment failed. Please try again or use another method.\\nReason: ${response.error.description}`);
-                            if (payNowButton) payNowButton.disabled = false; // Re-enable button on failure
-                        });
-
-                        rzp.open(); // Open the Razorpay checkout pop-up
-
-                    } catch (error) {
-                        console.error("Error during payment initiation or Cloud Function call:", error);
-                        alert(`Failed to start payment: ${error.message || 'An unknown error occurred'}. Please try again or contact support.`);
-                        if (payNowButton) payNowButton.disabled = false; // Re-enable button on any error
-                    }
-                });
-            }
+      if (payNowButton && checkoutForm) {
+        payNowButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          checkoutForm.requestSubmit();
         });
+      }
 
-        // Helper function to generate a unique ID for your Firestore orders
-        function generateOrderId() {
-            const timestamp = Date.now().toString(36);
-            const random = Math.random().toString(36).substr(2, 5);
-            return timestamp + '-' + random;
+      checkoutForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
+        const zipCode = document.getElementById('zip').value;
+        const country = document.getElementById('country').value;
+
+        const cartItems = getCart();
+        if (!cartItems || cartItems.length === 0) {
+          alert('Cart is empty.');
+          return;
         }
+
+        const totalWeight = calculateTotalWeight(); // from cart.js
+        const currentShippingCost = calculateShipping(); // from your logic
+        const orderTotal = parseFloat(orderTotalElement.textContent);
+
+        try {
+          const functions = firebase.functions();
+          const createOrder = functions.httpsCallable('createRazorpayOrder');
+          const res = await createOrder({
+            cartItems,
+            customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
+            shippingCost: currentShippingCost,
+            totalWeightKg: totalWeight / 1000
+          });
+
+          const { orderId, amount, currency } = res.data;
+
+          const rzp = new Razorpay({
+            key: "rzp_live_3InjjEzd3LUWLP",
+            amount,
+            currency,
+            order_id: orderId,
+            name: "Aamoda Pickles",
+            description: "Order from Aamoda Pickles",
+            image: "/logo.png",
+            handler: async function (response) {
+              const processPayment = functions.httpsCallable('processRazorpayPayment');
+              const internalOrderId = generateOrderId();
+
+              await processPayment({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                internalOrderId,
+                customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
+                cartItems,
+                shippingCost: currentShippingCost,
+                totalAmount: orderTotal
+              });
+
+              clearCart();
+              window.location.href = `thankyou.html?orderId=${internalOrderId}&paymentId=${response.razorpay_payment_id}`;
+            },
+            prefill: { name: fullName, email, contact: phone },
+            notes: { address, city, state, zipCode, country },
+            theme: { color: "#400607" },
+            modal: {
+              ondismiss: () => alert("Payment cancelled."),
+            }
+          });
+
+          rzp.open();
+        } catch (err) {
+          console.error("Payment error:", err);
+          alert("Something went wrong. Try again.");
+        }
+      });
+
+      // Only define once
+      if (typeof generateOrderId !== 'function') {
+        window.generateOrderId = function () {
+          return Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);
+        }
+      }
+    });
     </script>
 </body>
 
