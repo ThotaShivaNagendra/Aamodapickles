@@ -650,14 +650,11 @@
             });
             const payNowButton = document.getElementById('pay-now-button');
 
-    if (payNowButton) {
-        payNowButton.addEventListener('click', async (event) => {
-            // HERE IS WHERE YOU NEED TO ADD event.preventDefault();
-            event.preventDefault(); // <--- Add this line
+    payNowButton.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent default behavior
+    checkoutForm.requestSubmit(); // Trigger form's submit event which has Razorpay logic
+});
 
-            
-        });
-    }
 
             // Firebase configuration (replace with your actual project config)
         const firebaseConfig = {
