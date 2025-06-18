@@ -2,239 +2,246 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thank You - Aamoda Pickles</title>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You - Aamoda Pickles</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <style>
+        .thank-you-container {
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
 
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+        .thank-you-message {
+            color: #28a745;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
 
-  <style>
-    .thank-you-container {
-      background-color: #f8f9fa;
-      padding: 40px 20px;
-      text-align: center;
-      margin-top: 50px;
-    }
+        .payment-info {
+            margin-bottom: 15px;
+        }
 
-    .thank-you-message {
-      color: #400607;
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-      padding-top: 120px;
-    }
+        .order-details {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
 
-    .payment-info,
-    .order-details {
-      margin-bottom: 20px;
-      text-align: left;
-    }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #dee2e6;
+            padding: 8px 0;
+        }
 
-    .order-details {
-      border: 1px solid #dee2e6;
-      padding: 20px;
-      border-radius: 8px;
-      background-color: #ffffff;
-    }
+        .order-item:last-child {
+            border-bottom: none;
+        }
 
-    .order-item {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #dee2e6;
-      padding: 8px 0;
-      font-size: 0.95rem;
-    }
-
-    .order-item:last-child {
-      border-bottom: none;
-    }
-
-    .total {
-      font-weight: bold;
-    }
-
-    #orderItems {
-      margin-bottom: 10px;
-    }
-  </style>
+        .total {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg custom-navbar">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
-      </a>
-      <div class="d-flex align-items-center d-lg-none">
-        <a class="nav-link pe-2" href="cart.html">
-          <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
-        </a>
-        <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-search text-white"></i>
-          <span class="bg menu ms-2">Menu</span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav m-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
-          <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
-          <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="cart.html">
-              <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container ">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" class="logo-image" alt="Aamoda Pickles Logo">
             </a>
-          </li>
-        </ul>
-        <form class="d-flex ms-lg-auto" id="searchForm">
-          <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search"
-            id="searchInput">
-          <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-          <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2"
-            style="z-index: 1000; width: calc(100% - 20px); display: none;"></div>
-        </form>
-      </div>
-    </div>
-  </nav>
+            <div class="d-flex align-items-center d-lg-none">
+                <a class="nav-link pe-2" href="cart.html">
+                    <i class="fas fa-shopping-cart text-white"></i>(<span id="cart-icon-count-mobile">0</span>)
+                </a>
+                <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-search text-white"></i>
+                    <span class="bg menu ms-2">Menu</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="veg.html">Veg Pickles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nonveg.html">Non-Veg Pickles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="specials.html">Specials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>Cart (<span id="cart-icon-count-desktop">0</span>)
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-lg-auto" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search"
+                        id="searchInput">
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                    <div id="searchResults" class="position-absolute bg-white shadow rounded mt-2"
+                        style="z-index: 1000; width: calc(100% - 20px); display: none;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Thank You Message -->
-  <div class="container">
-    <div class="thank-you-container">
-      <h1 class="thank-you-message">Thank You for Your Order!</h1>
-      <p>Your order has been successfully placed. Here are your order details:</p>
-
-      <div class="payment-info">
-        <p><strong>Payment ID:</strong> <span id="paymentId">...</span></p>
-      </div>
-
-      <div class="order-details">
-        <h3>Order Details</h3>
-        <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-        <p><strong>Customer Name:</strong> <span id="customerName"></span></p>
-        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
-        <p><strong>Phone:</strong> <span id="customerPhone"></span></p>
-        <p><strong>Address:</strong> <span id="customerAddress"></span></p>
-        <p><strong>City:</strong> <span id="customerCity"></span>, <strong>State:</strong> <span
-            id="customerState"></span>, <strong>Zip:</strong> <span id="customerZip"></span>, <strong>Country:</strong>
-          <span id="customerCountry"></span></p>
-
-        <h4>Items:</h4>
-        <div id="orderItems"></div>
-
-        <p><strong>Shipping Cost:</strong> ₹<span id="shippingCost">0.00</span></p>
-        <p class="total"><strong>Total Amount:</strong> ₹<span id="totalAmount">0.00</span></p>
-      </div>
-
-      <a href="index.html" class="btn btn-primary mt-4">Continue Shopping</a>
-    </div>
-  </div>
-
-  <!-- Contact Section -->
-  <section class="contact-section py-5 bg text-white">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-4 text-center mb-4 mb-md-0">
-          <img src="logo.png" class="img-fluid" style="max-height: 250px;" alt="Aamoda Pickles Logo">
+        <div class="thank-you-container">
+            <h1 class="thank-you-message" style="padding-top:120px;color:#400607;">Thank You for Your Order!</h1>
+            <p>Your order has been successfully placed. Here are your order details:</p>
+
+            <div class="payment-info">
+                <p><b>Payment ID:</b> <span id="paymentId"></span></p>
+            </div>
+
+            <div class="order-details">
+                <h3>Order Details</h3>
+                <p><b>Order ID:</b> <span id="orderId"></span></p>
+                <p><b>Customer Name:</b> <span id="customerName"></span></p>
+                <p><b>Email:</b> <span id="customerEmail"></span></p>
+                <p><b>Phone:</b> <span id="customerPhone"></span></p>
+                <p><b>Address:</b> <span id="customerAddress"></span></p>
+                <p><b>City:</b> <span id="customerCity"></span>, <b>State:</b> <span id="customerState"></span>, <b>Zip:</b>
+                    <span id="customerZip"></span>, <b>Country:</b> <span id="customerCountry"></span></p>
+
+                <h4>Items:</h4>
+                <div id="orderItems">
+                    </div>
+                <p><b>Shipping Cost:</b> ₹<span id="shippingCost"></span></p>
+                <p class="total"><b>Total Amount:</b> ₹<span id="totalAmount"></span></p>
+            </div>
+
+            <a href="index.html" class="btn btn-primary">Continue Shopping</a>
         </div>
-        <div class="col-md-8 text-center text-md-start">
-          <h2 style="padding: 10px;">Contact Us</h2>
-          <p>We'd love to hear from you! Connect with us through:</p>
-          <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-            <a href="https://wa.me/917731021234?text=Hi%2C%20I'd%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"
-              class="btn btn-success">📞 WhatsApp</a>
-            <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
-            <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
-            <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
-          </div>
+    </div>
+
+    <section class="contact-section py-5 bg text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <img src="logo.png" class="img-fluid" style="max-height: 250px;" alt="Aamoda Pickles Logo">
+                </div>
+                <div class="col-md-8 text-center text-md-start">
+                    <h2 style="padding: 10px;">Contact Us</h2>
+                    <p>We'd love to hear from you! Connect with us through:</p>
+                    <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
+                        <a href="https://wa.me/917731021234?text=Hi%2C%20I\'d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"
+                            class="btn btn-success">📞 WhatsApp</a>
+                        <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸
+                            Instagram</a>
+                        <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
+                        <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer bg-warning text-center py-4">
-    <p>© 2025 Aamoda Pickles. All rights reserved.</p>
-    <div class="container mt-2">
-      <a href="terms.html" class="text-red mx-2">Terms & Conditions</a> |
-      <a href="shipping.html" class="text-red mx-2">Shipping Policy</a> |
-      <a href="contact.html" class="text-red mx-2">Contact Us</a> |
-      <a href="refundpolicy.html" class="text-red mx-2">Cancel & Refund Policy</a> |
-      <a href="privacypolicy.html" class="text-red mx-2">Privacy Policy</a>
-    </div>
-  </footer>
+    <footer class="footer bg-warning text-center py-4">
+        <p>© 2025 Aamoda Pickles. All rights reserved.</p>
+        <div class="container mt-2">
+            <a href="terms.html" class="text-red mx-2">Terms & Conditions</a> |
+            <a href="shipping.html" class="text-red mx-2">Shipping Policy</a> |
+            <a href="contact.html" class="text-red mx-2">Contact Us</a>
+            <a href="refundpolicy.html" class="text-red mx-2">Cancel & refund Policy</a>
+            <a href="privacypolicy.html" class="text-red mx-2">Privacy Policy</a>
+        </div>
+    </footer>
 
-  <!-- Firestore Logic -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
-      authDomain: "aamoda-pickles.firebaseapp.com",
-      projectId: "aamoda-pickles",
-      storageBucket: "aamoda-pickles.appspot.com",
-      messagingSenderId: "1009552622686",
-      appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
-      measurementId: "G-D1CVE3WP7N"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    <script>
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
+            authDomain: "aamoda-pickles.firebaseapp.com",
+            projectId: "aamoda-pickles",
+            storageBucket: "aamoda-pickles.firebasestorage.app",
+            messagingSenderId: "1009552622686",
+            appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
+            measurementId: "G-D1CVE3WP7N"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const orderId = params.get('orderId');
-      const paymentId = params.get('paymentId');
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            const paymentIdFromUrl = urlParams.get('paymentId');
 
-      if (paymentId) document.getElementById('paymentId').textContent = paymentId;
+            const paymentIdElement = document.getElementById('paymentId');
+            const orderIdElement = document.getElementById('orderId');
+            const customerNameElement = document.getElementById('customerName');
+            const customerEmailElement = document.getElementById('customerEmail');
+            const customerPhoneElement = document.getElementById('customerPhone');
+            const customerAddressElement = document.getElementById('customerAddress');
+            const customerCityElement = document.getElementById('customerCity');
+            const customerStateElement = document.getElementById('customerState');
+            const customerZipElement = document.getElementById('customerZip');
+            const customerCountryElement = document.getElementById('customerCountry');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const shippingCostElement = document.getElementById('shippingCost');
+            const orderItemsContainer = document.getElementById('orderItems');
 
-      if (orderId) {
-        db.collection('orders').doc(orderId).get().then(doc => {
-          if (!doc.exists) {
-            document.querySelector('.thank-you-container').innerHTML =
-              `<p class="text-center">Order details not found for ID: ${orderId}. Please contact support.</p>`;
-            return;
-          }
+            if (paymentIdElement) {
+                paymentIdElement.textContent = paymentIdFromUrl || "Not Available";
+            }
 
-          const data = doc.data();
-          document.getElementById('orderId').textContent = data.orderId || '';
-          document.getElementById('customerName').textContent = data.fullName || '';
-          document.getElementById('customerEmail').textContent = data.email || '';
-          document.getElementById('customerPhone').textContent = data.phone || '';
-          document.getElementById('customerAddress').textContent = data.address || '';
-          document.getElementById('customerCity').textContent = data.city || '';
-          document.getElementById('customerState').textContent = data.state || '';
-          document.getElementById('customerZip').textContent = data.zipCode || '';
-          document.getElementById('customerCountry').textContent = data.country || '';
-          document.getElementById('totalAmount').textContent = data.totalAmount?.toFixed(2) || '0.00';
-          document.getElementById('shippingCost').textContent = data.shippingCost?.toFixed(2) || '0.00';
+            if (orderId) {
+                db.collection('orders').doc(orderId).get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const order = doc.data();
+                            console.log('Order details retrieved from Firestore:', order);
 
-          const container = document.getElementById('orderItems');
-          if (Array.isArray(data.items)) {
-            data.items.forEach(item => {
-              const div = document.createElement('div');
-              div.className = 'order-item';
-              div.innerHTML = `<span>${item.cartItemId} × ${item.count}</span><span>₹${(item.pricePerUnit * item.count).toFixed(2)}</span>`;
-              container.appendChild(div);
-            });
-          }
-        }).catch(err => {
-          console.error('Firestore Error:', err);
-          document.querySelector('.thank-you-container').innerHTML =
-            '<p class="text-center">Error retrieving order details. Please contact support.</p>';
+                            if (orderIdElement) orderIdElement.textContent = order.orderId;
+                            if (customerNameElement) customerNameElement.textContent = order.fullName;
+                            if (customerEmailElement) customerEmailElement.textContent = order.email;
+                            if (customerPhoneElement) customerPhoneElement.textContent = order.phone;
+                            if (customerAddressElement) customerAddressElement.textContent = order.address;
+                            if (customerCityElement) customerCityElement.textContent = order.city;
+                            if (customerStateElement) customerStateElement.textContent = order.state;
+                            if (customerZipElement) customerZipElement.textContent = order.zipCode;
+                            if (customerCountryElement) customerCountryElement.textContent = order.country;
+                            if (totalAmountElement) totalAmountElement.textContent = order.totalAmount.toFixed(2);
+                            if (shippingCostElement) shippingCostElement.textContent = order.shippingCost.toFixed(2);
+
+                            
+                            if (order.items && Array.isArray(order.items)) {
+                                order.items.forEach(item => {
+                                    const itemDiv = document.createElement('div');
+                                    itemDiv.classList.add('order-item');
+                                    itemDiv.innerHTML = `
+                                         <span>      (${item.cartItemId}) x ${item.count} = ₹${(item.pricePerUnit * item.count).toFixed(2)}</span>
+                                `;
+                                    orderItemsContainer.appendChild(itemDiv);
+                                });
+                            }
+                        } else {
+                            document.querySelector('.thank-you-container').innerHTML =
+                                '<p class="text-center">Order details not found for ID: ' + orderId + '. Please contact support.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error retrieving order from Firestore:', error);
+                        document.querySelector('.thank-you-container').innerHTML =
+                            '<p class="text-center">Error retrieving order details. Please contact support.</p>';
+                    });
+            } else {
+                document.querySelector('.thank-you-container').innerHTML =
+                    '<p class="text-center">No Order ID provided. Please contact support.</p>';
+            }
         });
-      } else {
-        document.querySelector('.thank-you-container').innerHTML =
-          '<p class="text-center">No Order ID provided. Please contact support.</p>';
-      }
-    });
-  </script>
+    </script>
 </body>
 
 </html>
