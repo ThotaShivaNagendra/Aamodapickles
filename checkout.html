@@ -147,7 +147,7 @@
                             <h3>Total Amount: ₹<span id="order-total">0</span></h3>
                         </div>
 
-                        <button type="button" id="pay-now-button" class="btn btn-primary w-100">Pay Now</button>
+                        <button type="submit" class="btn btn-success btn-lg w-100">Pay Now</button>
                     </form>
                 </div>
                 <div class="col-md-4">
@@ -195,14 +195,9 @@
         </div>
     </footer>
 
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="products.js"></script>
     <script src="cart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-functions-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             updateCartIcon();
@@ -648,99 +643,145 @@
                   }
                 }
             });
-            const checkoutForm = document.getElementById('checkout-form');
-      const payNowButton = document.getElementById('pay-now-button');
-      const orderTotalElement = document.getElementById('order-total');
 
-      if (payNowButton && checkoutForm) {
-        payNowButton.addEventListener('click', (e) => {
-          e.preventDefault();
-          checkoutForm.requestSubmit();
-        });
-      }
+            // Hide suggestions when clicking outside the search input and results
+            document.addEventListener('click', (event) => {
+                if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+                    searchResultsDiv.style.display = 'none';
+                }
+            });
+            
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+              const firebaseConfig = {
+                apiKey: "AIzaSyANIbMcUHunk0Gjgi3xYc1-s6YENxNqG0o",
+                authDomain: "aamoda-pickles.firebaseapp.com",
+                projectId: "aamoda-pickles",
+                storageBucket: "aamoda-pickles.firebasestorage.app",
+                messagingSenderId: "1009552622686",
+                appId: "1:1009552622686:web:56858d3588e38dd174a0cf",
+                measurementId: "G-D1CVE3WP7N"
+              };
+              firebase.initializeApp(firebaseConfig);
+              const db = firebase.firestore();
+            
 
-      checkoutForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
+          // ----  Razorpay Integration ----
+                  checkoutForm.addEventListener('submit', function (e) {
+                      e.preventDefault(); // Prevent default form submission
 
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
-        const city = document.getElementById('city').value;
-        const state = document.getElementById('state').value;
-        const zipCode = document.getElementById('zip').value;
-        const country = document.getElementById('country').value;
+                      // Get form data
+                      const fullName = document.getElementById('fullName').value;
+                      const email = document.getElementById('email').value;
+                      const phone = document.getElementById('phone').value;
+                      const address = document.getElementById('address').value;
+                      const city = document.getElementById('city').value;
+                      const state = document.getElementById('state').value;
+                      const zipCode = document.getElementById('zip').value;
+                      const country = document.getElementById('country').value;
 
-        const cartItems = getCart();
-        if (!cartItems || cartItems.length === 0) {
-          alert('Cart is empty.');
-          return;
-        }
+                      // Recalculate shipping just before payment to ensure latest values
+                      const currentShippingCost = calculateShipping();
+                      const totalAmountPayable = parseFloat(orderTotalElement.textContent);
 
-        const totalWeight = calculateTotalWeight(); // from cart.js
-        const currentShippingCost = calculateShipping(); // from your logic
-        const orderTotal = parseFloat(orderTotalElement.textContent);
+                      // Generate a unique Order ID
+                      const orderId = generateOrderId();
 
-        try {
-          const functions = firebase.functions();
-          const createOrder = functions.httpsCallable('createRazorpayOrder');
-          const res = await createOrder({
-            cartItems,
-            customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
-            shippingCost: currentShippingCost,
-            totalWeightKg: totalWeight / 1000
-          });
+                      const options = {
+                          key: "rzp_test_dzr0ExL25Pj8II",
+                          amount: totalAmountPayable * 100,
+                          currency: "INR",
+                          name: "Aamoda Pickles",
+                          description: "Order from Aamoda Pickles",
+                          image: "logo.png",
+                          handler: function (response) {
+                          console.log("Payment Successful! Payment ID:", response.razorpay_payment_id);
 
-          const { orderId, amount, currency } = res.data;
+                          
+                          const cartItems = getCart();
+                          console.log("Full cart contents:", JSON.stringify(cartItems)); // Debugging the full cart
 
-          const rzp = new Razorpay({
-            key: "rzp_live_3InjjEzd3LUWLP",
-            amount,
-            currency,
-            order_id: orderId,
-            name: "Aamoda Pickles",
-            description: "Order from Aamoda Pickles",
-            image: "/logo.png",
-            handler: async function (response) {
-              const processPayment = functions.httpsCallable('processRazorpayPayment');
-              const internalOrderId = generateOrderId();
+                          const processedItems = cartItems.map(item => ({
+                              cartItemId: item.cartItemId,
+                              count: item.count,
+                              pricePerUnit: item.pricePerUnit,
+                          }));
 
-              await processPayment({
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_signature: response.razorpay_signature,
-                internalOrderId,
-                customerDetails: { fullName, email, phone, address, city, state, zipCode, country },
-                cartItems,
-                shippingCost: currentShippingCost,
-                totalAmount: orderTotal
+                          console.log("Processed items for Firestore:", JSON.stringify(processedItems)); // Debugging the processed items
+                          if (!cartItems || cartItems.length === 0) {
+                              console.warn("Cart is empty! Order will be saved without items.");
+                          }
+
+                          const orderData = {
+                              orderId: orderId,
+                              fullName: fullName,
+                              email: email,
+                              phone: phone,
+                              address: address,
+                              city: city,
+                              state: state,
+                              zipCode: zipCode,
+                              country: country,
+                              shippingCost: currentShippingCost,
+                              totalAmount: totalAmountPayable,
+                              paymentId: response.razorpay_payment_id,
+                              items: processedItems, // Save the cart items
+                              orderDate: firebase.firestore.FieldValue.serverTimestamp()
+                          };
+
+                          console.log("Order data to be saved:", JSON.stringify(orderData)); // Debug: Check all data
+
+                          db.collection('orders')
+                              .doc(orderId)
+                              .set(orderData)
+                              .then(() => {
+                                  console.log("Order saved to Firestore with ID: ", orderId);
+                                  clearCart(); // Clear cart *after* successful save
+                                  window.location.href = `thankyou.html?orderId=${orderId}&paymentId=${response.razorpay_payment_id}`;
+                              })
+                              .catch((error) => {
+                                  console.error("Error saving order to Firestore: ", error);
+                                  alert("Error saving order. Please contact support.");
+                              });
+                      },
+                          prefill: {
+                              name: fullName,
+                              email: email,
+                              contact: phone
+                          },
+                          notes: {
+                              address: address,
+                              city: city,
+                              state: state,
+                              zip: zipCode,
+                              country: country,
+                              shippingCost: currentShippingCost,
+                              totalWeight: totalWeight / 1000
+                          },
+                          theme: {
+                              color: "#400607"
+                          },
+                          modal: {
+                              ondismiss: function () {
+                                  console.log("Payment popup closed by user.");
+                                  alert("Payment popup was closed. If you need help, feel free to contact us.");
+                              }
+                          }
+                      };
+
+                      const rzp = new Razorpay(options);
+                      rzp.on('payment.failed', function (response) {
+                          console.error("Payment failed:", response.error);
+                          alert("Payment failed. Please try again.\nReason: " + response.error.description);
+                      });
+                      rzp.open();
+                  });
+
+                  function generateOrderId() {
+                      const timestamp = Date.now().toString(36);
+                      const random = Math.random().toString(36).substr(2, 5);
+                      return timestamp + '-' + random;
+                  }
               });
-
-              clearCart();
-              window.location.href = `thankyou.html?orderId=${internalOrderId}&paymentId=${response.razorpay_payment_id}`;
-            },
-            prefill: { name: fullName, email, contact: phone },
-            notes: { address, city, state, zipCode, country },
-            theme: { color: "#400607" },
-            modal: {
-              ondismiss: () => alert("Payment cancelled."),
-            }
-          });
-
-          rzp.open();
-        } catch (err) {
-          console.error("Payment error:", err);
-          alert("Something went wrong. Try again.");
-        }
-      });
-
-      // Only define once
-      if (typeof generateOrderId !== 'function') {
-        window.generateOrderId = function () {
-          return Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);
-        }
-      }
-    });
     </script>
 </body>
 
