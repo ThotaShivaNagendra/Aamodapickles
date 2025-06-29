@@ -29,9 +29,9 @@ const products = [
         image: 'chicken.jpeg',
         category: 'nonveg',
         prices: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
+            '250gm': 200,
+            '500gm': 400,
+            '1kg': 800
         },
         weights: {
             '250gm': 250,
@@ -47,9 +47,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 450,
-            '500gm': 900,
-            '1kg': 1800
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
         },
         weights: {
             '250gm': 250,
@@ -66,8 +66,8 @@ const products = [
         category: 'nonveg',
         prices: {
             '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '500gm': 750,
+            '1kg': 1500
         },
         weights: {
             '250gm': 250,
@@ -83,7 +83,7 @@ const products = [
         image: 'magayi.jpg',
         category: 'veg',
         prices: {
-            '250gm': 125,
+            '250gm': 130,
             '500gm': 250,
             '1kg': 500
         },
@@ -101,9 +101,9 @@ const products = [
         image: 'gongurachicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 300,
-            '500gm': 600,
-            '1kg': 1200
+            '250gm': 230,
+            '500gm': 450,
+            '1kg': 900
         },
         weights: {
             '250gm': 250,
@@ -119,9 +119,9 @@ const products = [
         image: 'karvepakupodi.jpg',
         category: 'special',
         prices: {
-            '250gm': 150,
-            '500gm': 300,
-            '1kg': 600
+            '250gm': 130,
+            '500gm': 250,
+            '1kg': 500
         },
         weights: {
             '250gm': 250,
@@ -138,8 +138,8 @@ const products = [
         category: 'nonveg',
         prices: {
             '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '500gm': 750,
+            '1kg': 1500
         },
         weights: {
             '250gm': 250,
@@ -407,9 +407,9 @@ const products = [
         image: 'bonelesschicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 300,
-            '500gm': 600,
-            '1kg': 1200
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         },
         weights: {
             '250gm': 250,
@@ -425,9 +425,9 @@ const products = [
         image: 'gonguraprawn.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 450,
-            '500gm': 900,
-            '1kg': 1800
+            '250gm': 400,
+            '500gm': 800,
+            '1kg': 1600
         },
         weights: {
             '250gm': 250,
@@ -443,9 +443,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 500,
-            '500gm': 1000,
-            '1kg': 2000
+            '250gm': 400,
+            '500gm': 800,
+            '1kg': 1600
         },
         weights: {
             '250gm': 250,
@@ -462,9 +462,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 550,
-            '500gm': 1100,
-            '1kg': 2200
+            '250gm': 450,
+            '500gm': 900,
+            '1kg': 1800
         },
         weights: {
             '250gm': 250,
@@ -480,9 +480,9 @@ const products = [
         image: 'gongurachicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 300,
-            '500gm': 600,
-            '1kg': 1200
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
         },
         weights: {
             '250gm': 250,
@@ -498,9 +498,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 550,
-            '500gm': 1100,
-            '1kg': 2200
+            '250gm': 450,
+            '500gm': 900,
+            '1kg': 1800
         },
         weights: {
             '250gm': 250,
@@ -516,9 +516,9 @@ const products = [
         image: 'nallakaram.jpg',
         category: 'special',
         prices: {
-            '250gm': 150,
-            '500gm': 300,
-            '1kg': 600
+            '250gm': 130,
+            '500gm': 250,
+            '1kg': 500
         },
         weights: {
             '250gm': 250,
@@ -534,9 +534,9 @@ const products = [
         image: 'chillypowder.jpg',
         category: 'special',
         prices: {
-            '250gm': 150,
-            '500gm': 300,
-            '1kg': 600
+            '250gm': 130,
+            '500gm': 250,
+            '1kg': 500
         },
         weights: {
             '250gm': 250,
@@ -566,7 +566,7 @@ const products = [
         image: 'gummadivadiyalu.jpg',
         category: 'special',
         prices: {
-            '250gm': 175,
+            '250gm': 180,
             '500gm': 350,
             '1kg': 700
         },
@@ -602,7 +602,7 @@ const products = [
     image: 'pesarivadiyalu.png',
     category: 'special',
     prices: {
-        '250gm': 175,
+        '250gm': 180,
         '500gm': 350,
         '1kg': 700
     },
@@ -632,4 +632,22 @@ const products = [
     description: 'Authentic and aromatic Desi Cow Ghee, traditionally churned from pure cow’s milk. Rich in flavor and essential nutrients, our ghee adds a distinct taste and wholesome goodness to your cooking. It is prepared using time-honored methods, ensuring its purity and quality.',
     ingredients: ['Pure Cow\'s Milk']
     },
+    {
+    id: 'Buffalo Ghee',
+    name: 'Pure Desi Buffalo Ghee',
+    image: 'buffalo-ghee.jpg',
+    category: 'special',
+    prices: {
+        '250gm': 250,
+        '500gm': 500,
+        '1kg': 1000
+    },
+    weights: {
+        '250gm': 250,
+        '500gm': 500,
+        '1kg': 1000
+    },
+    description: 'Rich, creamy, and flavorful Desi Buffalo Ghee, made from high-quality buffalo milk. Known for its dense texture and deep aroma, it enhances your dishes with a bold taste and superior nutrition. Crafted using traditional churning techniques to retain authenticity and purity.',
+    ingredients: ['Pure Buffalo\'s Milk']
+    }
 ];
