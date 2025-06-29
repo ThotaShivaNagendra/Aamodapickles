@@ -65,7 +65,7 @@ const products = [
         image: 'prawns.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
+            '250gm': 380,
             '500gm': 750,
             '1kg': 1500
         },
@@ -137,7 +137,7 @@ const products = [
         image: 'koramenu.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
+            '250gm': 380,
             '500gm': 750,
             '1kg': 1500
         },
