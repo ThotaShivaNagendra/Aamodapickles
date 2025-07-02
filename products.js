@@ -425,9 +425,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
         },
         weights: {
             '250gm': 250,
@@ -443,9 +443,9 @@ const products = [
         image: 'gonguraprawn.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
         },
         weights: {
             '250gm': 250,
