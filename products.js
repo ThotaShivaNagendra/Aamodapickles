@@ -21,61 +21,7 @@ const products = [
             '1kg': 1000
         },
         description: 'Tangy and spicy mango pickle, a classic Indian condiment that adds a burst of flavor to any meal.',
-        ingredients: ['Raw Mangoes', 'Salt', 'Mustard Oil', 'Chilli Powder', 'Turmeric Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Asafoetida']
-    },
-    {
-        id: 'chicken-pickle',
-        name: 'Chicken Pickle',
-        image: 'chicken.jpeg',
-        category: 'nonveg',
-        prices: {
-            '250gm': 200,
-            '500gm': 400,
-            '1kg': 800
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'A flavorful and spicy non-vegetarian pickle made with tender chicken pieces and a blend of aromatic spices.',
-        ingredients: ['Chicken Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Edible Oil']
-    },
-    {
-        id: 'mutton-pickle',
-        name: 'Mutton Pickle',
-        image: 'mutton.jpg',
-        category: 'nonveg',
-        prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'Rich and savory non-vegetarian pickle prepared with succulent mutton pieces and a unique mix of traditional spices.',
-        ingredients: ['Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Vinegar', 'Salt', 'Edible Oil']
-    },
-    {
-        id: 'prawns-pickle',
-        name: 'Prawns Pickle',
-        image: 'prawns.jpg',
-        category: 'nonveg',
-        prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'Delicious and tangy non-vegetarian pickle made with fresh prawns and a medley of zesty spices.',
-        ingredients: ['Prawns', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Curry Leaves', 'Salt', 'Edible Oil']
+        ingredients: ['Raw Mangoes', 'Sesame oil', 'Chilli Powder', 'Turmeric Powder', 'Fenugreek Seeds','Mustard Powder','Fenugreek Powder','Garlic','Salt']
     },
     {
         id: 'magayi-pickle',
@@ -93,61 +39,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A traditional Andhra-style pickle made with raw mangoes, mustard powder, and a blend of spices, offering a unique tangy and slightly bitter taste.',
-        ingredients: ['Raw Mangoes', 'Mustard Powder', 'Chilli Powder', 'Fenugreek Powder', 'Turmeric Powder', 'Salt', 'Mustard Oil', 'Asafoetida']
-    },
-    {
-        id: 'gongura-chicken-pickle',
-        name: 'Gongura Chicken Pickle',
-        image: 'gongurachicken.jpg',
-        category: 'nonveg',
-        prices: {
-            '250gm': 230,
-            '500gm': 450,
-            '1kg': 900
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'A spicy and tangy non-vegetarian pickle combining the unique sourness of Gongura leaves with tender chicken pieces and aromatic spices.',
-        ingredients: ['Chicken Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
-    },
-    {
-        id: 'karvepaku-podi',
-        name: 'Karvepaku Podi',
-        image: 'karvepakupodi.jpg',
-        category: 'special',
-        prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'A flavorful and aromatic powder made from curry leaves, lentils, and spices, perfect as a side with rice, idli, or dosa.',
-        ingredients: ['Curry Leaves', 'Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Tamarind', 'Asafoetida', 'Salt', 'Edible Oil']
-    },
-    {
-        id: 'koramenu-pickle',
-        name: 'Koramenu Pickle',
-        image: 'koramenu.jpg',
-        category: 'nonveg',
-        prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
-        },
-        weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
-        },
-        description: 'A unique and flavorful non-vegetarian pickle made with Koramenu (Snakehead fish) and a special blend of spices, offering a distinct taste.',
-        ingredients: ['Koramenu (Snakehead Fish)', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Curry Leaves', 'Salt', 'Edible Oil']
+        ingredients: ['Raw Mangoes', 'Sesame oil', 'Chilli Powder', 'Turmeric Powder', 'Fenugreek Seeds',, 'Mustard Powder','Fenugreek Powder','Garlic','Salt']
     },
     {
         id: 'lemon-pickle',
@@ -165,7 +57,7 @@ const products = [
             '1kg': 1000
         },
         description: 'Tangy and zesty lemon pickle, a popular vegetarian condiment that enhances the flavor of any meal.',
-        ingredients: ['Lemons', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Asafoetida', 'Edible Oil']
+        ingredients: ['Lemons', 'Sesame oil', 'Chilli Powder', 'Turmeric Powder','Salt','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'tomato-pickle',
@@ -183,7 +75,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A savory and slightly tangy vegetarian pickle made with ripe tomatoes and a blend of aromatic spices.',
-        ingredients: ['Tomatoes', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Cumin Seeds', 'Ginger-Garlic Paste', 'Curry Leaves', 'Edible Oil']
+        ingredients: ['Tomatoes','Tamarind','Sesame oil', 'Chilli Powder', 'Turmeric Powder','Coriander Powder','Mustard Powder', 'Cumin Powder','Salt','Ginger','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'redchilli-pickle',
@@ -201,7 +93,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A fiery and flavorful vegetarian pickle made with red chillies and a blend of pungent spices.',
-        ingredients: ['Red Chillies', 'Salt', 'Mustard Seeds', 'Fenugreek Seeds', 'Turmeric Powder', 'Asafoetida', 'Lemon Juice', 'Edible Oil']
+        ingredients: ['Red Chillies','Tamarind','Sesame oil', 'Chilli Powder','Garlic' ,'Turmeric Powder','Salt','Mustard Powder', 'Coriander Powder','Cumin Powder','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'garlic-pickle',
@@ -219,7 +111,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A pungent and savory vegetarian pickle made with garlic cloves and a mix of traditional spices.',
-        ingredients: ['Garlic Cloves', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Cumin Seeds', 'Ginger-Garlic Paste', 'Curry Leaves', 'Edible Oil']
+        ingredients: ['Garlic','Jaggery','Tamarind','Sesame oil', 'Chilli Powder', 'Turmeric Powder','Mustard Powder','Coriander Powder', 'Cumin Powder','Salt','Ginger','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'bittergourd-pickle',
@@ -237,7 +129,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A unique vegetarian pickle with the distinct bitter taste of bitter gourd balanced with spices and tanginess.',
-        ingredients: ['Bitter Gourd', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Cumin Seeds', 'Tamarind Pulp', 'Jaggery', 'Edible Oil']
+        ingredients: ['Bitter Gourd','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'ginger-pickle',
@@ -255,7 +147,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A zesty and spicy vegetarian pickle made with fresh ginger and a blend of traditional Indian spices.',
-        ingredients: ['Ginger', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Asafoetida', 'Lemon Juice', 'Edible Oil']
+        ingredients: ['Ginger','Jaggery','Tamarind','Sesame oil', 'Chilli Powder', 'Turmeric Powder','Mustard Powder', 'Cumin Powder','Coriander Powder','Salt','Ginger','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'amla-pickle',
@@ -273,7 +165,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A tangy and slightly sour vegetarian pickle made with Indian gooseberries (Amla) and a mix of aromatic spices.',
-        ingredients: ['Amla (Indian Gooseberries)', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Asafoetida', 'Edible Oil']
+        ingredients: ['Amla (Indian Gooseberries)','Tamarind','Sesame oil', 'Chilli Powder', 'Turmeric Powder','Mustard Powder', 'Cumin Powder','Coriander Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'tamarind-pickle',
@@ -291,7 +183,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A tangy and flavorful vegetarian pickle made with tamarind pulp and a blend of traditional Indian spices.',
-        ingredients: ['Tamarind Pulp', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Cumin Seeds', 'Jaggery', 'Edible Oil']
+        ingredients: ['Raw Tamarind','Sesame oil', 'Chilli Powder', 'Turmeric Powder', 'Cumin Powder','Coriander Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'coriander-pickle',
@@ -309,7 +201,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A fresh and aromatic vegetarian pickle made with coriander leaves and a blend of mild spices.',
-        ingredients: ['Coriander Leaves', 'Green Chillies', 'Ginger', 'Lemon Juice', 'Salt', 'Mustard Seeds', 'Fenugreek Seeds', 'Edible Oil']
+        ingredients: ['Coriander Leaves', 'Green Chillies', 'Jaggery','Tamarind','Cumin Powder','Coriander Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'drumstick-pickle',
@@ -327,7 +219,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A savory and slightly tangy vegetarian pickle made with drumsticks and a mix of traditional spices.',
-        ingredients: ['Drumsticks', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Tamarind Pulp', 'Edible Oil']
+        ingredients: ['Drumsticks','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'curry-leaf-pickle',
@@ -345,7 +237,7 @@ const products = [
             '1kg': 1000
         },
         description: 'An aromatic and flavorful vegetarian pickle made with fresh curry leaves and a blend of simple spices.',
-        ingredients: ['Curry Leaves', 'Green Chillies', 'Ginger', 'Garlic', 'Lemon Juice', 'Salt', 'Mustard Seeds', 'Edible Oil']
+        ingredients: ['Curry Leaves','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'cauliflower-pickle',
@@ -363,7 +255,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A crunchy and tangy vegetarian pickle made with fresh cauliflower florets and a blend of aromatic spices.',
-        ingredients: ['Cauliflower', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Cumin Seeds', 'Vinegar', 'Salt', 'Edible Oil']
+        ingredients: ['Cauliflower','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'sweet-mango-pickle',
@@ -381,7 +273,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A delightful vegetarian pickle with the sweetness of ripe mangoes balanced with a hint of spice and tang.',
-        ingredients: ['Ripe Mangoes', 'Sugar', 'Salt', 'Chilli Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Turmeric Powder', 'Asafoetida', 'Edible Oil']
+        ingredients: ['Raw Mangoes','Jaggery','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
     },
     {
         id: 'sorrel-leaf-pickle',
@@ -399,7 +291,97 @@ const products = [
             '1kg': 1000
         },
         description: 'A tangy and slightly sour vegetarian pickle made with sorrel leaves (Gongura) and a blend of traditional spices.',
-        ingredients: ['Sorrel Leaves (Gongura)', 'Salt', 'Chilli Powder', 'Turmeric Powder', 'Mustard Seeds', 'Fenugreek Seeds', 'Garlic', 'Edible Oil']
+        ingredients: ['Sorrel Leaves (Gongura)','Tamarind','Sesame oil', 'Chilli Powder','Mustard Powder', 'Coriander Powder','Cumin Powder','Salt','Garlic','Cumin Seeds','Mustard Seeds','Dry Red Chillies','Curry Leaves']
+    },
+    {
+        id: 'chicken-pickle',
+        name: 'Chicken Pickle',
+        image: 'chicken.jpeg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 200,
+            '500gm': 400,
+            '1kg': 800
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A flavorful and spicy non-vegetarian pickle made with tender chicken pieces and a blend of aromatic spices.',
+        ingredients: ['Chicken Pieces', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
+    },
+    {
+        id: 'mutton-pickle',
+        name: 'Mutton Pickle',
+        image: 'mutton.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'Rich and savory non-vegetarian pickle prepared with succulent mutton pieces and a unique mix of traditional spices.',
+        ingredients: ['Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
+    },
+    {
+        id: 'prawns-pickle',
+        name: 'Prawns Pickle',
+        image: 'prawns.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'Delicious and tangy non-vegetarian pickle made with fresh prawns and a medley of zesty spices.',
+        ingredients: ['Prawns', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder','Mustard Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
+    },
+    {
+        id: 'koramenu-pickle',
+        name: 'Koramenu Pickle',
+        image: 'koramenu.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 380,
+            '500gm': 750,
+            '1kg': 1500
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A unique and flavorful non-vegetarian pickle made with Koramenu (Snakehead fish) and a special blend of spices, offering a distinct taste.',
+        ingredients: ['Koramenu (Snakehead Fish)','Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder','Mustard Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
+    },
+    {
+        id: 'gongura-chicken-pickle',
+        name: 'Gongura Chicken Pickle',
+        image: 'gongurachicken.jpg',
+        category: 'nonveg',
+        prices: {
+            '250gm': 230,
+            '500gm': 450,
+            '1kg': 900
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A spicy and tangy non-vegetarian pickle combining the unique sourness of Gongura leaves with tender chicken pieces and aromatic spices.',
+        ingredients: ['Chicken Pieces','Gongura Leaves','Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     {
         id: 'boneless-chicken-pickle',
@@ -417,7 +399,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A spicy and savory non-vegetarian pickle made with tender, boneless chicken pieces and a rich blend of aromatic spices.',
-        ingredients: ['Boneless Chicken Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Curry Leaves', 'Salt', 'Edible Oil']
+        ingredients: ['Boneless Chicken Pieces', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     {
         id: 'gongura-prawns-pickle',
@@ -435,7 +417,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A tangy and spicy non-vegetarian pickle combining the unique sourness of Gongura leaves with succulent prawns and aromatic spices.',
-        ingredients: ['Prawns', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Fenugreek Seeds', 'Mustard Seeds', 'Salt', 'Edible Oil']
+        ingredients: ['Prawns', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     {
         id: 'gongura-mutton-pickle',
@@ -453,7 +435,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A rich and flavorful non-vegetarian pickle blending the tanginess of Gongura leaves with tender mutton pieces and a robust mix of spices.',
-        ingredients: ['Mutton Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
+        ingredients: ['Mutton Pieces', 'Gongura Leaves','Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     
      {
@@ -472,7 +454,7 @@ const products = [
             '1kg': 1000
         },
         description: 'Rich and savory non-vegetarian pickle prepared with Boneless mutton pieces and a unique mix of traditional spices.',
-        ingredients: ['Boneless Mutton Pieces', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Vinegar', 'Salt', 'Edible Oil']
+        ingredients: ['Boneless Mutton Pieces','Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     {
         id: 'boneless-gongura-chicken-pickle',
@@ -490,7 +472,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A spicy and tangy non-vegetarian pickle combining the unique sourness of Gongura leaves with tender chicken pieces and aromatic spices.',
-        ingredients: ['Boneless Chicken Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
+        ingredients: ['Boneless Chicken Pieces','Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
     },
     {
         id: 'boneless-gongura-mutton-pickle',
@@ -508,11 +490,29 @@ const products = [
             '1kg': 1000
         },
         description: 'A rich and flavorful non-vegetarian pickle blending the tanginess of Gongura leaves with tender mutton pieces and a robust mix of spices.',
-        ingredients: ['Boneless Mutton Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Salt', 'Edible Oil']
+        ingredients: ['Boneless Mutton Pieces', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
+    },
+     {
+        id: 'karvepaku-podi',
+        name: 'Karvepaku Podi',
+        image: 'karvepakupodi.jpg',
+        category: 'special',
+        prices: {
+            '250gm': 130,
+            '500gm': 250,
+            '1kg': 500
+        },
+        weights: {
+            '250gm': 250,
+            '500gm': 500,
+            '1kg': 1000
+        },
+        description: 'A flavorful and aromatic powder made from curry leaves, lentils, and spices, perfect as a side with rice, idli, or dosa.',
+        ingredients: ['Curry Leaves', 'Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Tamarind', 'Asafoetida', 'Salt', 'Edible Oil']
     },
     {
-        id: 'karam-podi',
-        name: 'Karam Podi',
+        id: 'Idly-karam-podi',
+        name: 'Idly Karam Podi',
         image: 'nallakaram.jpg',
         category: 'special',
         prices: {
@@ -552,10 +552,10 @@ const products = [
         image: 'putharekulu.jpg',
         category: 'special',
         prices: {
-            'piece': 35 // Special pricing for Putharekulu
+            '10 pieces': 350 // Special pricing for Putharekulu
         },
         weights: {
-            'piece': 50 // Weight per piece in grams
+            '10 pieces': 500 // Weight per piece in grams
         },
         description: 'A unique and delicate Andhra sweet made from rice flour sheets filled with jaggery, sugar, and nuts.',
         ingredients: ['Rice Flour', 'Jaggery', 'Sugar', 'Ghee', 'Cashews', 'Almonds', 'Cardamom Powder']
