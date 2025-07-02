@@ -551,10 +551,10 @@ const products = [
         image: 'putharekulu.jpg',
         category: 'special',
         prices: {
-            'pieces': 350 // Special pricing for Putharekulu
+            '10 Pieces': 350 // Special pricing for Putharekulu
         },
         weights: {
-            'pieces': 500 // Weight per piece in grams
+            '10 Pieces': 500 // Weight per piece in grams
         },
         description: 'A unique and delicate Andhra sweet made from rice flour sheets filled with jaggery, sugar, and nuts.',
         ingredients: ['Rice Flour', 'Jaggery', 'Sugar', 'Ghee', 'Cashews', 'Almonds', 'Cardamom Powder']
