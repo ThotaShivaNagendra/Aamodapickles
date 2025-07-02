@@ -317,9 +317,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
+            '250gm': 350,
+            '500gm': 700,
+            '1kg': 1400
         },
         weights: {
             '250gm': 250,
@@ -335,9 +335,9 @@ const products = [
         image: 'prawns.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
+            '250gm': 350,
+            '500gm': 700,
+            '1kg': 1400
         },
         weights: {
             '250gm': 250,
@@ -353,9 +353,9 @@ const products = [
         image: 'koramenu.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
+            '250gm': 300,
+            '500gm': 600,
+            '1kg': 1200
         },
         weights: {
             '250gm': 250,
@@ -389,9 +389,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 450,
-            '500gm': 900,
-            '1kg': 1800
+            '250gm': 400,
+            '500gm': 800,
+            '1kg': 1600
         },
         weights: {
             '250gm': 250,
@@ -479,9 +479,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 450,
-            '500gm': 900,
-            '1kg': 1800
+            '250gm': 400,
+            '500gm': 800,
+            '1kg': 1600
         },
         weights: {
             '250gm': 250,
