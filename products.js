@@ -507,7 +507,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A flavorful and aromatic powder made from curry leaves, lentils, and spices, perfect as a side with rice, idli, or dosa.',
-        ingredients: ['Curry Leaves', 'Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Tamarind', 'Asafoetida', 'Salt', 'Edible Oil']
+        ingredients: ['Curry Leaves', 'Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Cumin Seeds', 'Coriander Seeds', 'Garlic', 'Tamarind', 'Salt', 'Sesame Oil']
     },
     {
         id: 'Idly-karam-podi',
@@ -525,7 +525,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A spicy and versatile powder made from roasted lentils and red chillies, perfect as a condiment with rice, idli, or dosa.',
-        ingredients: ['Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Cumin Seeds', 'Coriander Seeds', 'Garlic', 'Salt', 'Edible Oil']
+        ingredients: ['Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Dry Red Chillies', 'Cumin Seeds', 'Coriander Seeds', 'Garlic', 'Tamarind', 'Salt', 'Sesame Oil']
     },
     {
         id: 'kura-karam',
@@ -543,7 +543,7 @@ const products = [
             '1kg': 1000
         },
         description: 'A coarse and flavorful chilli powder blend, traditionally used to add spice and flavor to various dishes.',
-        ingredients: ['Dry Red Chillies', 'Coriander Seeds', 'Cumin Seeds', 'Mustard Seeds', 'Fenugreek Seeds', 'Garlic', 'Salt', 'Turmeric Powder']
+        ingredients: ['Dry Red Chillies', 'Coriander Powder', 'Cumin Powder', 'Garlic', 'Salt', ]
     },
     {
         id: 'putharekulu',
@@ -575,7 +575,7 @@ const products = [
             '1kg': 1000
         },
         description: 'Sun-dried lentil fritters made with pumpkin, offering a unique flavor and crispy texture, used as a side dish or in curries.',
-        ingredients: ['Pumpkin (Gummadikaya)', 'Bengal Gram (Chana Dal)', 'Black Gram (Urad Dal)', 'Green Chillies', 'Ginger', 'Asafoetida', 'Salt', 'Turmeric Powder']
+        ingredients: ['Pumpkin (Gummadikaya)', 'Black Gram (Urad Dal)', 'sabudana','Green Chillies', 'Ginger', 'Salt',]
     },
     {
         id: 'challa-mirapakayalu',
@@ -593,7 +593,7 @@ const products = [
             '1kg': 1000
         },
         description: 'Sun-dried chillies soaked in buttermilk and salt, offering a unique tangy and spicy flavor, often fried and served as a side.',
-        ingredients: ['Green Chillies', 'Buttermilk', 'Salt', 'Turmeric Powder', 'Asafoetida']
+        ingredients: ['Green Chillies', 'Buttermilk', 'Salt', 'Turmeric Powder','Lemon Juice', 'Asafoetida Powder']
     },
     {
     id: 'Pesari Vadiyalu',
@@ -611,7 +611,7 @@ const products = [
         '1kg': 1000
     },
     description: 'Crispy and flavorful sun-dried fritters made from ground moong dal (split yellow lentils) and a blend of aromatic spices. These vadiyalu are a traditional Andhra delicacy, perfect for frying or adding to curries and stews for an extra crunch and taste.',
-    ingredients: ['Moong Dal (Split Yellow Lentils)', 'Rice Flour', 'Cumin Seeds', 'Asafoetida', 'Ginger', 'Green Chillies', 'Salt', 'Cooking Oil']
+    ingredients: ['Moong Dal (Split Yellow Lentils)', 'Cumin Seeds', 'Ginger', 'Green Chillies', 'Salt',]
     },
     {
     id: 'Cow Ghee',
