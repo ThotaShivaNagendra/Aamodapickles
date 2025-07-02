@@ -132,3 +132,16 @@ function generateCartItemId(productId, quantityKey) {
 
 // Load the cart when the script is first loaded (on page load)
 document.addEventListener('DOMContentLoaded', loadCart);
+document.addEventListener('DOMContentLoaded', () => {
+    renderCart();
+    updateCartIcon();
+
+    // 🔁 Attach event listener to clear cart button
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    if (clearCartBtn) {
+        clearCartBtn.addEventListener('click', () => {
+            clearCart();
+            renderCart();
+        });
+    }
+});
