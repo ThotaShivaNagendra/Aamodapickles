@@ -335,14 +335,20 @@ const products = [
         image: 'prawns.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 350,
-            '500gm': 700,
-            '1kg': 1400
+            '250gm(Regular)': 350,
+            '500gm(Regular)': 700,
+            '1kg(Regular)': 1400,
+            '250gm(Medium)': 380,
+            '500gm(Medium)': 750,
+            '1kg(Medium)': 1500
         },
         weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
+            '250gm(Regular)': 250,
+            '500gm(Regular)': 500,
+            '1kg(Regular)': 1000,
+            '250gm(Medium)': 250,
+            '500gm(Medium)': 500,
+            '1kg(Medium)': 1000
         },
         description: 'Delicious and tangy non-vegetarian pickle made with fresh prawns and a medley of zesty spices.',
         ingredients: ['Prawns', 'Ginger-Garlic Paste', 'Chilli Powder', 'Turmeric Powder','Mustard Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
@@ -443,14 +449,20 @@ const products = [
         image: 'gonguraprawn.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
+            '250gm(Regular)': 380,
+            '500gm(Regular)': 750,
+            '1kg(Regular)': 1500,
+            '250gm(Medium)': 400,
+            '500gm(Medium)': 800,
+            '1kg(Medium)': 1600
         },
         weights: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
+            '250gm(Regular)': 250,
+            '500gm(Regular)': 500,
+            '1kg(Regular)': 1000,
+            '250gm(Medium)': 250,
+            '500gm(Medium)': 500,
+            '1kg(Medium)': 1000
         },
         description: 'A tangy and spicy non-vegetarian pickle combining the unique sourness of Gongura leaves with succulent prawns and aromatic spices.',
         ingredients: ['Prawns', 'Gongura Leaves', 'Ginger-Garlic Paste', 'Chilli Powder','Mustard Powder','Turmeric Powder', 'Coriander Powder', 'Cumin Powder', 'Garam Masala', 'Lemon Juice', 'Salt', 'Groundnut Oil','Curry Leaves']
