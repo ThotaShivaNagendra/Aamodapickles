@@ -644,7 +644,7 @@ const products = [
     ingredients: ['Pure Cow\'s Milk']
     },
     {
-    id: 'Buffalo Ghee',
+    id: 'Buffalo-Ghee',
     name: 'Pure Desi Buffalo Ghee',
     image: 'buffalo-ghee.jpg',
     category: 'special',
