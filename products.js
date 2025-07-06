@@ -11,9 +11,9 @@ const products = [
         image: 'mango.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -29,9 +29,9 @@ const products = [
         image: 'magayi.jpg',
         category: 'veg',
         prices: {
-            '250gm': 120,
-            '500gm': 220,
-            '1kg': 400
+            '250gm': 119,
+            '500gm': 219,
+            '1kg': 399
         },
         weights: {
             '250gm': 250,
@@ -47,9 +47,9 @@ const products = [
         image: 'lemon.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -65,9 +65,9 @@ const products = [
         image: 'tomato.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -83,9 +83,9 @@ const products = [
         image: 'redchilli.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -101,9 +101,9 @@ const products = [
         image: 'garlic.jpg',
         category: 'veg',
        prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
+            '250gm': 129,
+            '500gm': 249,
+            '1kg': 499
         },
         weights: {
             '250gm': 250,
@@ -119,9 +119,9 @@ const products = [
         image: 'Bittergourd.png',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -137,9 +137,9 @@ const products = [
         image: 'allam.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -155,9 +155,9 @@ const products = [
         image: 'amla.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -173,9 +173,9 @@ const products = [
         image: 'chintakaya.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -191,9 +191,9 @@ const products = [
         image: 'kothimeera.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -209,9 +209,9 @@ const products = [
         image: 'drumstick.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -227,9 +227,9 @@ const products = [
         image: 'karvepaku.jpg',
         category: 'veg',
        prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -245,9 +245,9 @@ const products = [
         image: 'cauliflower.jpeg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -263,9 +263,9 @@ const products = [
         image: 'sweetmango.jpg',
         category: 'veg',
         prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -281,9 +281,9 @@ const products = [
         image: 'gongura.jpg',
         category: 'veg',
        prices: {
-            '250gm': 100,
-            '500gm': 180,
-            '1kg': 350
+            '250gm': 99,
+            '500gm': 179,
+            '1kg': 349
         },
         weights: {
             '250gm': 250,
@@ -299,9 +299,9 @@ const products = [
         image: 'chicken.jpeg',
         category: 'nonveg',
         prices: {
-            '250gm': 200,
-            '500gm': 400,
-            '1kg': 800
+            '250gm': 199,
+            '500gm': 399,
+            '1kg': 799
         },
         weights: {
             '250gm': 250,
@@ -317,9 +317,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 350,
-            '500gm': 700,
-            '1kg': 1400
+            '250gm': 349,
+            '500gm': 399,
+            '1kg': 1399
         },
         weights: {
             '250gm': 250,
@@ -335,12 +335,12 @@ const products = [
         image: 'prawns.jpg',
         category: 'nonveg',
         prices: {
-            '250gm(Regular)': 350,
-            '500gm(Regular)': 700,
-            '1kg(Regular)': 1400,
-            '250gm(Medium)': 380,
-            '500gm(Medium)': 750,
-            '1kg(Medium)': 1500
+            '250gm(Regular)': 349,
+            '500gm(Regular)': 699,
+            '1kg(Regular)': 1399,
+            '250gm(Medium)': 379,
+            '500gm(Medium)': 749,
+            '1kg(Medium)': 1499
         },
         weights: {
             '250gm(Regular)': 250,
@@ -359,9 +359,9 @@ const products = [
         image: 'koramenu.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 300,
-            '500gm': 600,
-            '1kg': 1200
+            '250gm': 299,
+            '500gm': 599,
+            '1kg': 1199
         },
         weights: {
             '250gm': 250,
@@ -377,9 +377,9 @@ const products = [
         image: 'bonelesschicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
+            '250gm': 299,
+            '500gm': 499,
+            '1kg': 999
         },
         weights: {
             '250gm': 250,
@@ -395,9 +395,9 @@ const products = [
         image: 'mutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 399,
+            '500gm': 799,
+            '1kg': 1599
         },
         weights: {
             '250gm': 250,
@@ -413,9 +413,9 @@ const products = [
         image: 'gongurachicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 230,
-            '500gm': 450,
-            '1kg': 900
+            '250gm': 229,
+            '500gm': 449,
+            '1kg': 899
         },
         weights: {
             '250gm': 250,
@@ -431,9 +431,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 380,
-            '500gm': 750,
-            '1kg': 1500
+            '250gm': 379,
+            '500gm': 749,
+            '1kg': 1499
         },
         weights: {
             '250gm': 250,
@@ -449,12 +449,12 @@ const products = [
         image: 'gonguraprawn.jpg',
         category: 'nonveg',
         prices: {
-            '250gm(Regular)': 380,
-            '500gm(Regular)': 750,
-            '1kg(Regular)': 1500,
-            '250gm(Medium)': 400,
-            '500gm(Medium)': 800,
-            '1kg(Medium)': 1600
+            '250gm(Regular)': 379,
+            '500gm(Regular)': 749,
+            '1kg(Regular)': 1499,
+            '250gm(Medium)': 399,
+            '500gm(Medium)': 799,
+            '1kg(Medium)': 1599
         },
         weights: {
             '250gm(Regular)': 250,
@@ -473,9 +473,9 @@ const products = [
         image: 'gongurachicken.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 250,
-            '500gm': 500,
-            '1kg': 1000
+            '250gm': 249,
+            '500gm': 499,
+            '1kg': 999
         },
         weights: {
             '250gm': 250,
@@ -491,9 +491,9 @@ const products = [
         image: 'gonguramutton.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 400,
-            '500gm': 800,
-            '1kg': 1600
+            '250gm': 399,
+            '500gm': 799,
+            '1kg': 1599
         },
         weights: {
             '250gm': 250,
@@ -509,9 +509,9 @@ const products = [
         image: 'karvepakupodi.jpg',
         category: 'special',
         prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
+            '250gm': 129,
+            '500gm': 249,
+            '1kg': 499
         },
         weights: {
             '250gm': 250,
@@ -527,9 +527,9 @@ const products = [
         image: 'nallakaram.jpg',
         category: 'special',
         prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
+            '250gm': 129,
+            '500gm': 249,
+            '1kg': 499
         },
         weights: {
             '250gm': 250,
@@ -545,9 +545,9 @@ const products = [
         image: 'chillypowder.jpg',
         category: 'special',
         prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
+            '250gm': 129,
+            '500gm': 249,
+            '1kg': 499
         },
         weights: {
             '250gm': 250,
@@ -577,9 +577,9 @@ const products = [
         image: 'gummadivadiyalu.jpg',
         category: 'special',
         prices: {
-            '250gm': 180,
-            '500gm': 350,
-            '1kg': 700
+            '250gm': 179,
+            '500gm': 349,
+            '1kg': 699
         },
         weights: {
             '250gm': 250,
@@ -595,9 +595,9 @@ const products = [
         image: 'mirapakayalu.jpg',
         category: 'special',
         prices: {
-            '250gm': 150,
-            '500gm': 300,
-            '1kg': 600
+            '250gm': 149,
+            '500gm': 299,
+            '1kg': 599
         },
         weights: {
             '250gm': 250,
@@ -613,9 +613,9 @@ const products = [
     image: 'pesarivadiyalu.png',
     category: 'special',
     prices: {
-        '250gm': 180,
-        '500gm': 350,
-        '1kg': 700
+        '250gm': 179,
+        '500gm': 349,
+        '1kg': 699
     },
     weights: {
         '250gm': 250,
@@ -631,9 +631,9 @@ const products = [
     image: 'ghee.jpg',
     category: 'special',
     prices: {
-        '250gm': 300,
-        '500gm': 600,
-        '1kg': 1200
+        '250gm': 299,
+        '500gm': 599,
+        '1kg': 1199
     },
     weights: {
         '250gm': 250,
@@ -649,9 +649,9 @@ const products = [
     image: 'buffalo-ghee.jpg',
     category: 'special',
     prices: {
-        '250gm': 250,
-        '500gm': 500,
-        '1kg': 1000
+        '250gm': 249,
+        '500gm': 499,
+        '1kg': 999
     },
     weights: {
         '250gm': 250,
