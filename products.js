@@ -12,8 +12,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -29,9 +29,9 @@ const products = [
         image: 'magayi.jpg',
         category: 'veg',
         prices: {
-            '250gm': 130,
-            '500gm': 250,
-            '1kg': 500
+            '250gm': 120,
+            '500gm': 220,
+            '1kg': 400
         },
         weights: {
             '250gm': 250,
@@ -48,8 +48,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -66,8 +66,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -84,8 +84,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -100,10 +100,10 @@ const products = [
         name: 'Garlic Pickle',
         image: 'garlic.jpg',
         category: 'veg',
-        prices: {
-            '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+       prices: {
+            '250gm': 130,
+            '500gm': 250,
+            '1kg': 500
         },
         weights: {
             '250gm': 250,
@@ -120,8 +120,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -138,8 +138,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -156,8 +156,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -174,8 +174,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -192,8 +192,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -210,8 +210,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -226,10 +226,10 @@ const products = [
         name: 'Curry Leaf Pickle',
         image: 'karvepaku.jpg',
         category: 'veg',
-        prices: {
+       prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -246,8 +246,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -264,8 +264,8 @@ const products = [
         category: 'veg',
         prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
@@ -280,10 +280,10 @@ const products = [
         name: 'Sorrel Leaf Pickle',
         image: 'gongura.jpg',
         category: 'veg',
-        prices: {
+       prices: {
             '250gm': 100,
-            '500gm': 200,
-            '1kg': 400
+            '500gm': 180,
+            '1kg': 350
         },
         weights: {
             '250gm': 250,
