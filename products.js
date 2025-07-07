@@ -359,9 +359,9 @@ const products = [
         image: 'koramenu.jpg',
         category: 'nonveg',
         prices: {
-            '250gm': 299,
-            '500gm': 599,
-            '1kg': 1199
+            '250gm': 349,
+            '500gm': 699,
+            '1kg': 1399
         },
         weights: {
             '250gm': 250,
