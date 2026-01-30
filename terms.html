@@ -96,10 +96,10 @@
           <h2 style="padding: 10px;">Contact Us</h2>
           <p>We'd love to hear from you! Connect with us through:</p>
           <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-3">
-            <a href="https://wa.me/917731021234?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"  class="btn btn-success">📞 WhatsApp</a>
+            <a href="https://wa.me/919390213231?text=Hi%2C%20I%27d%20like%20to%20place%20an%20order%20from%20Aamoda%20Pickles"  class="btn btn-success">📞 WhatsApp</a>
             <a href="https://www.instagram.com/aamodapickles" class="btn btn-light" target="_blank">📸 Instagram</a>
             <a href="mailto:aamodapickles@gmail.com" class="btn btn-warning">📧 Email Us</a>
-            <a href="tel:7731021234" class="btn btn-primary">📱 Call: 7731021234</a>
+            <a href="tel:9390213231" class="btn btn-primary">📱 Call: 9390213231</a>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
   <script src="products.js"></script>
   <script src="cart.js"></script>
   <script>
-    // Ensure cart count is updated on page load for terms page
+
     document.addEventListener('DOMContentLoaded', () => {
         updateCartIcon();
     });
@@ -130,8 +130,8 @@
 
                 searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.trim().toLowerCase();
-                searchResultsDiv.innerHTML = ''; // Clear previous suggestions
-                searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
+                searchResultsDiv.innerHTML = ''; 
+                searchResultsDiv.style.display = 'none'; 
 
                 if (searchTerm) {
                     const matchingProducts = products.filter(product =>
@@ -149,8 +149,8 @@
                             listItem.textContent = product.name;
                             listItem.addEventListener('click', () => {
                                 window.location.href = `product-details.html?id=${product.id}`;
-                                searchInput.value = ''; // Clear input after selection
-                                searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                                searchInput.value = ''; 
+                                searchResultsDiv.style.display = 'none'; 
                             });
                             suggestionsList.appendChild(listItem);
                         });
@@ -159,7 +159,7 @@
         }
     });
 
-    // Hide suggestions when clicking outside the search input and results
+    
     document.addEventListener('click', (event) => {
         if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
             searchResultsDiv.style.display = 'none';

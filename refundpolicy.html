@@ -105,7 +105,7 @@
   <script src="products.js"></script>
   <script src="cart.js"></script>
   <script>
-    // Ensure cart count is updated on page load for shipping page
+
     document.addEventListener('DOMContentLoaded', () => {
         updateCartIcon();
     });
@@ -114,8 +114,8 @@
 
                 searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.trim().toLowerCase();
-                searchResultsDiv.innerHTML = ''; // Clear previous suggestions
-                searchResultsDiv.style.display = 'none'; // Hide the suggestion box initially
+                searchResultsDiv.innerHTML = ''; 
+                searchResultsDiv.style.display = 'none'; 
 
                 if (searchTerm) {
                     const matchingProducts = products.filter(product =>
@@ -133,8 +133,8 @@
                             listItem.textContent = product.name;
                             listItem.addEventListener('click', () => {
                                 window.location.href = `product-details.html?id=${product.id}`;
-                                searchInput.value = ''; // Clear input after selection
-                                searchResultsDiv.style.display = 'none'; // Hide suggestions after selection
+                                searchInput.value = ''; 
+                                searchResultsDiv.style.display = 'none'; 
                             });
                             suggestionsList.appendChild(listItem);
                         });
@@ -143,7 +143,7 @@
         }
     });
 
-    // Hide suggestions when clicking outside the search input and results
+    
     document.addEventListener('click', (event) => {
         if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
             searchResultsDiv.style.display = 'none';
