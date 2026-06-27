@@ -248,6 +248,6 @@ input[type=number] {
     }
 }
 .contact-section {
-    background: #400607 !important;
-    border: none !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
 }
