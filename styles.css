@@ -41,7 +41,10 @@ header h1 {
   color:white;
   padding-top: 110px;
 }
-
+.contact-section h2 {
+    padding-top: 0 !important;
+    margin-top: 0;
+}
 .custom-navbar {
   background-color: #400607;
   
