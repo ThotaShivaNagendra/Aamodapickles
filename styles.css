@@ -247,16 +247,6 @@ input[type=number] {
         top: calc(100% + 2px);
     }
 }
-section,
-.container,
-.row,
-p,
-h2 {
-    margin: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-
 .contact-section {
     background: #400607 !important;
     border: none !important;
