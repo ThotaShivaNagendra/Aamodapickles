@@ -247,7 +247,3 @@ input[type=number] {
         top: calc(100% + 2px);
     }
 }
-.contact-section {
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
-}
