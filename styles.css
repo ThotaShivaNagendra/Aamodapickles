@@ -41,10 +41,7 @@ header h1 {
   color:white;
   padding-top: 110px;
 }
-.contact-section h2 {
-    padding-top: 0 !important;
-    margin-top: 0;
-}
+
 .custom-navbar {
   background-color: #400607;
   
@@ -249,4 +246,18 @@ input[type=number] {
         left: auto;    /* Remove left alignment */
         top: calc(100% + 2px);
     }
+}
+section,
+.container,
+.row,
+p,
+h2 {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.contact-section {
+    background: #400607 !important;
+    border: none !important;
 }
